@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestellsystem-Lieferdienst", "source\Bestellsystem-Lieferdienst.csproj", "{5DF6BCCC-6AFC-4178-B06E-F76B22434ED5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5DF6BCCC-6AFC-4178-B06E-F76B22434ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF6BCCC-6AFC-4178-B06E-F76B22434ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF6BCCC-6AFC-4178-B06E-F76B22434ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF6BCCC-6AFC-4178-B06E-F76B22434ED5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8836B2E0-C511-4780-BD7A-0C9EDDE4C3EB}
+	EndGlobalSection
+EndGlobal
