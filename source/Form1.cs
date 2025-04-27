@@ -1,5 +1,6 @@
 using Bestellsystem_Lieferdienst.DAL;
-using Microsoft.Data.SqlClient;
+using Bestellsystem_Lieferdienst.PL;
+using MySql.Data.MySqlClient;
 
 namespace Bestellsystem_Lieferdienst
 {
@@ -8,9 +9,35 @@ namespace Bestellsystem_Lieferdienst
         public Form1()
         {
             InitializeComponent();
+            InitializeManualComponent();
             //InsertDummyData();
-            InsertDefaultData();
+            // GetDataFromDatabase();
+            //InsertDefaultData();
         }
+
+        //Generated
+        private void LoadView(UserControl view)
+        {
+            Controls.Clear();
+            view.Dock = DockStyle.Fill;
+            Controls.Add(view);
+        }
+        //End
+
+        private void btn_Login_Click(object sender, EventArgs e)
+        {
+            LoadView(new LoginUserControl());
+        }
+
+        private void btn_Register_Click(object sender, EventArgs e)
+        {
+            LoadView(new SignupUserControl());
+        }
+
+        // private void btnRegister_Click(object sender, EventArgs e)
+        // {
+        //     LoadView(new RegisterUserControl());
+        // }
 
         void InsertDummyData()
         {
@@ -20,29 +47,34 @@ namespace Bestellsystem_Lieferdienst
                           """;
         }
 
+        string connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
+
+        void GetDataFromDatabase()
+        {
+            DatabaseHelper dbHelper = new DatabaseHelper(connectionString);
+            string query = "SELECT * FROM `user`";
+            var sd = dbHelper.GetDataFromDatabase(query);
+            foreach (var item in sd)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
         void InsertDefaultData()
         {
-            string connectionString = "Server=localhost;Database=lieferservice;User ID=root;Password=;";
-
-            string databaseConnectionString = connectionString;
-            
-            DatabaseHelper database = new(databaseConnectionString);
-            List<string> Usertyp = new List<string>() { "Customer", "Employee", "Admin"};
+            DatabaseHelper database = new(connectionString);
+            List<string> Usertyp = new List<string>() { "Customer", "Employee", "Admin" };
             for (int i = 0; i < 10; i++)
             {
                 foreach (var VARIABLE in Usertyp)
                 {
                     string data = $"""
-                                  INSERT INTO `benutzertyp`(`name`)
-                                  VALUES ({VARIABLE})
-                                  """;
-                    
-                database.InsertDataIntoDatabase(data);
-                }
-                using (var connection = new SqlConnection(connectionString))
-                {
-                }
+                                   INSERT INTO `benutzertyp`(`name`)
+                                   VALUES ({VARIABLE})
+                                   """;
 
+                    database.ExecuteNonQuery(data);
+                }
             }
         }
     }

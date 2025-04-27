@@ -1,50 +1,70 @@
 using System.Data;
-using Microsoft.Data.SqlClient;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace Bestellsystem_Lieferdienst.DAL;
-public class DatabaseHelper
+
+public class DatabaseHelper(string connectionString)
 {
-    private string connectionString;
-
-    public DatabaseHelper(string connectionString)
+    private MySqlConnection _connection = new(connectionString); //if this fails database couldn't be reached.
+    
+    public int ExecuteNonQuery(string query)
     {
-        this.connectionString = connectionString;
-    }
-    public int InsertDataIntoDatabase(string query)
-    {
-        
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        _connection.Open();
+        using (MySqlCommand command = new MySqlCommand(query, _connection))
         {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    return command.ExecuteNonQuery();
-                }
+            _connection.Close();
+            return command.ExecuteNonQuery();//TODO: Make it run async
         }
     }
-// Replace with your server name, database name and credentials.
 
-    public T[] GetDataFromDatabase<T>(string connectionString, string query)
+
+    object GetDataFromID(int id, string tableName)
     {
-        List<T> data = new List<T>();
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-                connection.Open();
+        throw new NotImplementedException();
+        return new();
+    }
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+    public T GetDataFromDatabase<T>(string query)
+    {
+        var i = GetDataFromDatabase(query);
+        //DataTable
+        foreach (DataRow item in i)
+        {
+            foreach (var column in item.ItemArray)
+            {
+            }
+        }
+
+        return default;
+    }
+
+    public DataRowCollection GetDataFromDatabase(string query)
+    {
+        List<object> data = new List<object>();
+        _connection.Open();
+        using (MySqlCommand command = new MySqlCommand(query, _connection))
+        {
+            using (MySqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader == null) throw new Exception("Error reading data from database");
+                while (reader.Read())
                 {
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    List<object> temp = new List<object>();
+                    for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        while (reader.Read())
-                        {
-                            Console.Write("{0}", reader[0]); // Prints the first column of each record. Change to
-                            if (data == null) throw new Exception("Error reading data from database");
-                            data.Add((T)reader.GetValue(0));
-                        }
+                        // DataTable i =  reader[];
+                        // reader.GetFieldType(i);
+                        var result = Convert.ChangeType(reader.GetValue(i), reader.GetFieldType(i));
+                        Console.WriteLine(result); // prints: 123
+                        temp.Add(result);
                     }
+
+                    data.Add(temp);
                 }
+            }
         }
-        return data.ToArray();
+
+        _connection.Close();
+        return null;
     }
 }
