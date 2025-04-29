@@ -1,3 +1,4 @@
+using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst.DAL;
 using Bestellsystem_Lieferdienst.PL;
 using MySql.Data.MySqlClient;
@@ -11,7 +12,7 @@ namespace Bestellsystem_Lieferdienst
             InitializeComponent();
             InitializeManualComponent();
             //InsertDummyData();
-            // GetDataFromDatabase();
+            GetDataFromDatabase();
             //InsertDefaultData();
         }
 
@@ -54,9 +55,10 @@ namespace Bestellsystem_Lieferdienst
             DatabaseHelper dbHelper = new DatabaseHelper(connectionString);
             string query = "SELECT * FROM `user`";
             var sd = dbHelper.GetDataFromDatabase(query);
-            foreach (var item in sd)
+            var a = dbHelper.GetDataFromDatabase<User>(query);
+            foreach (var item in a)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(item.ToString());
             }
         }
 
@@ -64,9 +66,8 @@ namespace Bestellsystem_Lieferdienst
         {
             DatabaseHelper database = new(connectionString);
             List<string> Usertyp = new List<string>() { "Customer", "Employee", "Admin" };
-            for (int i = 0; i < 10; i++)
-            {
-                foreach (var VARIABLE in Usertyp)
+
+                foreach (string VARIABLE in Usertyp)
                 {
                     string data = $"""
                                    INSERT INTO `benutzertyp`(`name`)
@@ -75,7 +76,6 @@ namespace Bestellsystem_Lieferdienst
 
                     database.ExecuteNonQuery(data);
                 }
-            }
         }
     }
 }

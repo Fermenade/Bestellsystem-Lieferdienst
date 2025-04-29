@@ -55,7 +55,7 @@ partial class SignupUserControl
         lb_HouseNr = new System.Windows.Forms.Label();
         SuspendLayout();
         // 
-        // button1
+        // btn_Signup
         // 
         btn_Signup.Location = new System.Drawing.Point(386, 636);
         btn_Signup.Name = "btn_Signup";
@@ -65,7 +65,7 @@ partial class SignupUserControl
         btn_Signup.UseVisualStyleBackColor = true;
         btn_Signup.Click += BtnSignupClick;
         // 
-        // label1
+        // lb_Email
         // 
         lb_Email.Location = new System.Drawing.Point(195, 11);
         lb_Email.Name = "lb_Email";
@@ -73,21 +73,21 @@ partial class SignupUserControl
         lb_Email.TabIndex = 1;
         lb_Email.Text = "E-Mail";
         // 
-        // textBox1
+        // tbx_Email
         // 
         tbx_Email.Location = new System.Drawing.Point(195, 63);
         tbx_Email.Name = "tbx_Email";
         tbx_Email.Size = new System.Drawing.Size(201, 47);
         tbx_Email.TabIndex = 2;
         // 
-        // textBox2
+        // tbx_Password
         // 
         tbx_Password.Location = new System.Drawing.Point(195, 166);
         tbx_Password.Name = "tbx_Password";
         tbx_Password.Size = new System.Drawing.Size(201, 47);
         tbx_Password.TabIndex = 4;
         // 
-        // label2
+        // lb_Password
         // 
         lb_Password.Location = new System.Drawing.Point(195, 114);
         lb_Password.Name = "lb_Password";
@@ -95,22 +95,22 @@ partial class SignupUserControl
         lb_Password.TabIndex = 3;
         lb_Password.Text = "Passwort";
         // 
-        // label3
+        // lb_Error
         // 
-        lb_Error.Location = new System.Drawing.Point(305, 592);
+        lb_Error.Location = new System.Drawing.Point(229, 548);
         lb_Error.Name = "lb_Error";
-        lb_Error.Size = new System.Drawing.Size(326, 51);
+        lb_Error.Size = new System.Drawing.Size(687, 95);
         lb_Error.TabIndex = 5;
         lb_Error.Text = "Error";
         // 
-        // textBox3
+        // tbx_Lastname
         // 
         tbx_Lastname.Location = new System.Drawing.Point(195, 371);
         tbx_Lastname.Name = "tbx_Lastname";
         tbx_Lastname.Size = new System.Drawing.Size(201, 47);
         tbx_Lastname.TabIndex = 9;
         // 
-        // label4
+        // lb_Lastname
         // 
         lb_Lastname.Location = new System.Drawing.Point(195, 319);
         lb_Lastname.Name = "lb_Lastname";
@@ -118,14 +118,14 @@ partial class SignupUserControl
         lb_Lastname.TabIndex = 8;
         lb_Lastname.Text = "Nachname";
         // 
-        // textBox4
+        // tbx_Firstname
         // 
         tbx_Firstname.Location = new System.Drawing.Point(195, 268);
         tbx_Firstname.Name = "tbx_Firstname";
         tbx_Firstname.Size = new System.Drawing.Size(201, 47);
         tbx_Firstname.TabIndex = 7;
         // 
-        // label5
+        // lb_Firstname
         // 
         lb_Firstname.Location = new System.Drawing.Point(195, 216);
         lb_Firstname.Name = "lb_Firstname";
@@ -133,14 +133,14 @@ partial class SignupUserControl
         lb_Firstname.TabIndex = 6;
         lb_Firstname.Text = "Vorname";
         // 
-        // textBox5
+        // tbx_Street
         // 
         tbx_Street.Location = new System.Drawing.Point(543, 370);
         tbx_Street.Name = "tbx_Street";
         tbx_Street.Size = new System.Drawing.Size(201, 47);
         tbx_Street.TabIndex = 17;
         // 
-        // label6
+        // lb_Street
         // 
         lb_Street.Location = new System.Drawing.Point(543, 318);
         lb_Street.Name = "lb_Street";
@@ -148,14 +148,14 @@ partial class SignupUserControl
         lb_Street.TabIndex = 16;
         lb_Street.Text = "Straße";
         // 
-        // textBox6
+        // tbx_City
         // 
         tbx_City.Location = new System.Drawing.Point(543, 267);
         tbx_City.Name = "tbx_City";
         tbx_City.Size = new System.Drawing.Size(201, 47);
         tbx_City.TabIndex = 15;
         // 
-        // label7
+        // lb_City
         // 
         lb_City.Location = new System.Drawing.Point(543, 215);
         lb_City.Name = "lb_City";
@@ -163,15 +163,14 @@ partial class SignupUserControl
         lb_City.TabIndex = 14;
         lb_City.Text = "Stadt";
         // 
-        // textBox7
+        // tbx_ZippCode
         // 
         tbx_ZippCode.Location = new System.Drawing.Point(543, 165);
         tbx_ZippCode.Name = "tbx_ZippCode";
         tbx_ZippCode.Size = new System.Drawing.Size(201, 47);
         tbx_ZippCode.TabIndex = 13;
-        
         // 
-        // label8
+        // lb_ZippCode
         // 
         lb_ZippCode.Location = new System.Drawing.Point(543, 113);
         lb_ZippCode.Name = "lb_ZippCode";
@@ -179,14 +178,14 @@ partial class SignupUserControl
         lb_ZippCode.TabIndex = 12;
         lb_ZippCode.Text = "PLZ";
         // 
-        // textBox8
+        // tbx_Country
         // 
         tbx_Country.Location = new System.Drawing.Point(543, 62);
         tbx_Country.Name = "tbx_Country";
         tbx_Country.Size = new System.Drawing.Size(201, 47);
         tbx_Country.TabIndex = 11;
         // 
-        // label9
+        // lb_Country
         // 
         lb_Country.Location = new System.Drawing.Point(543, 10);
         lb_Country.Name = "lb_Country";
@@ -194,14 +193,14 @@ partial class SignupUserControl
         lb_Country.TabIndex = 10;
         lb_Country.Text = "Land";
         // 
-        // textBox9
+        // tbx_ApartmentNr
         // 
         tbx_ApartmentNr.Location = new System.Drawing.Point(775, 165);
         tbx_ApartmentNr.Name = "tbx_ApartmentNr";
         tbx_ApartmentNr.Size = new System.Drawing.Size(201, 47);
         tbx_ApartmentNr.TabIndex = 21;
         // 
-        // label10
+        // lb_ApartmentNr
         // 
         lb_ApartmentNr.Location = new System.Drawing.Point(775, 113);
         lb_ApartmentNr.Name = "lb_ApartmentNr";
@@ -209,14 +208,14 @@ partial class SignupUserControl
         lb_ApartmentNr.TabIndex = 20;
         lb_ApartmentNr.Text = "Apartmentnr.";
         // 
-        // textBox10
+        // tbx_HouseNr
         // 
         tbx_HouseNr.Location = new System.Drawing.Point(775, 62);
         tbx_HouseNr.Name = "tbx_HouseNr";
         tbx_HouseNr.Size = new System.Drawing.Size(201, 47);
         tbx_HouseNr.TabIndex = 19;
         // 
-        // label11
+        // lb_HouseNr
         // 
         lb_HouseNr.Location = new System.Drawing.Point(775, 10);
         lb_HouseNr.Name = "lb_HouseNr";

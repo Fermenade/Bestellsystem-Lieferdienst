@@ -2,25 +2,29 @@ namespace Bestellsystem_Lieferdienst.BL;
 public class User
 {
     public int? UserID;
-    public int UsertypeID = 1;//Default Value
+    public int UsertypeID = 0;//Default Value
     public string? FirstName; //TODO: Update Database so that name is not necessary.
     public string? LastName;
     public string Email;
     public string Password;
     public Address? Address;
-    public User(string email, string password):this(null,null, email,password)
-    { }
+    //The Database Constructor HAS to be the first constructor!
     public User(int userId, int usertypeId, string firstName, string lastName, string email, string password)
         :this(firstName,lastName,email,password)
     {
         this.UserID=userId;
         this.UsertypeID=usertypeId;
     }
+    public User(string email, string password) : this(null, null, email, password)
+    {
+    }
     public User(string? firstName, string? lastName, string email, string password)
     {
         this.FirstName = firstName;
         this.LastName = lastName;
+        if(email=="")throw new ("Email is empty");
         this.Email = email;
+        if(password=="")throw new ("Password is empty");
         this.Password = password;
     }
     
@@ -58,24 +62,30 @@ public class Address
     public string Street;
     public int HouseNumber;
     public int? ApartmentNumber;
-
+    
+    //The Database Constructor HAS to be the first constructor!
     Address(int? addressId, string country, int zippCode, string city, string street, int houseNumber, int apartmentNumber)
-        : this(country, zippCode, city, street, houseNumber)
+        : this(country, zippCode, city, street, houseNumber, apartmentNumber)
     {
         this.AddressID=addressId;
-        this.ApartmentNumber = apartmentNumber;
     }
-    Address(string country, int zipCode, string city, string street, int houseNumber, int apartmentNumber)
+    public Address(string country, int zipCode, string city, string street, int houseNumber, int apartmentNumber)
         :this(country,zipCode,city,street,houseNumber)
     {
+        if(apartmentNumber==0)throw new ("Invalid apartment number");
         this.ApartmentNumber=apartmentNumber;
     }
-    Address(string country, int zippCode, string city, string street, int houseNumber)
+    public Address(string country, int zippCode, string city, string street, int houseNumber)
     {
+        if(country=="")throw new ("Invalid country");
         this.Country = country;
+        if(zippCode==0)throw new ("Invalid zipp number");
         this.ZippCode = zippCode;
+        if(city=="")throw new ("Invalid city");
         this.City = city;
+        if(street=="")throw new ("Invalid street");
         this.Street = street;
+        if(houseNumber==0)throw new ("Invalid house number");
         this.HouseNumber = houseNumber;
     }
     
@@ -87,7 +97,8 @@ public class Address
         str.Add($"'{City}'");
         str.Add($"'{Street}'");
         str.Add($"'{HouseNumber}'");
-        str.Add($"'{ApartmentNumber}'");
+        if(ApartmentNumber!=null)
+            str.Add($"'{ApartmentNumber}'");
         return string.Join(",",str);
     }
 }

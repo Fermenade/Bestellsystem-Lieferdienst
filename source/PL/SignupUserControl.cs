@@ -15,31 +15,67 @@ public partial class SignupUserControl : UserControl
 
     private void BtnSignupClick(object sender, EventArgs e)
     {
-        throw new System.NotImplementedException();
+        TryCreateUser();
     }
 
     void TryCreateUser()
     {
-        if (tbx_Firstname.Text == "")
+        User user;
+        try
         {
-            string email = tbx_Email.Text;
-            string password = tbx_Password.Text.ToSHA256();
-            User user = new User(email, password);
-            user.ToString();
-            DatabaseHelper helper = new DatabaseHelper("");
-            helper.ExecuteNonQuery();
+            if (tbx_Firstname.Text == "")
+            {
+                string email = tbx_Email.Text,
+                    password = tbx_Password.Text.ToSHA256();
+                user = new User(email, password);
+            }
+            else
+            {
+                string firstname = tbx_Firstname.Text,
+                    lastname = tbx_Lastname.Text,
+                    email = tbx_Email.Text,
+                    password = tbx_Password.Text;
+
+                user = new User(firstname, lastname, email, password);
+            }
         }
-        Address address = new Address()
+        catch (Exception ex)
         {
-            Country = tbx_City.Text,
-            City = tbx_City.Text,
-            ZippCode = int.Parse(tbx_ZippCode.Text),
-            Street = tbx_Street.Text,
-            HouseNumber = int.Parse(tbx_HouseNr.Text),
-            ApartmentNumber = int.Parse(tbx_ApartmentNr.Text)
-        };
+            lb_Error.Text = ex.Message;
+        }
+
+        string country = tbx_City.Text,
+            city = tbx_City.Text,
+            street = tbx_Street.Text;
+        //Cuz every number normally starts at 1
+        int zippCode = 0,
+            houseNumber = 0,
+            apartmentNumber = 0;
+        try
+        {
+        zippCode = int.Parse(tbx_ZippCode.Text);
+        houseNumber = int.Parse(tbx_HouseNr.Text);
+        apartmentNumber = int.Parse(tbx_ApartmentNr.Text);
+
+        Address address;
+            if (tbx_ApartmentNr.Text == "")
+            {
+
+                address = new Address(country, zippCode, city, street, houseNumber);
+            }
+            else
+            {
+                address = new Address(country, zippCode, city, street, houseNumber, apartmentNumber);
+            }
+        }
+        catch (Exception e)
+        {
+            lb_Error.Text = $"{e.Message}. \n Bestätigen sie, dass sie keine Adresse Ihrem Account hinterlegen wollen. (Sie können dies in ihrem Account Details jederzeit nachholen)";
+            btn_Signup.Text = "Erstellen ohne Adresse.";
+        }
     }
 }
+
 public static class StringExtensions
 {
     public static string ToSHA256(this string input)
