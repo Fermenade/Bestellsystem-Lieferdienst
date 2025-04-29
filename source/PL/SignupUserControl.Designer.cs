@@ -97,7 +97,7 @@ partial class SignupUserControl
         // 
         // lb_Error
         // 
-        lb_Error.Location = new System.Drawing.Point(229, 548);
+        lb_Error.Location = new System.Drawing.Point(230, 551);
         lb_Error.Name = "lb_Error";
         lb_Error.Size = new System.Drawing.Size(687, 95);
         lb_Error.TabIndex = 5;

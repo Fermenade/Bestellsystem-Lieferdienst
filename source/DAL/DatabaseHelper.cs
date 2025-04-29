@@ -10,7 +10,13 @@ public class DatabaseHelper(string connectionString)
     private MySqlConnection _connection = new(connectionString); //if this fails database couldn't be reached.
 
     public void InsertIntoTable<T>(string tableName, List<T> items) where T : class
-    {
+    { 
+        //TODO: ChatGPT hat da quatsch gemacht, verbessern.
+        //ich weiß nicht, ob die var namen der types wirklich alle matchen.
+        // außerdem wenn die items so geholt werden, warum hab ich mir überhaupt die arbeit mit den
+        // toString gemacht???
+        
+        
         //Generated
         if (_connection == null || String.IsNullOrEmpty(tableName))
             throw new ArgumentException(); // Validate input parameters
@@ -56,7 +62,12 @@ public class DatabaseHelper(string connectionString)
         // VALUES('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]')
         // """;}
     }
-
+    /// <summary>
+    /// Execute a non Value returning sql command.
+    /// eg. INSERT, UPDATE
+    /// </summary>
+    /// <param name="query">The sql query</param>
+    /// <returns>The amount of rows affected.</returns>
     public int ExecuteNonQuery(string query)
     {
         _connection.Open();
@@ -67,24 +78,26 @@ public class DatabaseHelper(string connectionString)
         }
     }
 
-
-    T GetDataFromID<T>(int id, string tableName)where T:class
+/// <summary>
+/// Get a single row in a table selected from the ID.
+/// </summary>
+/// <param name="id">ID of the row</param>
+/// <param name="tableName">Name of the table</param>
+/// <typeparam name="T">T must be type class. The type the data should be converted into.</typeparam>
+/// <remarks>The ID column is default {tableName}ID</remarks>
+/// <returns>The selected row of the database converted into the matching type</returns>
+    public T GetDataFromID<T>(int id, string tableName)where T:class
     {
         string sql = $"""SELECT * FROM {tableName} WHERE {tableName}ID = {id}""";
         var i = GetDataFromDatabase<T>(sql);
-        if (i.Length == 1)
-        {
-            return i[0];
-        }
-        return null;
+        return i[0];
     }
     /// <summary>
-    /// Takes a sql query, executes it and returns the output as an array of provided Type.
+    /// Takes a sql query, executes it and returns the output as an array of provided type.
     /// </summary>
     /// <param name="query">The sql query</param>
     /// <typeparam name="T">T must be of type class. The type the data should be converted into.</typeparam>
-    /// <remarks>The types FIRST constructor has to be the type that takes all arguments that the database row returns.</remarks>
-    /// <exception>If types first constructor doesn't satisfy all values from the database. Exception will be thrown.</exception>
+    /// <exception>If a types constructor doesn't satisfy all values from the database. Exception will be thrown.</exception>
     /// <returns>Returns all rows selected from the database converted into the provided type</returns>
     public T[] GetDataFromDatabase<T>(string query) where T : class
     {
@@ -155,9 +168,12 @@ public class DatabaseHelper(string connectionString)
                 }
             }
         }
-
         _connection.Close();
 
+        if (data.Count == 0)
+        {
+            throw new Exception("Could not find data from database.");
+        }
         return data.ToArray();
     }
 }

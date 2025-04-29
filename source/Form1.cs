@@ -40,26 +40,19 @@ namespace Bestellsystem_Lieferdienst
         //     LoadView(new RegisterUserControl());
         // }
 
-        void InsertDummyData()
-        {
-            string data = """
-                          INSERT INTO `benutzer` (`benutzerID`, `benutzerrtypID`, `vorname`, `nachname`, `e-mail`, `passwort`)
-                          VALUES('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]')
-                          """;
-        }
-
         string connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
 
         void GetDataFromDatabase()
         {
             DatabaseHelper dbHelper = new DatabaseHelper(connectionString);
-            string query = "SELECT * FROM `user`";
-            var sd = dbHelper.GetDataFromDatabase(query);
-            var a = dbHelper.GetDataFromDatabase<User>(query);
-            foreach (var item in a)
-            {
-                Console.WriteLine(item.ToString());
-            }
+            var u = dbHelper.GetDataFromID<User>(6, "user");
+            Console.WriteLine(u);
+            // string query = "SELECT * FROM `user`";
+            // var a = dbHelper.GetDataFromDatabase<Address>(query);
+            // foreach (var item in a)
+            // {
+            //     Console.WriteLine(item.ToString());
+            // }
         }
 
         void InsertDefaultData()
