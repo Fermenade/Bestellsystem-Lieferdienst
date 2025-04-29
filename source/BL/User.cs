@@ -8,7 +8,6 @@ public class User
     public string Email;
     public string Password;
     public Address? Address;
-    //The Database Constructor HAS to be the first constructor!
     public User(int userId, int usertypeId, string firstName, string lastName, string email, string password)
         :this(firstName,lastName,email,password)
     {
@@ -62,8 +61,6 @@ public class Address
     public string Street;
     public int HouseNumber;
     public int? ApartmentNumber;
-    
-    //The Database Constructor HAS to be the first constructor!
     Address(int? addressId, string country, int zippCode, string city, string street, int houseNumber, int apartmentNumber)
         : this(country, zippCode, city, street, houseNumber, apartmentNumber)
     {

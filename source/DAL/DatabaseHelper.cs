@@ -1,4 +1,5 @@
 using System.Data;
+using System.Reflection;
 using Bestellsystem_Lieferdienst.BL;
 using MySql.Data.MySqlClient;
 
@@ -89,21 +90,40 @@ public class DatabaseHelper(string connectionString)
     {
         //Generated
         List<T> results = [];
-
-        var constructor = typeof(T).GetConstructors()[0];
-        var parameters = constructor.GetParameters();
-        var args = new object[parameters.Length];
         var o = GetDataFromDatabase(query);
-        foreach (var VARIABLE in o)
+        ConstructorInfo? matchedConstructor = null;
+        
+        //Check if the class has a matching constructor
+        foreach (var VARIABLE in typeof(T).GetConstructors())
         {
-            for (int i = 0; i < parameters.Length; i++)
+            var x = VARIABLE.GetParameters();
+            if (o[0].Length == x.Length)
             {
-                // Get the value from the reader and convert it to the appropriate type
-                var value = VARIABLE[i];
-                args[i] = Convert.ChangeType(value, parameters[i].ParameterType);
+                bool validConsturctorExists = true;
+                for (int i = 0; i < x.Length; ++i)
+                {
+                    if (o[0][i].GetType() != x[i].ParameterType)
+                    {
+                        validConsturctorExists = false;
+                        break;
+                    }
+                }
+
+                if (validConsturctorExists)
+                {
+                    matchedConstructor = VARIABLE;
+                    break;
+                }
             }
+        }
+        if (matchedConstructor == null)
+        {
+            throw new Exception("Did not find matching constructor.");
+        }
+        foreach (object[] VARIABLE in o)
+        {
             // Create an instance of T using the constructor and the arguments
-            var instance = (T)constructor.Invoke(args);
+            var instance = (T)matchedConstructor.Invoke(VARIABLE);
             results.Add(instance);
         }
 
@@ -113,7 +133,7 @@ public class DatabaseHelper(string connectionString)
 /// Takes a sql query, executes it and returns the output as two-dimensional object array.
 /// </summary>
 /// <param name="query">The sql query</param>
-/// <returns>A nested array of all entries returned by the query</returns>
+/// <returns>A nested array of all entries returned by the query.</returns>
     public object[][] GetDataFromDatabase(string query)
     {
         List<object[]> data = new List<object[]>();
@@ -128,8 +148,7 @@ public class DatabaseHelper(string connectionString)
                     List<object> temp = new List<object>();
                     for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        object result = Convert.ChangeType(reader.GetValue(i), reader.GetFieldType(i));
-                        temp.Add(result);
+                        temp.Add(reader.GetValue(i));
                     }
 
                     data.Add(temp.ToArray());
