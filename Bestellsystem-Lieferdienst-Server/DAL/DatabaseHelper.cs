@@ -1,9 +1,8 @@
 using System.Data;
 using System.Reflection;
-using Bestellsystem_Lieferdienst.BL;
 using MySql.Data.MySqlClient;
 
-namespace Bestellsystem_Lieferdienst.DAL;
+namespace Bestellsystem_Lieferdienst_server.DAL;
 
 public class DatabaseHelper(string connectionString)
 {
@@ -54,6 +53,12 @@ public class DatabaseHelper(string connectionString)
                 }
             }
         }
+    }
+
+    string[] GetDatabaseTables()
+    {
+        _connection.Open();
+        return null;
     }
 
     void InsertDataIntoDatabase(object[] data, string table)
@@ -146,6 +151,8 @@ public class DatabaseHelper(string connectionString)
 /// Takes a sql query, executes it and returns the output as two-dimensional object array.
 /// </summary>
 /// <param name="query">The sql query</param>
+/// <exception cref="Exception">Error reading data from database</exception>
+/// <exception cref="Exception">Could not find any matching data.</exception>
 /// <returns>A nested array of all entries returned by the query.</returns>
     public object[][] GetDataFromDatabase(string query)
     {
