@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0-windows</TargetFramework>
+        <RootNamespace>Bestellsystem_Lieferdienst</RootNamespace>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Update="PL\LoginUserControl.cs">
+            <SubType>UserControl</SubType>
+        </Compile>
+        <Compile Update="PL\LoginUserControl.Designer.cs">
+            <DependentUpon>LoginUserControl.Designer.cs</DependentUpon>
+        </Compile>
+        <Compile Update="PL\SignupUserControl.cs">
+            <SubType>UserControl</SubType>
+        </Compile>
+        <Compile Update="PL\ShoppingCart.cs">
+          <SubType>UserControl</SubType>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DAL\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+</Project>
