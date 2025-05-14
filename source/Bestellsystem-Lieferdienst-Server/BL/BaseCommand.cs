@@ -1,6 +1,5 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using bestellsystem_lieferdienst_server.BL;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
@@ -24,7 +23,7 @@ public static class CommandManager
             // Create an instance of the command and register it
             BaseCommand commandInstance = (BaseCommand)Activator.CreateInstance(commandType);
             CommandManager.RegisterCommand(commandInstance);
-            
+
             RegisterAllSubcommands(commandInstance);
         }
     }
@@ -43,12 +42,12 @@ public static class CommandManager
     private static void RegisterAllSubcommands(BaseCommand baseCommand)
     {
         //Get all Subcommands in the assembly that implement ICommand
-        IEnumerable<Type> subCommands = baseCommand.GetType().GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic)
+        IEnumerable<Type> subCommands = baseCommand.GetType().GetNestedTypes(BindingFlags.Public)
             .Where(t =>
-                typeof(ICommand).IsAssignableFrom(t) && !t.IsAbstract && 
+                typeof(ICommand).IsAssignableFrom(t) && !t.IsAbstract &&
                 !typeof(BaseCommand).IsAssignableFrom(t)
             );
-        
+
         foreach (Type commandType in subCommands)
         {
             // Create an instance of the command and register it
@@ -61,7 +60,7 @@ public static class CommandManager
         return Commands.FirstOrDefault(cmd =>
             cmd.Name.Equals(commandName, StringComparison.OrdinalIgnoreCase));
     }
-    
+
     public static void ExecuteCommand(UserCommand message)
     {
         message.Command?.Execute(message.Arguments);
@@ -73,17 +72,19 @@ public interface ICommand
 {
     string Name { get; }
     bool? TakesParameter { get; }
-    void Execute(string? command);
+    Usertype MinPrivilegeRequired { get; }
+    void Execute(User? user,string? command);
 }
 
 public abstract class BaseCommand : ICommand
 {
     public abstract string Name { get; }
+    public Usertype MinPrivilegeRequired => Usertype.User;
     public bool? TakesParameter => null;//TODO: es kann sein dass wenn diese wert nicht false ist, dann macht es etwas falsches um Usage anzeige.
 
     //public abstract void Execute(string[] args);
     public List<ICommand> SubCommands { get; } = new List<ICommand>();
-    
+
     public void AddSubCommand(ICommand command)
     {
         if (GetSubCommand(command.Name) != null) throw new("Subcommand with same name already exists");
@@ -94,20 +95,27 @@ public abstract class BaseCommand : ICommand
     {
         return SubCommands.FirstOrDefault(cmd => cmd.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
-    public void Execute(UserCommand.CArgument[] userCommand)
+    public void Execute(UserCommand.ArgumentList userCommand)
     {
-        if (userCommand.Length == 0)
+        if (userCommand.Arguments.Length == 0)
         {
             throw new ArgumentException("Command must have at least one argument");
             return;
         }
-        foreach (var VARIABLE in userCommand)
+        foreach (var VARIABLE in userCommand.Arguments)
         {
-            VARIABLE.Command.Execute(VARIABLE.Argument);
+            if ((int)VARIABLE.Command.MinPrivilegeRequired <=userCommand.User.UsertypeID)
+            {
+                VARIABLE.Command.Execute(userCommand.User,VARIABLE.Argument);
+            }
+            else
+            {
+                throw new Exception("Too low privilege level for executing Command");
+            }
         }
         //,   Console.WriteLine($"Executing {Name} with args: {string.Join(", ", args)}");
     }
 
-    public void Execute(string command)//This has to be empty 
+    public void Execute(User user,string command)//This has to be empty 
     { }
 }

@@ -9,10 +9,10 @@ public class User
     public string Password;
     public Address? Address;
     public User(int userId, int usertypeId, string firstName, string lastName, string email, string password)
-        :this(firstName,lastName,email,password)
+        : this(firstName, lastName, email, password)
     {
-        this.UserID=userId;
-        this.UsertypeID=usertypeId;
+        this.UserID = userId;
+        this.UsertypeID = usertypeId;
     }
     public User(string email, string password) : this(null, null, email, password)
     {
@@ -21,16 +21,16 @@ public class User
     {
         this.FirstName = firstName;
         this.LastName = lastName;
-        if(email=="")throw new ("Email is empty");
+        if (email == "") throw new("Email is empty");
         this.Email = email;
-        if(password=="")throw new ("Password is empty");
+        if (password == "") throw new("Password is empty");
         this.Password = password;
     }
-    
+
     public override string ToString()
     {
         List<string> str = new List<string>();
-        
+
         if (FirstName != null)
         {
             str.Add($"'{FirstName}'");
@@ -41,7 +41,7 @@ public class User
         }
         str.Add($"'{Email}'");
         str.Add($"'{Password}'");
-        
+
         return string.Join(",", str);
     }
 }

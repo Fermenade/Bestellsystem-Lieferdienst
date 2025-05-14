@@ -1,14 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
-using System.Text;
+using bestellsystem_lieferdienst_server.BL;
 using Bestellsystem_Lieferdienst_server.DAL;
-using Mysqlx.Crud;
+
 // ReSharper disable UnusedType.Global
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
-class Commands
+public class Commands
 {
     static string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
     static DatabaseHelper _dbHelper = new DatabaseHelper(_connectionString);
@@ -16,50 +13,18 @@ class Commands
     public class sql : BaseCommand
     {
         public override string Name => "sql";
-
-        class Select : ICommand
+        /// <summary>
+        /// Executes a sql command and returns all it's values.
+        /// This command requires Admin or above privileges.
+        /// </summary>
+        public class ExecSqlCommand : ICommand
         {
-            public string Name => "SELECT";
+            public string Name => "exec";
             public bool? TakesParameter => true;
-
-            public void Execute(string? args)
-            {
-                _dbHelper.GetDataFromDatabase(args);
-            }
-        }
-
-        class Insert : ICommand
-        {
-            public string Name => "INSERT";
-            public bool? TakesParameter => true;
-
-            public void Execute(string? args)
+            public Usertype MinPrivilegeRequired => Usertype.Admin;
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
-            }
-        }
-
-        class Update : ICommand
-        {
-            public string Name => "UPDATE";
-            public bool? TakesParameter => true;
-
-            public void Execute(string? args)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        class Delete : ICommand
-        {
-            //So theoretically this is not very safe, but this is still just a 
-            public string Name => "DELETE";
-            public bool? TakesParameter => true;
-
-            public void Execute(string? args)
-            {
-                throw new NotImplementedException();
-
             }
         }
     }
@@ -68,34 +33,37 @@ class Commands
     {
         public override string Name => "GET";
 
-        class GetAllProducts : ICommand
+        public class GetAllProducts : ICommand
         {
             public string Name => "ALLPRODUCTS";
             public bool? TakesParameter => false;
+            public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(string? args)
+            public void Execute(User User, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class GetProduct : ICommand
+        public class GetProduct : ICommand
         {
             public string Name => "PRODUCT";
             public bool? TakesParameter => false;
+            public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(string? args)
+            public void Execute(User User, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class GetUser : ICommand
+        public class GetUser : ICommand
         {
             public string Name { get; }
             public bool? TakesParameter { get; }
+            public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(string? command)
+            public void Execute(User User, string? command)
             {
                 throw new NotImplementedException();
             }
@@ -106,45 +74,60 @@ class Commands
     {
         public override string Name => "SET";
 
-        class RegisterUser : ICommand
+        public class RegisterUser : ICommand
         {
             public string Name => "USER";
             public bool? TakesParameter => true;
+            public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(string? args)
+            public void Execute(User user,string? args)
             {
+                if (user == null)
+                {
+                    //Insert
+                }
+                else
+                {
+                    //User (probably) Exists
+                }
+
                 throw new NotImplementedException();
             }
         }
 
-        class SetProduct : ICommand
+        public class SetProduct : ICommand
         {
             public string Name => "PRODUCT";
             public bool? TakesParameter => true;
 
-            public void Execute(string? command)
+            public Usertype MinPrivilegeRequired => Usertype.Employee;
+
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class SetAddress : ICommand
+        public class SetAddress : ICommand
         {
             public string Name => "ADDRESS";
             public bool? TakesParameter => true;
+            public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-            public void Execute(string? command)
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class SetProductGroup : ICommand
+        public class SetProductGroup : ICommand
         {
             public string Name => "PRODUCTGROUP";
             public bool? TakesParameter => true;
 
-            public void Execute(string? command)
+            public Usertype MinPrivilegeRequired => Usertype.Employee;
+
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -155,45 +138,51 @@ class Commands
     {
         public override string Name => "UPDATE";
 
-        class UpdateUser : ICommand
+        public class UpdateUser : ICommand
         {
             public string Name => "USER";
             public bool? TakesParameter => true;
+            public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-            public void Execute(string? args)
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class UpdateProduct : ICommand
+        public class UpdateProduct : ICommand
         {
             public string Name => "PRODUCT";
             public bool? TakesParameter => true;
 
-            public void Execute(string? command)
+            public Usertype MinPrivilegeRequired => Usertype.Employee;
+
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class UpdateAddress : ICommand
+        public class UpdateAddress : ICommand
         {
             public string Name => "ADDRESS";
             public bool? TakesParameter => true;
 
-            public void Execute(string? command)
+            public Usertype MinPrivilegeRequired => Usertype.Customer;
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class UpdateProductGroup : ICommand
+        public class UpdateProductGroup : ICommand
         {
             public string Name => "PRODUCTGROUP";
             public bool? TakesParameter => true;
 
-            public void Execute(string? command)
+            public Usertype MinPrivilegeRequired => Usertype.Employee;
+
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -204,46 +193,56 @@ class Commands
     {
         public override string Name => "DELETE";
 
-        class DeleteUser : ICommand
+        public class DeleteUser : ICommand
         {
             public string Name => "USER";
             public bool? TakesParameter => true;
 
-            public void Execute(string? args)
+            public Usertype MinPrivilegeRequired => Usertype.Admin;
+
+            public void Execute(User user, string? args)
             {
+                //Feature not planed
                 throw new NotImplementedException();
             }
         }
 
-        class DeleteProduct : ICommand
+        public class DeleteProduct : ICommand
         {
             public string Name => "PRODUCT";
             public bool? TakesParameter => true;
 
-            public void Execute(string? command)
+            public Usertype MinPrivilegeRequired => Usertype.Employee;
+
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class DeleteAddress : ICommand
+        public class DeleteAddress : ICommand
         {
             public string Name => "ADDRESS";
             public bool? TakesParameter => true;
 
-            public void Execute(string? command)
+            public Usertype MinPrivilegeRequired => Usertype.Customer;
+
+            public void Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
         }
 
-        class DeleteProductGroup : ICommand
+        public class DeleteProductGroup : ICommand
         {
             public string Name => "PRODUCTGROUP";
             public bool? TakesParameter => true;
 
-            public void Execute(string? command)
+            public Usertype MinPrivilegeRequired => Usertype.Employee;
+
+            public void Execute(User user, string? args)
             {
+                //Feature not planned.
                 throw new NotImplementedException();
             }
         }
@@ -256,12 +255,13 @@ class Commands
     {
         public override string Name => "server";
 
-        class Ping : ICommand
+        public class Ping : ICommand
         {
             public string Name => "ping";
             public bool? TakesParameter => true;
+            public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(string? args)
+            public void Execute(User User, string? args)
             {
                 throw new NotImplementedException();
                 //send("client pong")
@@ -280,8 +280,8 @@ class Commands
         {
             public string Name => "example subcommand name";
             public bool? TakesParameter => false;
-
-            public void Execute(string? args)
+            public Usertype MinPrivilegeRequired => Usertype.User;
+            public void Execute(User User, string? args)
             {
                 throw new NotImplementedException();
             }

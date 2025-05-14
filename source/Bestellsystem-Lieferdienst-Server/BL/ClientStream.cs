@@ -1,13 +1,13 @@
+using Bestellsystem_Lieferdienst_server.BL;
 using System.Net.Sockets;
 using System.Text;
-using Bestellsystem_Lieferdienst_server.BL;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
 public class ClientStream(TcpClient client)
 {
     private NetworkStream stream = client.GetStream();
-    
+
     private bool _clientReceiveHandlingStarted = false;
     /// <summary>
     /// Starts the server client receiver.
@@ -15,7 +15,7 @@ public class ClientStream(TcpClient client)
     /// <param name="stream"></param>
     public void ReceiveMessages()
     {
-        if(_clientReceiveHandlingStarted)throw new Exception("Client receive handling already started.");
+        if (_clientReceiveHandlingStarted) throw new Exception("Client receive handling already started.");
         _clientReceiveHandlingStarted = true;
         byte[] responseBuffer = new byte[1024]; //TODO: check if this is long enough.
         Task.Run(() =>
@@ -37,12 +37,11 @@ public class ClientStream(TcpClient client)
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Fehler beim Empfangen von Nachrichten: {ex.Message}");
-                    Console.WriteLine(ex);
-                    //TODO: Improve that.
+                    Console.WriteLine($"Error when receiving message: {ex.Message}");
+
                     if (ex.Message == "Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..")
                     {
-                        Console.WriteLine("Client forcibly close the connection.");
+                        Console.WriteLine("Client forcibly close the connection.\nExiting..");
                         ClientDisconnected.Invoke();
                         break;
                     }

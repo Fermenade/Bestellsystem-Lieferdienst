@@ -1,6 +1,6 @@
+using Bestellsystem_Lieferdienst.BL;
 using System.Security.Cryptography;
 using System.Text;
-using Bestellsystem_Lieferdienst.BL;
 
 namespace Bestellsystem_Lieferdienst.PL;
 
@@ -52,11 +52,11 @@ public partial class SignupUserControl : UserControl
             apartmentNumber = 0;
         try
         {
-        zippCode = int.Parse(tbx_ZippCode.Text);
-        houseNumber = int.Parse(tbx_HouseNr.Text);
-        apartmentNumber = int.Parse(tbx_ApartmentNr.Text);
+            zippCode = int.Parse(tbx_ZippCode.Text);
+            houseNumber = int.Parse(tbx_HouseNr.Text);
+            apartmentNumber = int.Parse(tbx_ApartmentNr.Text);
 
-        Address address;
+            Address address;
             if (tbx_ApartmentNr.Text == "")
             {
 

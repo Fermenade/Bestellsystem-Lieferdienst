@@ -1,6 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
 using System.Net.Sockets;
-using System.Text;
 
 namespace Bestellsystem_Lieferdienst.Server
 {
@@ -17,16 +16,16 @@ namespace Bestellsystem_Lieferdienst.Server
                 {
                     // Complete the connection
                     tcpClient.EndConnect(ar);
-                    Console.WriteLine("Connected to the server.");
+                    Debug.WriteLine("Connected to the server.");
 
                     // Get the stream for reading and writing
 
                     // Send a message to the server
-                    SendBytesAsync("Moin"u8.ToArray());
+                    SendBytesAsync("SET USER user"u8.ToArray());
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception: {ex.Message}");
+                    Debug.WriteLine($"Exception: {ex.Message}");
                 }
             }
         }

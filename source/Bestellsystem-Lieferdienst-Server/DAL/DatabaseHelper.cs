@@ -1,6 +1,6 @@
+using MySql.Data.MySqlClient;
 using System.Data;
 using System.Reflection;
-using MySql.Data.MySqlClient;
 
 namespace Bestellsystem_Lieferdienst_server.DAL;
 
@@ -9,13 +9,13 @@ public class DatabaseHelper(string connectionString)
     private MySqlConnection _connection = new(connectionString); //if this fails database couldn't be reached.
 
     public void InsertIntoTable<T>(string tableName, List<T> items) where T : class
-    { 
+    {
         //TODO: ChatGPT hat da quatsch gemacht, verbessern.
         //ich weiß nicht, ob die var namen der types wirklich alle matchen.
         // außerdem wenn die items so geholt werden, warum hab ich mir überhaupt die arbeit mit den
         // toString gemacht???
-        
-        
+
+
         //Generated
         if (_connection == null || String.IsNullOrEmpty(tableName))
             throw new ArgumentException(); // Validate input parameters
@@ -83,15 +83,15 @@ public class DatabaseHelper(string connectionString)
         }
     }
 
-/// <summary>
-/// Get a single row in a table selected from the ID.
-/// </summary>
-/// <param name="id">ID of the row</param>
-/// <param name="tableName">Name of the table</param>
-/// <typeparam name="T">T must be type class. The type the data should be converted into.</typeparam>
-/// <remarks>The ID column is default {tableName}ID</remarks>
-/// <returns>The selected row of the database converted into the matching type</returns>
-    public T GetDataFromID<T>(int id, string tableName)where T:class
+    /// <summary>
+    /// Get a single row in a table selected from the ID.
+    /// </summary>
+    /// <param name="id">ID of the row</param>
+    /// <param name="tableName">Name of the table</param>
+    /// <typeparam name="T">T must be type class. The type the data should be converted into.</typeparam>
+    /// <remarks>The ID column is default {tableName}ID</remarks>
+    /// <returns>The selected row of the database converted into the matching type</returns>
+    public T GetDataFromID<T>(int id, string tableName) where T : class
     {
         string sql = $"""SELECT * FROM {tableName} WHERE {tableName}ID = {id}""";
         var i = GetDataFromDatabase<T>(sql);
@@ -110,7 +110,7 @@ public class DatabaseHelper(string connectionString)
         List<T> results = [];
         var o = GetDataFromDatabase(query);
         ConstructorInfo? matchedConstructor = null;
-        
+
         //Check if the class has a matching constructor
         foreach (var VARIABLE in typeof(T).GetConstructors())
         {
@@ -147,13 +147,13 @@ public class DatabaseHelper(string connectionString)
 
         return results.ToArray();
     }
-/// <summary>
-/// Takes a sql query, executes it and returns the output as two-dimensional object array.
-/// </summary>
-/// <param name="query">The sql query</param>
-/// <exception cref="Exception">Error reading data from database</exception>
-/// <exception cref="Exception">Could not find any matching data.</exception>
-/// <returns>A nested array of all entries returned by the query.</returns>
+    /// <summary>
+    /// Takes a sql query, executes it and returns the output as two-dimensional object array.
+    /// </summary>
+    /// <param name="query">The sql query</param>
+    /// <exception cref="Exception">Error reading data from database</exception>
+    /// <exception cref="Exception">Could not find any matching data.</exception>
+    /// <returns>A nested array of all entries returned by the query.</returns>
     public object[][] GetDataFromDatabase(string query)
     {
         List<object[]> data = new List<object[]>();

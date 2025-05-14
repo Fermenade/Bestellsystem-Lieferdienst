@@ -1,5 +1,5 @@
-using System.Text;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Bestellsystem_Lieferdienst_server.BL;
 
@@ -25,6 +25,6 @@ public static class JsonSerialize
 
     public static T Deserialize<T>(string json)
     {
-        return JsonConvert.DeserializeObject<T>(json)??throw new Exception("Deserialization failed, wrong format");
+        return JsonConvert.DeserializeObject<T>(json) ?? throw new Exception("Deserialization failed, wrong format");
     }
 }

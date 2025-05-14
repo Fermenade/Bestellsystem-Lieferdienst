@@ -1,13 +1,12 @@
-using System.Net.Sockets;
-using Bestellsystem_Lieferdienst_server;
 using bestellsystem_lieferdienst_server.BL;
-using Org.BouncyCastle.Tls;
+using Bestellsystem_Lieferdienst_server;
+using System.Net.Sockets;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
-public class Client(TcpClient client):ClientStream(client)
+public class Client(TcpClient client) : ClientStream(client)
 {
-    private User? user;
+    private User user = new();
     public void StartHandeling()
     {
         ReceiveMessages();
@@ -40,14 +39,19 @@ public class Client(TcpClient client):ClientStream(client)
         Console.WriteLine($"Received message '{message}' from '{client.Client.RemoteEndPoint}'");
         try
         {
-            UserCommand command = new UserCommand(message);
+            UserCommand command = new UserCommand(user, message);
             CommandManager.ExecuteCommand(command);
         }
         catch (Exception ex)
         {
-            if (ex.Message == "Not a valid Command")
+            switch (ex.Message)
             {
-                Console.WriteLine($"Client {client.Client.RemoteEndPoint} sent unknown command => Ignoring.");
+                case "Not a valid Command":
+                    Console.WriteLine($"Client {client.Client.RemoteEndPoint} sent unknown command => Ignoring.");
+                    break;
+                default:
+                    Console.WriteLine($"Uncaught exception: {ex}");
+                    break;
             }
         }
     }
