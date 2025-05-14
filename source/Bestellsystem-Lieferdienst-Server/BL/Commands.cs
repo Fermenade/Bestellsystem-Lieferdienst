@@ -153,7 +153,7 @@ class Commands
 
     public class UpdatePredefined : BaseCommand
     {
-        public override string Name => "SET";
+        public override string Name => "UPDATE";
 
         class UpdateUser : ICommand
         {
@@ -202,7 +202,7 @@ class Commands
 
     public class DeletePredefined : BaseCommand
     {
-        public override string Name => "SET";
+        public override string Name => "DELETE";
 
         class DeleteUser : ICommand
         {

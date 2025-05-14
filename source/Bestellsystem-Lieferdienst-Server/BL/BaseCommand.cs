@@ -30,7 +30,10 @@ public static class CommandManager
     }
     private static void RegisterCommand(ICommand command)
     {
-        if (GetBaseCommand(command.Name) == null)throw new Exception("Command with same name already exists");
+        if (GetBaseCommand(command.Name) != null)
+        {
+            throw new Exception($"Command with same name ('{command.Name}') already exists");
+        }
         Commands.Add(command);
     }
     /// <summary>

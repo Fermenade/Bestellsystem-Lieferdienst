@@ -38,6 +38,14 @@ public class ClientStream(TcpClient client)
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Fehler beim Empfangen von Nachrichten: {ex.Message}");
+                    Console.WriteLine(ex);
+                    //TODO: Improve that.
+                    if (ex.Message == "Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..")
+                    {
+                        Console.WriteLine("Client forcibly close the connection.");
+                        ClientDisconnected.Invoke();
+                        break;
+                    }
                 }
             }
         });

@@ -21,10 +21,7 @@ public class Client(TcpClient client):ClientStream(client)
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error: " + ex.Message);
-        }
-        finally
-        {
+            Console.WriteLine("Error: " + ex.Message + "\n Exiting...");
             ProcessClientDisconnected();
         }
     }
@@ -35,13 +32,23 @@ public class Client(TcpClient client):ClientStream(client)
         ClientDisconnected -= ProcessClientDisconnected;
         // Remove the client from the list and close the connection
         Server.clients.Remove(this);
-        client.Close();
         Console.WriteLine("Client disconnected: " + client.Client.RemoteEndPoint);
+        client.Close();
     }
     void ProcessReceiveMessages(string message)
     {
         Console.WriteLine($"Received message '{message}' from '{client.Client.RemoteEndPoint}'");
-        UserCommand command = new UserCommand(message);
-        CommandManager.ExecuteCommand(command);
+        try
+        {
+            UserCommand command = new UserCommand(message);
+            CommandManager.ExecuteCommand(command);
+        }
+        catch (Exception ex)
+        {
+            if (ex.Message == "Not a valid Command")
+            {
+                Console.WriteLine($"Client {client.Client.RemoteEndPoint} sent unknown command => Ignoring.");
+            }
+        }
     }
 }

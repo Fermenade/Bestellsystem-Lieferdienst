@@ -1,11 +1,6 @@
-﻿using Bestellsystem_Lieferdienst_server.BL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Bestellsystem_Lieferdienst.Server
 {
@@ -15,24 +10,25 @@ namespace Bestellsystem_Lieferdienst.Server
         public static void ConnectToServer()
         {
             //Generated
-            tcpClient.BeginConnect(IPAddress.Broadcast, 9999, ar => {
-                if (ar.IsCompleted)
+            tcpClient.BeginConnect("127.0.0.1", 5000, new AsyncCallback(ConnectCallback), tcpClient);
+            void ConnectCallback(IAsyncResult ar)
+            {
+                try
                 {
-                    // Connection established successfully
-                    NetworkStream networkStream = tcpClient.GetStream();
+                    // Complete the connection
+                    tcpClient.EndConnect(ar);
+                    Console.WriteLine("Connected to the server.");
 
-                    byte[] buffer = Encoding.ASCII.GetBytes("Ping");
-                    networkStream.BeginWrite(buffer, 0, buffer.Length, ar2 => {
-                        // Write operation completed
-                        Console.WriteLine("Data sent.");
-                        tcpClient.Close();
-                    }, null);
+                    // Get the stream for reading and writing
+
+                    // Send a message to the server
+                    SendBytesAsync("Moin"u8.ToArray());
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Connection failed");
+                    Console.WriteLine($"Exception: {ex.Message}");
                 }
-            }, null);
+            }
         }
         static async void SendBytesAsync(byte[] bytes)
         {
