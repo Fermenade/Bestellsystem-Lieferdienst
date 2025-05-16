@@ -6,16 +6,11 @@ namespace Bestellsystem_Lieferdienst_Server.BL;
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public class UserCommand
 {
-    public class ArgumentList
+    public class ArgumentList(User? user, ArgumentList.CArgument[] arguments)
     {
-        public User User;
-        public CArgument[] Arguments;
+        public User? User = user;
+        public CArgument[] Arguments = arguments;
 
-        public ArgumentList(User User, CArgument[] arguments)
-        {
-            this.User = User;
-            this.Arguments = arguments;
-        }
         public class CArgument
         {
             public ICommand Command { get; private set; }

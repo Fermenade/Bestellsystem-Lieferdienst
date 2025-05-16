@@ -9,7 +9,7 @@ public class Server
     //https://codingvision.net/c-simple-tcp-server
     //https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/sockets/tcp-classes
     static TcpListener server = new(IPAddress.Any, 5000);
-    public static List<Client> clients = new();
+    public static HashSet<Client> clients = new();
     public static void StartServerHandling()
     {
         server.Start();

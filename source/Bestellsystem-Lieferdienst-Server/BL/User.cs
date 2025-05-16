@@ -9,7 +9,6 @@ public class User
     public string Email;
     public string Password;
     public Address? Address;
-    public User(){}
     public User(int userId, int usertypeId, string firstName, string lastName, string email, string password)
         : this(firstName, lastName, email, password)
     {
@@ -113,7 +112,7 @@ public struct Receipe
     //TODO: Product should be quantisisable :)
 }
 
-public struct Product
+public class Product
 {
     int ProductID;
     string ProductName;

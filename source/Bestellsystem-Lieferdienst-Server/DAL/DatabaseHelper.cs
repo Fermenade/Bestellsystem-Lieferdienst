@@ -8,11 +8,11 @@ public class DatabaseHelper(string connectionString)
 {
     private MySqlConnection _connection = new(connectionString); //if this fails database couldn't be reached.
 
-    public void InsertIntoTable<T>(string tableName, List<T> items) where T : class
+    public void InsertItemIntoTable<T>(string tableName, T item) where T : class
     {
         //TODO: ChatGPT hat da quatsch gemacht, verbessern.
         //ich weiß nicht, ob die var namen der types wirklich alle matchen.
-        // außerdem wenn die items so geholt werden, warum hab ich mir überhaupt die arbeit mit den
+        // außerdem wenn die item so geholt werden, warum hab ich mir überhaupt die arbeit mit den
         // toString gemacht???
 
 
@@ -20,52 +20,35 @@ public class DatabaseHelper(string connectionString)
         if (_connection == null || String.IsNullOrEmpty(tableName))
             throw new ArgumentException(); // Validate input parameters
 
-        foreach (var item in items)
+        var properties = typeof(T).GetProperties();
+        string columns = String.Join(", ", properties.Select(p => p.Name));
+
+        var cmd = $"INSERT INTO '{tableName}' ({columns}) VALUES ({item.ToString()});";
+
+        using (var command = new MySqlCommand(cmd, _connection))
         {
-            var properties = typeof(T).GetProperties();
-            string columns = String.Join(", ", properties.Select(p => p.Name));
-            string valuesPlaceholder = String.Join(", ", Enumerable.Repeat("@" + "{0}", properties.Length)
-                .ToArray());
-
-            var cmd = $"INSERT INTO '{tableName}' ({columns}) VALUES ({items.ToString()});";
-
-            using (var command = new MySqlCommand(cmd, _connection))
+            for (int i = 0; i < properties.Length; ++i)
             {
-                for (int i = 0; i < properties.Length; ++i)
-                {
-                    var propertyValue = properties[i].GetValue(item);
+                var propertyValue = properties[i].GetValue(item);
 
-                    // Assuming all property values are of the type string, you might need to adjust this part according to your needs
-                    command.Parameters.AddWithValue("@" + i,
-                        (propertyValue == null)
-                            ? DBNull.Value
-                            : Convert.ChangeType(propertyValue, propertyValue.GetType()));
-                }
+                // Assuming all property values are of the type string, you might need to adjust this part according to your needs
+                command.Parameters.AddWithValue("@" + i,
+                    (propertyValue == null)
+                        ? DBNull.Value
+                        : Convert.ChangeType(propertyValue, propertyValue.GetType()));
+            }
 
-                try
-                {
-                    command.ExecuteNonQuery();
-                }
-                catch (MySqlException ex) // Catching specific exception related to MySQL
-                {
-                    Console.WriteLine("Failed to insert item: " + item);
-                    Console.WriteLine(ex.Message);
-                }
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (MySqlException ex) // Catching specific exception related to MySQL
+            {
+
+                throw new Exception("Failed to insert item: " + item+"\n"+ex);
+
             }
         }
-    }
-
-    string[] GetDatabaseTables()
-    {
-        _connection.Open();
-        return null;
-    }
-
-    void InsertDataIntoDatabase(object[] data, string table)
-    {
-        // INSERT INTO `benutzer` (`benutzerID`, `benutzerrtypID`, `vorname`, `nachname`, `e-mail`, `passwort`)
-        // VALUES('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]')
-        // """;}
     }
     /// <summary>
     /// Execute a non Value returning sql command.

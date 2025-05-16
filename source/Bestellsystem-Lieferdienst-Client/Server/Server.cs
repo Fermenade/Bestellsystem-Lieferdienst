@@ -22,6 +22,8 @@ namespace Bestellsystem_Lieferdienst.Server
 
                     // Send a message to the server
                     SendBytesAsync("SET USER user"u8.ToArray());
+                    SendBytesAsync("SET PRODUCT user"u8.ToArray());
+                    //TODO: Client/Server must receive a notice of the other that it got the message, else it will try again.
                 }
                 catch (Exception ex)
                 {

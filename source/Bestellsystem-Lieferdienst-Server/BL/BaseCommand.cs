@@ -104,7 +104,7 @@ public abstract class BaseCommand : ICommand
         }
         foreach (var VARIABLE in userCommand.Arguments)
         {
-            if ((int)VARIABLE.Command.MinPrivilegeRequired <=userCommand.User.UsertypeID)
+            if ((int)VARIABLE.Command.MinPrivilegeRequired <= (userCommand.User?.UsertypeID ?? 0))
             {
                 VARIABLE.Command.Execute(userCommand.User,VARIABLE.Argument);
             }

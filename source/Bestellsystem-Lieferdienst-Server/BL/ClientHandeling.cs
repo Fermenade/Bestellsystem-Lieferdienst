@@ -1,16 +1,16 @@
 using bestellsystem_lieferdienst_server.BL;
 using Bestellsystem_Lieferdienst_server;
 using System.Net.Sockets;
+using Bestellsystem_Lieferdienst_server.BL;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
 public class Client(TcpClient client) : ClientStream(client)
 {
-    private User user = new();
+    public User? user = null;
     public void StartHandeling()
     {
         ReceiveMessages();
-        Server.clients.Add(this);
         try
         {
             MessageReceived += ProcessReceiveMessages;
@@ -48,6 +48,9 @@ public class Client(TcpClient client) : ClientStream(client)
             {
                 case "Not a valid Command":
                     Console.WriteLine($"Client {client.Client.RemoteEndPoint} sent unknown command => Ignoring.");
+                    break;
+                case "UserHappened":
+                    user = JsonSerialize.Deserialize<User>(message);
                     break;
                 default:
                     Console.WriteLine($"Uncaught exception: {ex}");

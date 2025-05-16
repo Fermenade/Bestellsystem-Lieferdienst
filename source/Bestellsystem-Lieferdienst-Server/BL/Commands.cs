@@ -1,4 +1,5 @@
 using bestellsystem_lieferdienst_server.BL;
+using Bestellsystem_Lieferdienst_server.BL;
 using Bestellsystem_Lieferdienst_server.DAL;
 
 // ReSharper disable UnusedType.Global
@@ -82,16 +83,19 @@ public class Commands
 
             public void Execute(User user,string? args)
             {
+                string tablename = "User";
                 if (user == null)
                 {
-                    //Insert
+                    User i = JsonSerialize.Deserialize<User>(args); 
+                    _dbHelper.InsertItemIntoTable(tablename,i);
+
+                    //So, let me explain. Yes this is horrible, but with my approach I don't see a better way to solve it. Actually I like this in some way.
+                    throw new Exception("UserHappened");
                 }
                 else
                 {
-                    //User (probably) Exists
+                    throw new Exception("Tried to create a new user for a already logged in user.");
                 }
-
-                throw new NotImplementedException();
             }
         }
 
@@ -104,7 +108,9 @@ public class Commands
 
             public void Execute(User user, string? args)
             {
-                throw new NotImplementedException();
+                string tablename = "Products";
+               Product i = JsonSerialize.Deserialize<Product>(args);
+               _dbHelper.InsertItemIntoTable(tablename,i);
             }
         }
 
@@ -116,7 +122,9 @@ public class Commands
 
             public void Execute(User user, string? args)
             {
-                throw new NotImplementedException();
+                string tablename = "Address";
+                Product i = JsonSerialize.Deserialize<Product>(args);
+                _dbHelper.InsertItemIntoTable(tablename, i);
             }
         }
 
@@ -129,7 +137,9 @@ public class Commands
 
             public void Execute(User user, string? args)
             {
-                throw new NotImplementedException();
+                string tablename = "Products";
+                Product i = JsonSerialize.Deserialize<Product>(args);
+                _dbHelper.InsertItemIntoTable(tablename, i);
             }
         }
     }
