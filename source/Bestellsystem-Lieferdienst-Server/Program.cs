@@ -1,4 +1,4 @@
-﻿namespace Bestellsystem_Lieferdienst_server;
+﻿namespace Bestellsystem_Lieferdienst_Server;
 
 internal static class Program
 {

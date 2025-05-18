@@ -1,6 +1,6 @@
 using bestellsystem_lieferdienst_server.BL;
-using Bestellsystem_Lieferdienst_server.BL;
-using Bestellsystem_Lieferdienst_server.DAL;
+using Bestellsystem_Lieferdienst_Server.BL;
+using Bestellsystem_Lieferdienst_Server.DAL;
 
 // ReSharper disable UnusedType.Global
 

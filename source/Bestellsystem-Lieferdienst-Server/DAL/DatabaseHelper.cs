@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using System.Reflection;
 
-namespace Bestellsystem_Lieferdienst_server.DAL;
+namespace Bestellsystem_Lieferdienst_Server.DAL;
 
 public class DatabaseHelper(string connectionString)
 {

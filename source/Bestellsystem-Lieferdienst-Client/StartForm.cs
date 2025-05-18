@@ -1,6 +1,8 @@
-using Bestellsystem_Lieferdienst.PL;
+using System.Diagnostics;
+using Bestellsystem_Lieferdienst_Client.PL;
+using Bestellsystem_Lieferdienst.Server;
 
-namespace Bestellsystem_Lieferdienst
+namespace Bestellsystem_Lieferdienst_Client
 {
     public partial class StartForm : Form
     {
@@ -9,9 +11,7 @@ namespace Bestellsystem_Lieferdienst
             InitializeComponent();
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
-            //TODO: sign the message to the server with this.
-            Guid.NewGuid().ToString();
-            Server.Server.ConnectToServer();
+            Debug.WriteLine(Client.client.SendAndReturn<string>("hey"));
         }
 
         //Generated

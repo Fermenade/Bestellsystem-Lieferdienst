@@ -1,7 +1,7 @@
 using bestellsystem_lieferdienst_server.BL;
-using Bestellsystem_Lieferdienst_server;
+using Bestellsystem_Lieferdienst_Server;
 using System.Net.Sockets;
-using Bestellsystem_Lieferdienst_server.BL;
+using Bestellsystem_Lieferdienst_Server.BL;
 using System.Collections.Generic;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
@@ -41,10 +41,11 @@ public class Client(TcpClient client) : ClientStream(client)
 
         Package request = JsonSerialize.Deserialize<Package>(message);
 
-        if (PendingPackage.isPendingPackage(request))
+        if (!PendingPackage.isPendingPackage(request))
         {
 
             //This logic if this is not nativ request.
+            request.Data = null;
             string data = request.Data;
             try
             {
@@ -65,6 +66,7 @@ public class Client(TcpClient client) : ClientStream(client)
                 {
                     case "Not a valid Command":
                         Console.WriteLine($"Client {client.Client.RemoteEndPoint} sent unknown command => Ignoring.");
+                        request.ErrorMessage = "Unknown Command";
                         break;
                     default:
                         request.ErrorMessage = $"{ex}\n{ex.Message}";

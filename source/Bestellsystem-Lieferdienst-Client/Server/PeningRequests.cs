@@ -5,17 +5,14 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Bestellsystem_Lieferdienst_Server.BL;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Asn1.Ocsp;
 
-namespace Bestellsystem_Lieferdienst_Server
+namespace Bestellsystem_Lieferdienst.Server
 {
     //Generated
     class PendingPackage:Package
     {
         static Dictionary<Guid, TaskCompletionSource<string>> pendingPackages = new Dictionary<Guid, TaskCompletionSource<string>>();
-        private DateTime now = DateTime.Now;
 
         public PendingPackage(string data):base(data)
         {
@@ -24,11 +21,11 @@ namespace Bestellsystem_Lieferdienst_Server
 
         public static bool isPendingPackage(Package data)
         {
-            if (pendingPackages.TryGetValue(data.UID, out var value))
+            if (pendingPackages.TryGetValue(data.UID,out var value))
             {
                 if (data.ErrorMessage != null)
                 {
-                    throw new($"Client command has thrown exception: {data.ErrorMessage}");
+                    throw new($"Server command has thrown exception: {data.ErrorMessage}");
                 }
 
                 value.SetResult(data.Data);
@@ -49,10 +46,7 @@ namespace Bestellsystem_Lieferdienst_Server
     }
     public class Package
     {
-        public Guid UID
-        {
-            get;
-        }
+        public Guid UID;
 
         //TODO: add time out if the other does not respond within a specified time frame the package will be sent again. if that fails too connection will
         //be set into crisis mode (e.g. popup that tells user that connection was lost.)
@@ -63,11 +57,11 @@ namespace Bestellsystem_Lieferdienst_Server
 
         //Ok here is the basic idea:
 
-        //Since I want to get sure that the client and server are operating in *cooperation* every package the
+        //Since I want to get sure that the tcpclient and server are operating in *cooperation* every package the
 
-        //client/server sends get signed, so that multiple packages can be sent and the client/client won't get confused about which
+        //tcpclient/server sends get signed, so that multiple packages can be sent and the tcpclient/tcpclient won't get confused about which
 
-        //package belongs to which client/server request.
+        //package belongs to which tcpclient/server request.
 
         //Horrible explained ik. but idc.
 
@@ -80,9 +74,9 @@ namespace Bestellsystem_Lieferdienst_Server
 
         //The flow would look something like this:
         //Information should be sent -> Information gets packed into a package which has a guid to identify.
-        //-> Information gets sent - code will await the return -> client/server gets the package -> checks if its one of its own pending packages
+        //-> Information gets sent - code will await the return -> tcpclient/server gets the package -> checks if its one of its own pending packages
         //-> if not it will execute the command -> information like package purpose was success or failure (maybe even error message)
-        //-> server/client send the updated package back -> client/server checks if it's one of its own pending packages
+        //-> server/tcpclient send the updated package back -> tcpclient/server checks if it's one of its own pending packages
         //-> if it is, it will give the waiting code the promised values and dispose the package.
 
 
@@ -97,13 +91,12 @@ namespace Bestellsystem_Lieferdienst_Server
         }
 
         [JsonConstructor]
-        public Package(Guid uID, string data, string? errorMessage)
+        public Package(Guid guid, string data, string errorMessage)
         {
-            UID = uID;
-            Data = data;
-            ErrorMessage = errorMessage;
+            this.UID = guid;
+            this.Data = data;
+            this.ErrorMessage = errorMessage;
         }
-
 
 
         //This logic assumes that Data will only write NOT read by the sender and the receiver will only read not write.

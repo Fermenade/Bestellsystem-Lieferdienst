@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Bestellsystem_Lieferdienst.PL;
+namespace Bestellsystem_Lieferdienst_Client.PL;
 
 partial class ShoppingCart
 {

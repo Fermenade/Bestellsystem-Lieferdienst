@@ -1,4 +1,4 @@
-namespace Bestellsystem_Lieferdienst.BL;
+namespace Bestellsystem_Lieferdienst_Client.BL;
 
 public class Address
 {

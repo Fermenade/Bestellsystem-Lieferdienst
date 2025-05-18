@@ -1,4 +1,6 @@
-namespace Bestellsystem_Lieferdienst
+using Bestellsystem_Lieferdienst.Server;
+
+namespace Bestellsystem_Lieferdienst_Client
 {
     internal static class Program
     {
@@ -11,16 +13,18 @@ namespace Bestellsystem_Lieferdienst
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            Client.client.ConnectToServer();
             Application.Run(new StartForm());
+
             // // Connect to the server on localhost and port 5000
-            // TcpClient client = new TcpClient("127.0.0.1", 5000);
+            // TcpClient tcpclient = new TcpClient("127.0.0.1", 5000);
             // Console.WriteLine("Connected to server.");
             //
             // // Get the stream to read/write data
-            // NetworkStream stream = client.GetStream();
+            // NetworkStream stream = tcpclient.GetStream();
             //
             // // Send a message to the server
-            // string message = "Hello from client!";
+            // string message = "Hello from tcpclient!";
             // byte[] data = Encoding.UTF8.GetBytes(message);
             // stream.Write(data, 0, data.Length);
             // Console.WriteLine("Message sent: " + message);
@@ -32,7 +36,7 @@ namespace Bestellsystem_Lieferdienst
             // Console.WriteLine("Received from server: " + response);
             //
             // // Close the connection
-            // client.Close();
+            // tcpclient.Close();
         }
     }
 }

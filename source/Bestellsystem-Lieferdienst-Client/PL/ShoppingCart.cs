@@ -1,6 +1,6 @@
-using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst_Client.BL;
 
-namespace Bestellsystem_Lieferdienst.PL;
+namespace Bestellsystem_Lieferdienst_Client.PL;
 
 public partial class ShoppingCart : UserControl
 {

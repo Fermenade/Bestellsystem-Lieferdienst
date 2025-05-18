@@ -1,6 +1,6 @@
-﻿using Bestellsystem_Lieferdienst.PL;
+﻿using Bestellsystem_Lieferdienst_Client.PL;
 
-namespace Bestellsystem_Lieferdienst
+namespace Bestellsystem_Lieferdienst_Client
 {
     partial class StartForm
     {

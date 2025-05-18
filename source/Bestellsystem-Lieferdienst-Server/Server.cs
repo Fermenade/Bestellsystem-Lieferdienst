@@ -2,7 +2,7 @@ using Bestellsystem_Lieferdienst_Server.BL;
 using System.Net;
 using System.Net.Sockets;
 
-namespace Bestellsystem_Lieferdienst_server;
+namespace Bestellsystem_Lieferdienst_Server;
 
 public class Server
 {
