@@ -61,6 +61,12 @@ public class ClientStream(TcpClient client)
         SendBinaryAsync(data);
         Console.WriteLine($"Sent message '{message}' to '{client.Client.RemoteEndPoint}'");
     }
+    async Task<T> SendAndReturn<T>(string command)
+    {
+        PendingPackage newPackage = new PendingPackage(command);
+        string i = await newPackage.WaitForAnswer();//RequestRecieve
+        return JsonSerialize.Deserialize<T>(i);
+    }
 
     public event MessageDelegate MessageReceived;
     public delegate void MessageDelegate(string message);

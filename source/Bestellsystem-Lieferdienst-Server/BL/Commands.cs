@@ -23,7 +23,7 @@ public class Commands
             public string Name => "exec";
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.Admin;
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -40,7 +40,7 @@ public class Commands
             public bool? TakesParameter => false;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(User User, string? args)
+            public object Execute(User User, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -52,7 +52,7 @@ public class Commands
             public bool? TakesParameter => false;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(User User, string? args)
+            public object Execute(User User, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -64,7 +64,7 @@ public class Commands
             public bool? TakesParameter { get; }
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(User User, string? command)
+            public object Execute(User User, string? command)
             {
                 throw new NotImplementedException();
             }
@@ -81,7 +81,7 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(User user,string? args)
+            public object Execute(User user,string? args)
             {
                 string tablename = "User";
                 if (user == null)
@@ -89,8 +89,8 @@ public class Commands
                     User i = JsonSerialize.Deserialize<User>(args); 
                     _dbHelper.InsertItemIntoTable(tablename,i);
 
-                    //So, let me explain. Yes this is horrible, but with my approach I don't see a better way to solve it. Actually I like this in some way.
-                    throw new Exception("UserHappened");
+                    //TODOMaybe add Unique ID between Client and server when client looses connection. it can send a reconnect command with the ID.
+                    return "UserHappened";
                 }
                 else
                 {
@@ -106,11 +106,12 @@ public class Commands
 
             public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 string tablename = "Products";
                Product i = JsonSerialize.Deserialize<Product>(args);
                _dbHelper.InsertItemIntoTable(tablename,i);
+               return null;
             }
         }
 
@@ -120,11 +121,12 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 string tablename = "Address";
-                Product i = JsonSerialize.Deserialize<Product>(args);
+                Address i = JsonSerialize.Deserialize<Address>(args);
                 _dbHelper.InsertItemIntoTable(tablename, i);
+                return null;
             }
         }
 
@@ -135,11 +137,12 @@ public class Commands
 
             public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 string tablename = "Products";
                 Product i = JsonSerialize.Deserialize<Product>(args);
                 _dbHelper.InsertItemIntoTable(tablename, i);
+                return null;
             }
         }
     }
@@ -154,7 +157,7 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -167,7 +170,7 @@ public class Commands
 
             public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -179,7 +182,7 @@ public class Commands
             public bool? TakesParameter => true;
 
             public Usertype MinPrivilegeRequired => Usertype.Customer;
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -192,7 +195,7 @@ public class Commands
 
             public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -210,7 +213,7 @@ public class Commands
 
             public Usertype MinPrivilegeRequired => Usertype.Admin;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 //Feature not planed
                 throw new NotImplementedException();
@@ -224,7 +227,7 @@ public class Commands
 
             public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -237,7 +240,7 @@ public class Commands
 
             public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 throw new NotImplementedException();
             }
@@ -250,7 +253,7 @@ public class Commands
 
             public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-            public void Execute(User user, string? args)
+            public object Execute(User user, string? args)
             {
                 //Feature not planned.
                 throw new NotImplementedException();
@@ -271,7 +274,7 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public void Execute(User User, string? args)
+            public object Execute(User User, string? args)
             {
                 throw new NotImplementedException();
                 //send("client pong")
@@ -291,7 +294,7 @@ public class Commands
             public string Name => "example subcommand name";
             public bool? TakesParameter => false;
             public Usertype MinPrivilegeRequired => Usertype.User;
-            public void Execute(User User, string? args)
+            public object Execute(User User, string? args)
             {
                 throw new NotImplementedException();
             }

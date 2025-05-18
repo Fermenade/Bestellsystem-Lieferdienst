@@ -2,6 +2,7 @@ using bestellsystem_lieferdienst_server.BL;
 using Bestellsystem_Lieferdienst_server;
 using System.Net.Sockets;
 using Bestellsystem_Lieferdienst_server.BL;
+using System.Collections.Generic;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
@@ -37,25 +38,41 @@ public class Client(TcpClient client) : ClientStream(client)
     void ProcessReceiveMessages(string message)
     {
         Console.WriteLine($"Received message '{message}' from '{client.Client.RemoteEndPoint}'");
-        try
+
+        Package request = JsonSerialize.Deserialize<Package>(message);
+
+        if (PendingPackage.isPendingPackage(request))
         {
-            UserCommand command = new UserCommand(user, message);
-            CommandManager.ExecuteCommand(command);
-        }
-        catch (Exception ex)
-        {
-            switch (ex.Message)
+
+            //This logic if this is not nativ request.
+            string data = request.Data;
+            try
             {
-                case "Not a valid Command":
-                    Console.WriteLine($"Client {client.Client.RemoteEndPoint} sent unknown command => Ignoring.");
-                    break;
-                case "UserHappened":
-                    user = JsonSerialize.Deserialize<User>(message);
-                    break;
-                default:
-                    Console.WriteLine($"Uncaught exception: {ex}");
-                    break;
+                UserCommand command = new UserCommand(user, data);
+
+                request.Data = JsonSerialize.Serialize(CommandManager.ExecuteCommand(command));
+
+                if (request.Data == "UserHappened")
+                {
+                    string[] i = data.Split(" ");
+                    if (i[1] == "USER")
+                        user = JsonSerialize.Deserialize<User>(i[2]);
+                }
             }
+            catch (Exception ex)
+            {
+                switch (ex.Message)
+                {
+                    case "Not a valid Command":
+                        Console.WriteLine($"Client {client.Client.RemoteEndPoint} sent unknown command => Ignoring.");
+                        break;
+                    default:
+                        request.ErrorMessage = $"{ex}\n{ex.Message}";
+                        break;
+                }
+            }
+
+            MessageSendAsync(request.ToString());
         }
     }
 }

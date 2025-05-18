@@ -45,7 +45,7 @@ public class DatabaseHelper(string connectionString)
             catch (MySqlException ex) // Catching specific exception related to MySQL
             {
 
-                throw new Exception("Failed to insert item: " + item+"\n"+ex);
+                throw new Exception("Failed to insert item: " + item);
 
             }
         }

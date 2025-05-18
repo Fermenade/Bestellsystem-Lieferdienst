@@ -61,9 +61,9 @@ public static class CommandManager
             cmd.Name.Equals(commandName, StringComparison.OrdinalIgnoreCase));
     }
 
-    public static void ExecuteCommand(UserCommand message)
+    public static object ExecuteCommand(UserCommand message)
     {
-        message.Command?.Execute(message.Arguments);
+        return message.Command?.Execute(message.Arguments);
     }
 
 }
@@ -73,7 +73,7 @@ public interface ICommand
     string Name { get; }
     bool? TakesParameter { get; }
     Usertype MinPrivilegeRequired { get; }
-    void Execute(User? user,string? command);
+    object Execute(User? user,string? command);
 }
 
 public abstract class BaseCommand : ICommand
@@ -95,27 +95,30 @@ public abstract class BaseCommand : ICommand
     {
         return SubCommands.FirstOrDefault(cmd => cmd.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
-    public void Execute(UserCommand.ArgumentList userCommand)
+    public object Execute(UserCommand.ArgumentList userCommand)
     {
         if (userCommand.Arguments.Length == 0)
         {
             throw new ArgumentException("Command must have at least one argument");
-            return;
         }
         foreach (var VARIABLE in userCommand.Arguments)
         {
             if ((int)VARIABLE.Command.MinPrivilegeRequired <= (userCommand.User?.UsertypeID ?? 0))
             {
-                VARIABLE.Command.Execute(userCommand.User,VARIABLE.Argument);
+                return VARIABLE.Command.Execute(userCommand.User,VARIABLE.Argument);
             }
             else
             {
                 throw new Exception("Too low privilege level for executing Command");
             }
         }
+
+        throw new Exception("This part should not have been reached!");
         //,   Console.WriteLine($"Executing {Name} with args: {string.Join(", ", args)}");
     }
 
-    public void Execute(User user,string command)//This has to be empty 
-    { }
+    public object Execute(User user, string command) //This has to be empty 
+    {
+        return null;
+    }
 }
