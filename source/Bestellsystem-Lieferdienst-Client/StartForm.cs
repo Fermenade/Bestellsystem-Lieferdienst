@@ -28,6 +28,26 @@ namespace Bestellsystem_Lieferdienst_Client
             this.LoadView(new SignupUserControl());
         }
 
+        private void pBXProduct1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblProduct1Name_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         // private void btnRegister_Click(object sender, EventArgs e)
         // {
         //     LoadView(new RegisterUserControl());
