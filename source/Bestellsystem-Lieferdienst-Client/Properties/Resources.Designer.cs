@@ -63,6 +63,26 @@ namespace Bestellsystem_Lieferdienst.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap doener {
+            get {
+                object obj = ResourceManager.GetObject("doener", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dueruem {
+            get {
+                object obj = ResourceManager.GetObject("dueruem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Screenshot_2024_05_27_090755 {
             get {
                 object obj = ResourceManager.GetObject("Screenshot 2024-05-27 090755", resourceCulture);
