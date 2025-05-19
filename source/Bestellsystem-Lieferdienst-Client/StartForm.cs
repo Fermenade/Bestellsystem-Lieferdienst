@@ -12,7 +12,7 @@ namespace Bestellsystem_Lieferdienst_Client
             InitializeComponent();
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
-            Debug.WriteLine(Client.client.SendAndReturn<string>("hey"));
+            //Debug.WriteLine(Client.client.SendAndReturn<string>("hey"));
         }
 
         //Generated
