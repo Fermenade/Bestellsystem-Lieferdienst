@@ -1,6 +1,5 @@
-using bestellsystem_lieferdienst_server.BL;
-using Bestellsystem_Lieferdienst_Server.BL;
 using Bestellsystem_Lieferdienst_Server.DAL;
+using Client_Server_Code_Library;
 
 // ReSharper disable UnusedType.Global
 
@@ -81,13 +80,13 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public object Execute(User user,string? args)
+            public object Execute(User user, string? args)
             {
                 string tablename = "User";
                 if (user == null)
                 {
-                    User i = JsonSerialize.Deserialize<User>(args); 
-                    _dbHelper.InsertItemIntoTable(tablename,i);
+                    User i = JsonSerialize.Deserialize<User>(args);
+                    _dbHelper.InsertItemIntoTable(tablename, i);
 
                     //TODOMaybe add Unique ID between Client and server when client looses connection. it can send a reconnect command with the ID.
                     return "UserHappened";
@@ -109,9 +108,9 @@ public class Commands
             public object Execute(User user, string? args)
             {
                 string tablename = "Products";
-               Product i = JsonSerialize.Deserialize<Product>(args);
-               _dbHelper.InsertItemIntoTable(tablename,i);
-               return null;
+                Product i = JsonSerialize.Deserialize<Product>(args);
+                _dbHelper.InsertItemIntoTable(tablename, i);
+                return 1;
             }
         }
 
@@ -126,7 +125,7 @@ public class Commands
                 string tablename = "Address";
                 Address i = JsonSerialize.Deserialize<Address>(args);
                 _dbHelper.InsertItemIntoTable(tablename, i);
-                return null;
+                return 1;
             }
         }
 
@@ -142,7 +141,7 @@ public class Commands
                 string tablename = "Products";
                 Product i = JsonSerialize.Deserialize<Product>(args);
                 _dbHelper.InsertItemIntoTable(tablename, i);
-                return null;
+                return 1;
             }
         }
     }

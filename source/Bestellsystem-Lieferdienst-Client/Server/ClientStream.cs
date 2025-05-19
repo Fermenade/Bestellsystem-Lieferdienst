@@ -1,11 +1,12 @@
 using System.Diagnostics;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
+using Client_Server_Code_Library;
+
 
 namespace Bestellsystem_Lieferdienst.Server;
 
-public class ClientStream:TcpClient
+public class ClientStream : TcpClient
 {
     private NetworkStream stream;
 

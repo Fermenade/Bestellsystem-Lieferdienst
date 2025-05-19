@@ -1,16 +1,12 @@
-using System.Net.Sockets;
-using System.Collections.Generic;
-using System.IO.Packaging;
-using Bestellsystem_Lieferdienst_Client.BL;
 using System.Diagnostics;
-using System.Net.Http;
+using Client_Server_Code_Library;
 
 
 namespace Bestellsystem_Lieferdienst.Server;
 
 public class Client : ClientStream
 {
-    public static Client client = new("127.0.0.1",5000);
+    public static Client client = new("127.0.0.1", 5000);
     private string ip;
     private int port;
     public Client(string ip, Int32 port)
@@ -29,9 +25,9 @@ public class Client : ClientStream
                 // Complete the connection
                 EndConnect(ar);
                 Debug.WriteLine("Connected to the server. Starting handling.");
-                
+
                 StartHandling();
-                
+
                 //TODO: Client/Server must receive a notice of the other that it got the message, else it will try again.
             }
             catch (Exception ex)
@@ -92,4 +88,4 @@ public class Client : ClientStream
             MessageSendAsync(request.ToString());
         }
     }
-}    
+}

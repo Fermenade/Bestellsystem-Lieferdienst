@@ -1,7 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
-using Bestellsystem_Lieferdienst.Server;
-using Bestellsystem_Lieferdienst.BL.Datatypes;
+using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.PL;
 

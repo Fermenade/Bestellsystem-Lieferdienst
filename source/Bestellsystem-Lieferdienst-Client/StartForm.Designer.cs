@@ -30,15 +30,16 @@ namespace Bestellsystem_Lieferdienst_Client
         /// </summary>
         private void InitializeComponent()
         {
-            btn_Login = new System.Windows.Forms.Button();
-            btn_Register = new System.Windows.Forms.Button();
+            btn_Login = new Button();
+            btn_Register = new Button();
+            button1 = new Button();
             SuspendLayout();
             // 
             // btn_Login
             // 
-            btn_Login.Location = new System.Drawing.Point(1233, 12);
+            btn_Login.Location = new Point(1233, 12);
             btn_Login.Name = "btn_Login";
-            btn_Login.Size = new System.Drawing.Size(123, 54);
+            btn_Login.Size = new Size(123, 54);
             btn_Login.TabIndex = 0;
             btn_Login.Text = "Login";
             btn_Login.UseVisualStyleBackColor = true;
@@ -46,21 +47,33 @@ namespace Bestellsystem_Lieferdienst_Client
             // 
             // btn_Register
             // 
-            btn_Register.Location = new System.Drawing.Point(1024, 12);
+            btn_Register.Location = new Point(1024, 12);
             btn_Register.Name = "btn_Register";
-            btn_Register.Size = new System.Drawing.Size(193, 54);
+            btn_Register.Size = new Size(193, 54);
             btn_Register.TabIndex = 7;
             btn_Register.Text = "Registrieren";
             btn_Register.UseVisualStyleBackColor = true;
             btn_Register.Click += btn_Register_Click;
             // 
-            // Form1
+            // button1
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(17F, 41F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1381, 709);
+            button1.Location = new Point(438, 266);
+            button1.Name = "button1";
+            button1.Size = new Size(188, 58);
+            button1.TabIndex = 8;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // StartForm
+            // 
+            AutoScaleDimensions = new SizeF(17F, 41F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1381, 709);
+            Controls.Add(button1);
             Controls.Add(btn_Register);
             Controls.Add(btn_Login);
+            Name = "StartForm";
             Text = "Form1";
             ResumeLayout(false);
         }
@@ -78,5 +91,6 @@ namespace Bestellsystem_Lieferdienst_Client
             ShoppingCart e = new ShoppingCart();
             ResumeLayout(false);
         }
+        private Button button1;
     }
 }

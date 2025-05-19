@@ -1,27 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Bestellsystem_Lieferdienst.Server
-{
+namespace Client_Server_Code_Library;
     //Generated
-    class PendingPackage:Package
+    public class PendingPackage : Package
     {
         static Dictionary<Guid, TaskCompletionSource<string>> pendingPackages = new Dictionary<Guid, TaskCompletionSource<string>>();
 
-        public PendingPackage(string data):base(data)
+        public PendingPackage(string data) : base(data)
         {
-            pendingPackages.Add(this.UID,new TaskCompletionSource<string>());
+            pendingPackages.Add(this.UID, new TaskCompletionSource<string>());
         }
 
         public static bool isPendingPackage(Package data)
         {
-            if (pendingPackages.TryGetValue(data.UID,out var value))
+            if (pendingPackages.TryGetValue(data.UID, out var value))
             {
                 if (data.ErrorMessage != null)
                 {
@@ -110,4 +102,3 @@ namespace Bestellsystem_Lieferdienst.Server
             return JsonSerialize.Serialize(this);
         }
     }
-}

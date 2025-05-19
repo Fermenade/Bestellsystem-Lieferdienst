@@ -1,6 +1,7 @@
-using System.Diagnostics;
-using Bestellsystem_Lieferdienst_Client.PL;
 using Bestellsystem_Lieferdienst.Server;
+using Bestellsystem_Lieferdienst_Client.PL;
+using System.Diagnostics;
+using Bestellsystem_Lieferdienst.PL;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -31,6 +32,11 @@ namespace Bestellsystem_Lieferdienst_Client
         private void btn_Register_Click(object sender, EventArgs e)
         {
             LoadView(new SignupUserControl());
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoadView(new UserControl1());
         }
 
         // private void btnRegister_Click(object sender, EventArgs e)
