@@ -41,19 +41,14 @@ public class ClientStream : TcpClient
                     string response = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
                     MessageReceived?.Invoke(response);
                 }
-                catch (Exception ex)
+                catch (IOException ex)
                 {
-                    Console.WriteLine($"Error when receiving message: {ex.Message}");
+#if DEBUG
+                    Debug.WriteLine($"Error when receiving message: {ex.Message}");
+#endif
+                    Debug.WriteLine("Connection forcefully closed.");
 
-                    if (ex.Message == "Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..")
-                    {
-                        Debug.WriteLine("Connection forcefully closed.");
-                        break;
-                    }
-                    else
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
+                    break;
                 }
             }
         });

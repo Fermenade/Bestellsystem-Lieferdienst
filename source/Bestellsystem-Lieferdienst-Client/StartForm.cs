@@ -16,27 +16,16 @@ namespace Bestellsystem_Lieferdienst_Client
         }
 
         //Generated
-        private void LoadView(UserControl view)
-        {
-            Controls.Clear();
-            view.Dock = DockStyle.Fill;
-            Controls.Add(view);
-        }
         //End
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            LoadView(new LoginUserControl());
+            this.LoadView(new LoginUserControl());
         }
 
         private void btn_Register_Click(object sender, EventArgs e)
         {
-            LoadView(new SignupUserControl());
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            LoadView(new UserControl1());
+            this.LoadView(new SignupUserControl());
         }
 
         // private void btnRegister_Click(object sender, EventArgs e)

@@ -32,7 +32,6 @@ namespace Bestellsystem_Lieferdienst_Client
         {
             btn_Login = new Button();
             btn_Register = new Button();
-            button1 = new Button();
             SuspendLayout();
             // 
             // btn_Login
@@ -55,22 +54,11 @@ namespace Bestellsystem_Lieferdienst_Client
             btn_Register.UseVisualStyleBackColor = true;
             btn_Register.Click += btn_Register_Click;
             // 
-            // button1
-            // 
-            button1.Location = new Point(438, 266);
-            button1.Name = "button1";
-            button1.Size = new Size(188, 58);
-            button1.TabIndex = 8;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
             // StartForm
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1381, 709);
-            Controls.Add(button1);
             Controls.Add(btn_Register);
             Controls.Add(btn_Login);
             Name = "StartForm";
@@ -91,6 +79,5 @@ namespace Bestellsystem_Lieferdienst_Client
             ShoppingCart e = new ShoppingCart();
             ResumeLayout(false);
         }
-        private Button button1;
     }
 }
