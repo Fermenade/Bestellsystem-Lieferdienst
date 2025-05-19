@@ -1,4 +1,4 @@
-using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst.BL.Datatypes;
 
 namespace Bestellsystem_Lieferdienst_Client.PL;
 
