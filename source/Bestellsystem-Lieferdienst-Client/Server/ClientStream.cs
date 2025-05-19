@@ -1,11 +1,12 @@
 using System.Diagnostics;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
+using Client_Server_Code_Library;
+
 
 namespace Bestellsystem_Lieferdienst.Server;
 
-public class ClientStream:TcpClient
+public class ClientStream : TcpClient
 {
     private NetworkStream stream;
 
@@ -40,19 +41,14 @@ public class ClientStream:TcpClient
                     string response = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
                     MessageReceived?.Invoke(response);
                 }
-                catch (Exception ex)
+                catch (IOException ex)
                 {
-                    Console.WriteLine($"Error when receiving message: {ex.Message}");
+#if DEBUG
+                    Debug.WriteLine($"Error when receiving message: {ex.Message}");
+#endif
+                    Debug.WriteLine("Connection forcefully closed.");
 
-                    if (ex.Message == "Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..")
-                    {
-                        Debug.WriteLine("Connection forcefully closed.");
-                        break;
-                    }
-                    else
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
+                    break;
                 }
             }
         });

@@ -1,5 +1,5 @@
 using System.Reflection;
-using bestellsystem_lieferdienst_server.BL;
+using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
@@ -73,7 +73,7 @@ public interface ICommand
     string Name { get; }
     bool? TakesParameter { get; }
     Usertype MinPrivilegeRequired { get; }
-    object Execute(User? user,string? command);
+    object Execute(User? user, string? command);
 }
 
 public abstract class BaseCommand : ICommand
@@ -105,7 +105,7 @@ public abstract class BaseCommand : ICommand
         {
             if ((int)VARIABLE.Command.MinPrivilegeRequired <= (userCommand.User?.UsertypeID ?? 0))
             {
-                return VARIABLE.Command.Execute(userCommand.User,VARIABLE.Argument);
+                return VARIABLE.Command.Execute(userCommand.User, VARIABLE.Argument);
             }
             else
             {

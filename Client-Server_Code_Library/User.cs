@@ -1,4 +1,5 @@
-namespace Bestellsystem_Lieferdienst.BL.Datatypes;
+namespace Client_Server_Code_Library;
+
 public class User
 {
     public int UserID;

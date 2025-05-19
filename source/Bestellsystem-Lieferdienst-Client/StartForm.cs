@@ -1,6 +1,7 @@
-using System.Diagnostics;
-using Bestellsystem_Lieferdienst_Client.PL;
 using Bestellsystem_Lieferdienst.Server;
+using Bestellsystem_Lieferdienst_Client.PL;
+using System.Diagnostics;
+using Bestellsystem_Lieferdienst.PL;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -15,22 +16,16 @@ namespace Bestellsystem_Lieferdienst_Client
         }
 
         //Generated
-        private void LoadView(UserControl view)
-        {
-            Controls.Clear();
-            view.Dock = DockStyle.Fill;
-            Controls.Add(view);
-        }
         //End
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            LoadView(new LoginUserControl());
+            this.LoadView(new LoginUserControl());
         }
 
         private void btn_Register_Click(object sender, EventArgs e)
         {
-            LoadView(new SignupUserControl());
+            this.LoadView(new SignupUserControl());
         }
 
         private void pBXProduct1_Click(object sender, EventArgs e)
