@@ -8,15 +8,12 @@ namespace Bestellsystem_Lieferdienst.BL.Datatypes
 {
     public class Receipe
     {
-        public struct Receipe
-        {
-            int ReceipeID;
-            int UserID;
-            private int[] productsID;
-            DateTime Datum;
+        int ReceipeID;
+        int UserID;
+        private int[] productsID;
+        DateTime Datum;
 
-            private string Übergabeort;
-            //TODO: Product should be quantisisable :)
-        }
+        private string Übergabeort;
+        //TODO: Product should be quantisisable :)
     }
 }

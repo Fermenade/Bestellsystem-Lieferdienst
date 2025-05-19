@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace Bestellsystem_Lieferdienst.BL.Datatypes
 {
-    public class Usertype
+    public class Product
     {
-        int UsertypeID;
-        string Name;
+        int ProductID;
+        string ProductName;
+        string ProductDescription;
+        int ProductPrice;
+        ProductCategory[] ProductCategories;
     }
 }

@@ -9,10 +9,9 @@ namespace Bestellsystem_Lieferdienst.BL.Datatypes
     public class ProductCategory
     {
 
-        public class ProductCategory
-        {
-            int CategoryID;
-            string CategoryName;
-        }
+        
+         int CategoryID;
+         string CategoryName;
+        
     }
 }
