@@ -2,6 +2,7 @@ using Bestellsystem_Lieferdienst.Server;
 using Bestellsystem_Lieferdienst_Client.PL;
 using System.Diagnostics;
 using Bestellsystem_Lieferdienst.PL;
+using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -13,6 +14,7 @@ namespace Bestellsystem_Lieferdienst_Client
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
             //Debug.WriteLine(Client.client.SendAndReturn<string>("hey"));
+
         }
 
         //Generated

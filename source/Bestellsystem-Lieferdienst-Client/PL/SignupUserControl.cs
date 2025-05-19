@@ -73,6 +73,11 @@ public partial class SignupUserControl : UserControl
             btn_Signup.Text = "Erstellen ohne Adresse.";
         }
     }
+
+    private void lb_Error_Click(object sender, EventArgs e)
+    {
+
+    }
 }
 
 public static class StringExtensions
