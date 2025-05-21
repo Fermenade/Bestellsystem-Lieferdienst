@@ -16,10 +16,10 @@ public class Server
         Console.WriteLine("Server started");
         while (true)
         {
+            Client cl = new(server.AcceptSocket());
             // Accept a client connection
-            TcpClient client = server.AcceptTcpClient();
-            Console.WriteLine("Client connected: " + client.Client.RemoteEndPoint);
-            Client cl = new Client(client);
+            Console.WriteLine("Client connected: " + cl.Socket.RemoteEndPoint);
+
             clients.Add(cl);
             cl.StartHandeling();
         }

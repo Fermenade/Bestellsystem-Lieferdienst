@@ -142,6 +142,7 @@ public class DatabaseHelper(string connectionString)
     {
         List<object[]> data = new List<object[]>();
         _connection.Open();
+
         using (MySqlCommand command = new MySqlCommand(query, _connection))
         {
             using (MySqlDataReader reader = command.ExecuteReader())

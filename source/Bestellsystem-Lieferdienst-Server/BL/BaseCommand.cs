@@ -1,5 +1,5 @@
-using System.Reflection;
 using Client_Server_Code_Library;
+using System.Reflection;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
@@ -63,7 +63,7 @@ public static class CommandManager
 
     public static object ExecuteCommand(UserCommand message)
     {
-        return message.Command?.Execute(message.Arguments);
+        return message.Command?.Execute(message.Argument);
     }
 
 }
@@ -95,25 +95,20 @@ public abstract class BaseCommand : ICommand
     {
         return SubCommands.FirstOrDefault(cmd => cmd.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
-    public object Execute(UserCommand.ArgumentList userCommand)
+    public object Execute(UserCommand.CArgument userCommand)
     {
-        if (userCommand.Arguments.Length == 0)
+        if (userCommand == null)
         {
             throw new ArgumentException("Command must have at least one argument");
         }
-        foreach (var VARIABLE in userCommand.Arguments)
+        if ((int)userCommand.Command.MinPrivilegeRequired <= (userCommand.User?.UsertypeID ?? 0))
         {
-            if ((int)VARIABLE.Command.MinPrivilegeRequired <= (userCommand.User?.UsertypeID ?? 0))
-            {
-                return VARIABLE.Command.Execute(userCommand.User, VARIABLE.Argument);
-            }
-            else
-            {
-                throw new Exception("Too low privilege level for executing Command");
-            }
+            return userCommand.Command.Execute(userCommand.User, userCommand.Argument);
         }
-
-        throw new Exception("This part should not have been reached!");
+        else
+        {
+            throw new Exception("Too low privilege level for executing Command");
+        }
         //,   Console.WriteLine($"Executing {Name} with args: {string.Join(", ", args)}");
     }
 

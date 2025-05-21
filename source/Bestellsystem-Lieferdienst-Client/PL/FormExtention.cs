@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bestellsystem_Lieferdienst.PL
+﻿namespace Bestellsystem_Lieferdienst.PL
 {
     public static class FormExtention
     {

@@ -1,7 +1,7 @@
+using Client_Server_Code_Library;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
-using Client_Server_Code_Library;
 
 
 namespace Bestellsystem_Lieferdienst.Server;
@@ -24,7 +24,7 @@ public class ClientStream : TcpClient
 
         if (_clientReceiveHandlingStarted) throw new Exception("Client receive handling already started.");
         _clientReceiveHandlingStarted = true;
-        byte[] responseBuffer = new byte[1024]; //TODO: check if this is long enough.
+        byte[] responseBuffer = new byte[10000]; //TODO: check if this is long enough.
         Task.Run(() =>
         {
             while (true)
@@ -43,9 +43,6 @@ public class ClientStream : TcpClient
                 }
                 catch (IOException ex)
                 {
-#if DEBUG
-                    Debug.WriteLine($"Error when receiving message: {ex.Message}");
-#endif
                     Debug.WriteLine("Connection forcefully closed.");
 
                     break;
@@ -81,11 +78,24 @@ public class ClientStream : TcpClient
         SendBinaryAsync(data);
         Debug.WriteLine($"Sent message {message}");
     }
-    public async Task<T> SendAndReturn<T>(string command)
+
+    public T SendAndReturn<T>(string command) => SendAndReturnAsync<T>(command).Result;
+    private async Task<T> SendAndReturnAsync<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
         MessageSendAsync(JsonSerialize.Serialize(newPackage));
-        string i = await newPackage.WaitForAnswer();//RequestRecieve
+        string i = "";
+        await Task.Run(() =>
+        {//It just works
+            var x = newPackage.WaitForAnswer();
+            while (!x.IsCompleted)
+            {
+                //TODO: Why does this work and not the other???
+            }
+
+            i = x.Result;
+        });
+        //string i = await newPackage.WaitForAnswer();//What the fug?
         return JsonSerialize.Deserialize<T>(i);
     }
 

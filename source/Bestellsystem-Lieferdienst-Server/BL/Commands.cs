@@ -10,6 +10,9 @@ public class Commands
     static string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
     static DatabaseHelper _dbHelper = new DatabaseHelper(_connectionString);
 
+    public static string productTable = "product";
+    public static string productCategoriesTable = "productcategories";
+
     public class sql : BaseCommand
     {
         public override string Name => "sql";
@@ -41,10 +44,24 @@ public class Commands
 
             public object Execute(User User, string? args)
             {
-                throw new NotImplementedException();
+                string tableName = "product";
+                string query = $"SELECT * FROM {tableName}";
+                return _dbHelper.GetDataFromDatabase<Product>(query);
             }
         }
+        public class GetAllCategories : ICommand
+        {
+            public string Name => "ALLCATEGORIES";
+            public bool? TakesParameter => false;
+            public Usertype MinPrivilegeRequired => Usertype.User;
 
+            public object Execute(User User, string? args)
+            {
+                string TableName = "productgroup";
+                string query = $"SELECT * FROM {TableName}";
+                return _dbHelper.GetDataFromDatabase<ProductCategory>(query);
+            }
+        }
         public class GetProduct : ICommand
         {
             public string Name => "PRODUCT";
@@ -53,7 +70,9 @@ public class Commands
 
             public object Execute(User User, string? args)
             {
-                throw new NotImplementedException();
+                string TableName = "product";
+                string query = $"SELECT * FROM {TableName}";
+                return _dbHelper.GetDataFromDatabase<ProductCategory>(query);
             }
         }
 

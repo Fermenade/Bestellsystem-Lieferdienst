@@ -1,12 +1,11 @@
+using Client_Server_Code_Library;
 using System.Net.Sockets;
 using System.Text;
-using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
-public class ClientStream(TcpClient client)
+public class ClientStream(Socket client) : NetworkStream(client,true)
 {
-    private NetworkStream stream = client.GetStream();
 
     private bool _clientReceiveHandlingStarted = false;
     /// <summary>
@@ -15,16 +14,17 @@ public class ClientStream(TcpClient client)
     /// <param name="stream"></param>
     public void ReceiveMessages()
     {
+
         if (_clientReceiveHandlingStarted) throw new Exception("Client receive handling already started.");
         _clientReceiveHandlingStarted = true;
-        byte[] responseBuffer = new byte[1024]; //TODO: check if this is long enough.
+        byte[] responseBuffer = new byte[10000]; //TODO: check if this is long enough.
         Task.Run(() =>
         {
             while (true)
             {
                 try
                 {
-                    int bytesRead = stream.Read(responseBuffer, 0, responseBuffer.Length);
+                    int bytesRead = Read(responseBuffer, 0, responseBuffer.Length);
                     if (bytesRead == 0)
                     {
                         ClientDisconnected.Invoke();
@@ -52,16 +52,17 @@ public class ClientStream(TcpClient client)
 
     async void SendBinaryAsync(byte[] bytes)
     {
-        await stream.WriteAsync(bytes);
+        await WriteAsync(bytes);
     }
 
     public void MessageSendAsync(string message)
     {
         byte[] data = BinaryCoder.BinaryEncoder(message);
         SendBinaryAsync(data);
-        Console.WriteLine($"Sent message '{message}' to '{client.Client.RemoteEndPoint}'");
+        Console.WriteLine(BinaryCoder.BinaryDecoder(data));
+        Console.WriteLine($"Sent message '{message}' to '{client.RemoteEndPoint}'");
     }
-    async Task<T> SendAndReturn<T>(string command)
+    public async Task<T> SendAndReturn<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
         string i = await newPackage.WaitForAnswer();//RequestRecieve

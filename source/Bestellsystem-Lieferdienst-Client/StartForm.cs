@@ -1,7 +1,7 @@
-using Bestellsystem_Lieferdienst.Server;
+using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.PL;
 using System.Diagnostics;
-using Bestellsystem_Lieferdienst.PL;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -12,7 +12,10 @@ namespace Bestellsystem_Lieferdienst_Client
             InitializeComponent();
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
-            //Debug.WriteLine(Client.client.SendAndReturn<string>("hey"));
+            foreach (var VARIABLE in GetData.GetAllProductCategories())
+            {
+                Debug.WriteLine($"{VARIABLE.CategoryID} {VARIABLE.CategoryName}");
+            }
         }
 
         //Generated
@@ -28,7 +31,7 @@ namespace Bestellsystem_Lieferdienst_Client
             this.LoadView(new SignupUserControl());
         }
 
-        private void pBXProduct1_Click(object sender, EventArgs e)
+        private void pBXProduct1Click(object sender, EventArgs e)
         {
 
         }

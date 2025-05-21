@@ -1,9 +1,10 @@
 using System.Net.Sockets;
 using Client_Server_Code_Library;
+using Org.BouncyCastle.Tls.Crypto;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
-public class Client(TcpClient client) : ClientStream(client)
+public class Client(Socket client) : ClientStream(client)
 {
     public User? user = null;
     public void StartHandeling()
@@ -22,19 +23,20 @@ public class Client(TcpClient client) : ClientStream(client)
             ProcessClientDisconnected();
         }
     }
-
     void ProcessClientDisconnected()
     {
         MessageReceived -= ProcessReceiveMessages;
         ClientDisconnected -= ProcessClientDisconnected;
         // Remove the client from the list and close the connection
         Server.clients.Remove(this);
-        Console.WriteLine("Client disconnected: " + client.Client.RemoteEndPoint);
-        client.Close();
+        Console.WriteLine("Client disconnected: " + client.RemoteEndPoint);
+        Close();
     }
+
+
     void ProcessReceiveMessages(string message)
     {
-        Console.WriteLine($"Received message '{message}' from '{client.Client.RemoteEndPoint}'");
+        Console.WriteLine($"Received message '{message}' from '{client.RemoteEndPoint}'");
 
         Package request = JsonSerialize.Deserialize<Package>(message);
 
@@ -42,8 +44,8 @@ public class Client(TcpClient client) : ClientStream(client)
         {
 
             //This logic if this is not nativ request.
-            request.Data = null;
             string data = request.Data;
+            request.Data = null;
             try
             {
                 UserCommand command = new UserCommand(user, data);
@@ -62,7 +64,7 @@ public class Client(TcpClient client) : ClientStream(client)
                 switch (ex.Message)
                 {
                     case "Not a valid Command":
-                        Console.WriteLine($"Client {client.Client.RemoteEndPoint} sent unknown command => Ignoring.");
+                        Console.WriteLine($"Client {client.RemoteEndPoint} sent unknown command => Ignoring.");
                         request.ErrorMessage = "Unknown Command";
                         break;
                     default:
