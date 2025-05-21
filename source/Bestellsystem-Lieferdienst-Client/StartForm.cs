@@ -12,10 +12,6 @@ namespace Bestellsystem_Lieferdienst_Client
             InitializeComponent();
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
-            foreach (var VARIABLE in GetData.GetAllProductCategories())
-            {
-                Debug.WriteLine($"{VARIABLE.CategoryID} {VARIABLE.CategoryName}");
-            }
         }
 
         //Generated
