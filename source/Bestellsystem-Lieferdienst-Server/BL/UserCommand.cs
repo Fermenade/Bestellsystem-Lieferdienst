@@ -1,4 +1,4 @@
-using bestellsystem_lieferdienst_server.BL;
+using Client_Server_Code_Library;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
@@ -6,34 +6,34 @@ namespace Bestellsystem_Lieferdienst_Server.BL;
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public class UserCommand
 {
-    public class ArgumentList(User? user, ArgumentList.CArgument[] arguments)
+    public class CArgument
     {
-        public User? User = user;
-        public CArgument[] Arguments = arguments;
+        public User? User;
+        public ICommand Command { get; private set; }
+        public string? Argument { get; private set; }
 
-        public class CArgument
+        public CArgument(ICommand command)
         {
-            public ICommand Command { get; private set; }
-            public string? Argument { get; private set; }
-
-            public CArgument(ICommand command)
-            {
-                this.Command = command;
-            }
-
-            public CArgument(ICommand command, string argument)
-            {
-                this.Command = command;
-                this.Argument = argument;
-            }
-
+            this.Command = command;
         }
 
+        public CArgument(ICommand command, string argument)
+        {
+            this.Command = command;
+            this.Argument = argument;
+        }
+
+        public CArgument(User user, CArgument argument)
+        {
+            this.User = user;
+            this.Command = argument.Command;
+            this.Argument = argument.Argument;
+        }
     }
 
     public BaseCommand Command { get; private set; }
 
-    public ArgumentList? Arguments { get; private set; }
+    public CArgument? Argument { get; private set; }
 
     public UserCommand(User? User, string command)
     {
@@ -46,34 +46,32 @@ public class UserCommand
                 .Explode(command); //TODO: das explode sorgt auch dafür, dass der prefix "-" nicht mehr als ein einzelnes element angesehen wird
 
         this.Command = (BaseCommand)CommandManager.GetBaseCommand(parts[0]) ?? throw new Exception("Not a valid Command");
-        this.Arguments = new(User, ParseAllArguments(parts.Skip(1).ToArray()));
+        this.Argument = new(User, ParseArgument(parts.Skip(1).ToArray()));
     }
 
-    ArgumentList.CArgument[]? ParseAllArguments(string[] input)
+    CArgument? ParseArgument(string[] input)
     {
-        List<ArgumentList.CArgument> arguments = new List<ArgumentList.CArgument>();
-        for (int i = 0; i < input.Length; i++)
+        if (input.Length > 2)
         {
-            string arg = StringFormating.RemoveQuotes(input[i]);
+            throw new Exception("Commands max take 1 Argument");
+        }
+        string arg = StringFormating.RemoveQuotes(input[0]);
 
-            ICommand subCommand = Command.GetSubCommand(arg) ?? throw new Exception($"{Command.Name} doesnt have an argument called '{arg}'");
-            if (i + 1 < input.Length)
-            {
-                if (subCommand.TakesParameter == false)
-                    throw new($"{subCommand.Name} does not take parameters");
-                i++; //So that the parameter gets ignored
-                ArgumentList.CArgument cArgument = new(subCommand, StringFormating.RemoveQuotes(input[i]));
-                arguments.Add(cArgument);
-            }
-            else
-            {
-                if (subCommand.TakesParameter == true)
-                    throw new($"{subCommand.Name} takes parameters, but 0 are given");
-                ArgumentList.CArgument cArgument = new(subCommand);
-                arguments.Add(cArgument);
-            }
+        ICommand subCommand = Command.GetSubCommand(arg) ?? throw new Exception($"{Command.Name} doesnt have an argument called '{arg}'");
+        CArgument cArgument;
+        if (1 < input.Length)
+        {
+            if (subCommand.TakesParameter == false)
+                throw new($"{subCommand.Name} does not take parameters");
+            cArgument = new(subCommand, StringFormating.RemoveQuotes(input[1]));
+        }
+        else
+        {
+            if (subCommand.TakesParameter == true)
+                throw new($"{subCommand.Name} takes parameters, but 0 are given");
+            cArgument = new(subCommand);
         }
 
-        return arguments.ToArray();
+        return cArgument;
     }
 }

@@ -1,6 +1,5 @@
-using bestellsystem_lieferdienst_server.BL;
-using Bestellsystem_Lieferdienst_Server.BL;
 using Bestellsystem_Lieferdienst_Server.DAL;
+using Client_Server_Code_Library;
 
 // ReSharper disable UnusedType.Global
 
@@ -10,6 +9,13 @@ public class Commands
 {
     static string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
     static DatabaseHelper _dbHelper = new DatabaseHelper(_connectionString);
+
+    public static string tableProduct = "product";
+    public static string tableProductGroup = "productgroup";
+    public static string tableOrder = "order";
+    public static string tableAddress = "address";
+    public static string tableUsertype = "usertype";
+    public static string tableUser = "user";
 
     public class sql : BaseCommand
     {
@@ -46,6 +52,11 @@ public class Commands
                 return _dbHelper.GetDataFromDatabase<Product>(command);
             }
         }
+        public class GetAllCategories : ICommand
+        {
+            public string Name => "ALLCATEGORIES";
+            public bool? TakesParameter => false;
+            public Usertype MinPrivilegeRequired => Usertype.User;
 
             public object Execute(User User, string? args)
             {
@@ -95,7 +106,7 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public object Execute(User user,string? args)
+            public object Execute(User user, string? args)
             {
                 string tablename = "User";
                 if (user == null)

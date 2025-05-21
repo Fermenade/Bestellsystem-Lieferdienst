@@ -1,38 +1,37 @@
-namespace Bestellsystem_Lieferdienst_Client.BL;
+namespace Client_Server_Code_Library;
 
 public class Address
 {
-    int? AddressID;
+    int AddressID;
     public string Country;
     public int ZippCode;
     public string City;
     public string Street;
     public int HouseNumber;
     public int ApartmentNumber;
-    //
     Address(int addressId, string country, int zippCode, string city, string street, int houseNumber, int apartmentNumber)
         : this(country, zippCode, city, street, houseNumber, apartmentNumber)
     {
-        this.AddressID = addressId;
+        AddressID = addressId;
     }
     public Address(string country, int zipCode, string city, string street, int houseNumber, int apartmentNumber)
         : this(country, zipCode, city, street, houseNumber)
     {
         if (apartmentNumber == 0) throw new("Invalid apartment number");
-        this.ApartmentNumber = apartmentNumber;
+        ApartmentNumber = apartmentNumber;
     }
     public Address(string country, int zippCode, string city, string street, int houseNumber)
     {
         if (country == "") throw new("Invalid country");
-        this.Country = country;
+        Country = country;
         if (zippCode == 0) throw new("Invalid zipp number");
-        this.ZippCode = zippCode;
+        ZippCode = zippCode;
         if (city == "") throw new("Invalid city");
-        this.City = city;
+        City = city;
         if (street == "") throw new("Invalid street");
-        this.Street = street;
+        Street = street;
         if (houseNumber == 0) throw new("Invalid house number");
-        this.HouseNumber = houseNumber;
+        HouseNumber = houseNumber;
     }
 
     public override string ToString()

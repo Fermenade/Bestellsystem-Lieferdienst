@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Bestellsystem_Lieferdienst.Server;
+namespace Client_Server_Code_Library;
 
 public static class BinaryCoder
 {

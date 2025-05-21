@@ -1,11 +1,12 @@
+using Client_Server_Code_Library;
 using System.Diagnostics;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
+
 
 namespace Bestellsystem_Lieferdienst.Server;
 
-public class ClientStream:TcpClient
+public class ClientStream : TcpClient
 {
     private NetworkStream stream;
 
@@ -23,7 +24,7 @@ public class ClientStream:TcpClient
 
         if (_clientReceiveHandlingStarted) throw new Exception("Client receive handling already started.");
         _clientReceiveHandlingStarted = true;
-        byte[] responseBuffer = new byte[1024]; //TODO: check if this is long enough.
+        byte[] responseBuffer = new byte[10000]; //TODO: check if this is long enough.
         Task.Run(() =>
         {
             while (true)
@@ -40,19 +41,11 @@ public class ClientStream:TcpClient
                     string response = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
                     MessageReceived?.Invoke(response);
                 }
-                catch (Exception ex)
+                catch (IOException ex)
                 {
-                    Console.WriteLine($"Error when receiving message: {ex.Message}");
+                    Debug.WriteLine("Connection forcefully closed.");
 
-                    if (ex.Message == "Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..")
-                    {
-                        Debug.WriteLine("Connection forcefully closed.");
-                        break;
-                    }
-                    else
-                    {
-                        Debug.WriteLine(ex.Message);
-                    }
+                    break;
                 }
             }
         });
@@ -85,12 +78,44 @@ public class ClientStream:TcpClient
         SendBinaryAsync(data);
         Debug.WriteLine($"Sent message {message}");
     }
-    public async Task<T> SendAndReturn<T>(string command)
+
+    public T SendAndReturn<T>(string command) => SendAndReturnAsync<T>(command).Result;
+    //private async Task<T> SendAndReturnAsync<T>(string command)
+    //{
+    //    PendingPackage newPackage = new PendingPackage(command);
+    //    MessageSendAsync(JsonSerialize.Serialize(newPackage));
+    //    string i = await Task.Run(() =>
+    //    {//It just works
+    //        var x = newPackage.WaitForAnswer();
+    //        int o = 0;
+    //        while (!x.IsCompleted)
+    //        {
+    //            //TODO: Why does this work and not the other???
+    //            Debug.WriteLine(o);
+    //            o++;
+    //        }
+
+    //        return x.Result;
+    //    });
+    //    return JsonSerialize.Deserialize<T>(i);
+    //}
+    private Task<T> SendAndReturnAsync<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
         MessageSendAsync(JsonSerialize.Serialize(newPackage));
-        string i = await newPackage.WaitForAnswer();//RequestRecieve
-        return JsonSerialize.Deserialize<T>(i);
+
+        // Create a task that will complete when newPackage.WaitForAnswer() is done
+        return Task.Run(() =>
+        {
+            var x = newPackage.WaitForAnswer();
+            while (!x.IsCompleted)
+            {
+                // Optionally, you can add a small delay to prevent busy waiting
+                Thread.Sleep(10); // Sleep for 10 milliseconds
+            }
+
+            return JsonSerialize.Deserialize<T>(x.Result);
+        });
     }
 
     public event MessageDelegate MessageReceived;

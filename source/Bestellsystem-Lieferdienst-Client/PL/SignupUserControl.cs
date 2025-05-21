@@ -1,7 +1,6 @@
+using Client_Server_Code_Library;
 using System.Security.Cryptography;
 using System.Text;
-using Bestellsystem_Lieferdienst_Client.BL;
-using Bestellsystem_Lieferdienst.Server;
 
 namespace Bestellsystem_Lieferdienst_Client.PL;
 
@@ -73,6 +72,11 @@ public partial class SignupUserControl : UserControl
             lb_Error.Text = $"{e.Message}. \n Bestätigen sie, dass sie keine Adresse Ihrem Account hinterlegen wollen. (Sie können dies in ihrem Account Details jederzeit nachholen)";
             btn_Signup.Text = "Erstellen ohne Adresse.";
         }
+    }
+
+    private void lb_Error_Click(object sender, EventArgs e)
+    {
+
     }
 }
 

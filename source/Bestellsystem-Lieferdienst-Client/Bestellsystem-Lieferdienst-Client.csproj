@@ -32,4 +32,8 @@
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
+    </ItemGroup>
+
 </Project>
