@@ -10,8 +10,12 @@ public class Commands
     static string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
     static DatabaseHelper _dbHelper = new DatabaseHelper(_connectionString);
 
-    public static string productTable = "product";
-    public static string productCategoriesTable = "productcategories";
+    public static string tableProduct = "product";
+    public static string tableProductGroup = "productgroup";
+    public static string tableOrder = "order";
+    public static string tableAddress = "address";
+    public static string tableUsertype = "usertype";
+    public static string tableUser = "user";
 
     public class sql : BaseCommand
     {
@@ -57,8 +61,7 @@ public class Commands
 
             public object Execute(User User, string? args)
             {
-                string TableName = "productgroup";
-                string query = $"SELECT * FROM {TableName}";
+                string query = $"SELECT * FROM {tableProductGroup}";
                 return _dbHelper.GetDataFromDatabase<ProductCategory>(query);
             }
         }

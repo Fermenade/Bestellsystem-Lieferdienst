@@ -1,4 +1,6 @@
-﻿namespace Client_Server_Code_Library;
+﻿using Newtonsoft.Json;
+
+namespace Client_Server_Code_Library;
 public class ProductCategory
 {
     public int? CategoryID;
@@ -7,6 +9,7 @@ public class ProductCategory
     {
         this.CategoryName = categoryName;
     }
+    [JsonConstructor]
     public ProductCategory(int CategoryId, string categoryName)
     {
         this.CategoryID = CategoryId;

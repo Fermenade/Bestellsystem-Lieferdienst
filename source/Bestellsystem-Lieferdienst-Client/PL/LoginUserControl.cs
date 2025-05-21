@@ -7,9 +7,4 @@ partial class LoginUserControl
         InitializeComponent();
         InitializeManualComponent();
     }
-
-    private void InitializeComponent()
-    {
-
-    }
 }

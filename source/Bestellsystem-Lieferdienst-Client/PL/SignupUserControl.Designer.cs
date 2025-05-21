@@ -117,7 +117,6 @@ partial class SignupUserControl
         tbx_Lastname.Name = "tbx_Lastname";
         tbx_Lastname.Size = new Size(85, 23);
         tbx_Lastname.TabIndex = 9;
-        tbx_Lastname.TextChanged += this.tbx_Lastname_TextChanged;
         // 
         // lb_Lastname
         // 
@@ -127,7 +126,6 @@ partial class SignupUserControl
         lb_Lastname.Size = new Size(71, 18);
         lb_Lastname.TabIndex = 8;
         lb_Lastname.Text = "Nachname";
-        lb_Lastname.Click += this.lb_Lastname_Click;
         // 
         // tbx_Firstname
         // 

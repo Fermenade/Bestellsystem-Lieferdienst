@@ -80,23 +80,42 @@ public class ClientStream : TcpClient
     }
 
     public T SendAndReturn<T>(string command) => SendAndReturnAsync<T>(command).Result;
-    private async Task<T> SendAndReturnAsync<T>(string command)
+    //private async Task<T> SendAndReturnAsync<T>(string command)
+    //{
+    //    PendingPackage newPackage = new PendingPackage(command);
+    //    MessageSendAsync(JsonSerialize.Serialize(newPackage));
+    //    string i = await Task.Run(() =>
+    //    {//It just works
+    //        var x = newPackage.WaitForAnswer();
+    //        int o = 0;
+    //        while (!x.IsCompleted)
+    //        {
+    //            //TODO: Why does this work and not the other???
+    //            Debug.WriteLine(o);
+    //            o++;
+    //        }
+
+    //        return x.Result;
+    //    });
+    //    return JsonSerialize.Deserialize<T>(i);
+    //}
+    private Task<T> SendAndReturnAsync<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
         MessageSendAsync(JsonSerialize.Serialize(newPackage));
-        string i = "";
-        await Task.Run(() =>
-        {//It just works
+
+        // Create a task that will complete when newPackage.WaitForAnswer() is done
+        return Task.Run(() =>
+        {
             var x = newPackage.WaitForAnswer();
             while (!x.IsCompleted)
             {
-                //TODO: Why does this work and not the other???
+                // Optionally, you can add a small delay to prevent busy waiting
+                Thread.Sleep(10); // Sleep for 10 milliseconds
             }
 
-            i = x.Result;
+            return JsonSerialize.Deserialize<T>(x.Result);
         });
-        //string i = await newPackage.WaitForAnswer();//What the fug?
-        return JsonSerialize.Deserialize<T>(i);
     }
 
     public event MessageDelegate MessageReceived;
