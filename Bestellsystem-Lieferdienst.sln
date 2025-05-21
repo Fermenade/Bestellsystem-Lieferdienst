@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestellsystem-Lieferdienst-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client-Server_Code_Library", "Client-Server_Code_Library\Client-Server_Code_Library.csproj", "{186DEEE3-C17B-4C45-ADB0-AE6059C9ACDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{CECC5BF5-9097-4739-96BB-C06DB6AF8663}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
