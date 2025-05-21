@@ -8,7 +8,8 @@ public class Address
     public string City;
     public string Street;
     public int HouseNumber;
-    public int? ApartmentNumber;
+    public int ApartmentNumber;
+    //
     Address(int addressId, string country, int zippCode, string city, string street, int houseNumber, int apartmentNumber)
         : this(country, zippCode, city, street, houseNumber, apartmentNumber)
     {
