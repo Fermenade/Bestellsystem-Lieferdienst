@@ -1,6 +1,6 @@
-using System.Diagnostics;
+using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.PL;
-using Bestellsystem_Lieferdienst.Server;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -11,7 +11,7 @@ namespace Bestellsystem_Lieferdienst_Client
             InitializeComponent();
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
-            Debug.WriteLine(Client.client.SendAndReturn<string>("hey"));
+            //GetData.GetUser("max@muster.com", "1234");
         }
 
         //Generated

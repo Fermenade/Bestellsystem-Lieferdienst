@@ -8,36 +8,15 @@ public class DatabaseHelper(string connectionString)
 {
     private MySqlConnection _connection = new(connectionString); //if this fails database couldn't be reached.
 
-    public void InsertItemIntoTable<T>(string tableName, T item) where T : class
+    public void InsertItemIntoTable(SqlCommand query)
     {
-        //TODO: ChatGPT hat da quatsch gemacht, verbessern.
-        //ich weiß nicht, ob die var namen der types wirklich alle matchen.
-        // außerdem wenn die item so geholt werden, warum hab ich mir überhaupt die arbeit mit den
-        // toString gemacht???
 
-
-        //Generated
-        if (_connection == null || String.IsNullOrEmpty(tableName))
-            throw new ArgumentException(); // Validate input parameters
-
-        var properties = typeof(T).GetProperties();
-        string columns = String.Join(", ", properties.Select(p => p.Name));
-
-        var cmd = $"INSERT INTO '{tableName}' ({columns}) VALUES ({item.ToString()});";
-
-        using (var command = new MySqlCommand(cmd, _connection))
+        using (var command = new MySqlCommand(query.SqlStatement, _connection))
         {
-            for (int i = 0; i < properties.Length; ++i)
+            foreach (var VARIABLE in query.Parameters)
             {
-                var propertyValue = properties[i].GetValue(item);
-
-                // Assuming all property values are of the type string, you might need to adjust this part according to your needs
-                command.Parameters.AddWithValue("@" + i,
-                    (propertyValue == null)
-                        ? DBNull.Value
-                        : Convert.ChangeType(propertyValue, propertyValue.GetType()));
+                command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
             }
-
             try
             {
                 command.ExecuteNonQuery();
@@ -45,7 +24,7 @@ public class DatabaseHelper(string connectionString)
             catch (MySqlException ex) // Catching specific exception related to MySQL
             {
 
-                throw new Exception("Failed to insert item: " + item);
+                throw new Exception("Failed to insert item: "+ query.SqlStatement);
 
             }
         }
@@ -56,11 +35,16 @@ public class DatabaseHelper(string connectionString)
     /// </summary>
     /// <param name="query">The sql query</param>
     /// <returns>The amount of rows affected.</returns>
-    public int ExecuteNonQuery(string query)
+    public int ExecuteNonQuery(SqlCommand query)
     {
         _connection.Open();
-        using (MySqlCommand command = new MySqlCommand(query, _connection))
+        using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
         {
+            foreach (var VARIABLE in query.Parameters)
+            {
+                command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
+            }
+
             _connection.Close();
             return command.ExecuteNonQuery(); //TODO: Make it run async
         }
@@ -74,10 +58,9 @@ public class DatabaseHelper(string connectionString)
     /// <typeparam name="T">T must be type class. The type the data should be converted into.</typeparam>
     /// <remarks>The ID column is default {tableName}ID</remarks>
     /// <returns>The selected row of the database converted into the matching type</returns>
-    public T GetDataFromID<T>(int id, string tableName) where T : class
+    public T GetDataFromID<T>(SqlCommand query) where T : class
     {
-        string sql = $"""SELECT * FROM {tableName} WHERE {tableName}ID = {id}""";
-        var i = GetDataFromDatabase<T>(sql);
+        var i = GetDataFromDatabase<T>(query);
         return i[0];
     }
     /// <summary>
@@ -87,7 +70,7 @@ public class DatabaseHelper(string connectionString)
     /// <typeparam name="T">T must be of type class. The type the data should be converted into.</typeparam>
     /// <exception>If a types constructor doesn't satisfy all values from the database. Exception will be thrown.</exception>
     /// <returns>Returns all rows selected from the database converted into the provided type</returns>
-    public T[] GetDataFromDatabase<T>(string query) where T : class
+    public T[] GetDataFromDatabase<T>(SqlCommand query) where T : class
     {
         //Generated
         List<T> results = [];
@@ -137,12 +120,17 @@ public class DatabaseHelper(string connectionString)
     /// <exception cref="Exception">Error reading data from database</exception>
     /// <exception cref="Exception">Could not find any matching data.</exception>
     /// <returns>A nested array of all entries returned by the query.</returns>
-    public object[][] GetDataFromDatabase(string query)
+    public object[][] GetDataFromDatabase(SqlCommand query)
     {
         List<object[]> data = new List<object[]>();
         _connection.Open();
-        using (MySqlCommand command = new MySqlCommand(query, _connection))
+
+        using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
         {
+            foreach (var VARIABLE in query.Parameters)
+            {
+                command.Parameters.AddWithValue(VARIABLE.Item1,VARIABLE.Item2);
+            }
             using (MySqlDataReader reader = command.ExecuteReader())
             {
                 if (reader == null) throw new Exception("Error reading data from database");

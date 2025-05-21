@@ -53,11 +53,17 @@ public class Client(TcpClient client) : ClientStream(client)
 
                 request.Data = JsonSerialize.Serialize(CommandManager.ExecuteCommand(command));
 
-                if (request.Data == "UserHappened")
+                string[] e = data.Split(" ");
+                if (e[1] == "USER")
                 {
-                    string[] i = data.Split(" ");
-                    if (i[1] == "USER")
-                        user = JsonSerialize.Deserialize<User>(i[2]);
+                    if (e[0] == "GET")
+                    {
+                        user = JsonSerialize.Deserialize<User>(request.Data);
+                    }
+                    else
+                    {
+                        user = JsonSerialize.Deserialize<User>(e[3]);
+                    }
                 }
             }
             catch (Exception ex)

@@ -42,31 +42,45 @@ public class Commands
 
             public object Execute(User User, string? args)
             {
-                throw new NotImplementedException();
+                SqlCommand command = new SqlCommand().SelectAll(tableProduct);
+                return _dbHelper.GetDataFromDatabase<Product>(command);
             }
         }
 
+            public object Execute(User User, string? args)
+            {
+                SqlCommand command = new SqlCommand().SelectAll(tableProductGroup);
+                return _dbHelper.GetDataFromDatabase<ProductCategory>(command);
+            }
+        }
         public class GetProduct : ICommand
         {
             public string Name => "PRODUCT";
-            public bool? TakesParameter => false;
+            public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
             public object Execute(User User, string? args)
             {
-                throw new NotImplementedException();
+                SqlCommand command = new SqlCommand().SelectById(tableProduct, int.Parse(args));
+                return _dbHelper.GetDataFromID<Product>(command);
             }
         }
 
         public class GetUser : ICommand
         {
-            public string Name { get; }
-            public bool? TakesParameter { get; }
+            public string Name => "USER";
+            public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public object Execute(User User, string? command)
+            public object Execute(User User, string? args)
             {
-                throw new NotImplementedException();
+                string[] i = args.Split(" ");
+                if (i.Length != 2) throw new Exception("User must takes two arguments");
+                    //TODO: Update database from e-mail to email
+
+                SqlCommand command = new SqlCommand().SelectByNonPredefined(tableUser, [("email",i[0]),("password",i[1])]);
+
+                return _dbHelper.GetDataFromDatabase<User>(command);
             }
         }
     }
@@ -86,8 +100,9 @@ public class Commands
                 string tablename = "User";
                 if (user == null)
                 {
-                    User i = JsonSerialize.Deserialize<User>(args); 
-                    _dbHelper.InsertItemIntoTable(tablename,i);
+                    User i = JsonSerialize.Deserialize<User>(args);
+                    SqlCommand command = new SqlCommand().Insert(tableUser, i);
+                    _dbHelper.InsertItemIntoTable(command);
 
                     //TODOMaybe add Unique ID between Client and server when client looses connection. it can send a reconnect command with the ID.
                     return "UserHappened";
@@ -108,10 +123,11 @@ public class Commands
 
             public object Execute(User user, string? args)
             {
-                string tablename = "Products";
-               Product i = JsonSerialize.Deserialize<Product>(args);
-               _dbHelper.InsertItemIntoTable(tablename,i);
-               return null;
+                Product i = JsonSerialize.Deserialize<Product>(args);
+                SqlCommand command = new SqlCommand().Insert(tableProduct, i);
+                _dbHelper.InsertItemIntoTable(command);
+
+                return 1;
             }
         }
 
@@ -123,10 +139,11 @@ public class Commands
 
             public object Execute(User user, string? args)
             {
-                string tablename = "Address";
                 Address i = JsonSerialize.Deserialize<Address>(args);
-                _dbHelper.InsertItemIntoTable(tablename, i);
-                return null;
+                SqlCommand command = new SqlCommand().Insert(tableAddress, i);
+                _dbHelper.InsertItemIntoTable(command);
+
+                return 1;
             }
         }
 
@@ -139,10 +156,11 @@ public class Commands
 
             public object Execute(User user, string? args)
             {
-                string tablename = "Products";
                 Product i = JsonSerialize.Deserialize<Product>(args);
-                _dbHelper.InsertItemIntoTable(tablename, i);
-                return null;
+                SqlCommand command = new SqlCommand().Insert(tableProductGroup, i);
+                _dbHelper.InsertItemIntoTable(command);
+
+                return 1;
             }
         }
     }
