@@ -108,7 +108,6 @@ partial class SignupUserControl
         lb_Error.Size = new Size(283, 30);
         lb_Error.TabIndex = 5;
         lb_Error.Text = "Error";
-        lb_Error.Click += lb_Error_Click;
         // 
         // tbx_Lastname
         // 

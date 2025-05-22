@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Client_Server_Code_Library;
 
 public class User
@@ -9,11 +11,14 @@ public class User
     public string Email;
     public string Password;
     public Address Address;
-    public User(int userId, int usertypeId, string firstName, string lastName, string email, string password)
+
+    [JsonConstructor]
+    public User(int userId, int usertypeId, string firstName, string lastName, string email, string password,Address address)
         : this(firstName, lastName, email, password)
     {
         UserID = userId;
         UsertypeID = usertypeId;
+        Address = address;
     }
     public User(string email, string password) : this(null, null, email, password)
     {
@@ -30,20 +35,7 @@ public class User
 
     public override string ToString()
     {
-        List<string> str = new List<string>();
-
-        if (FirstName != null)
-        {
-            str.Add($"'{FirstName}'");
-        }
-        if (LastName != null)
-        {
-            str.Add($"'{LastName}'");
-        }
-        str.Add($"'{Email}'");
-        str.Add($"'{Password}'");
-
-        return string.Join(",", str);
+        return JsonSerialize.Serialize(this);
     }
 }
 

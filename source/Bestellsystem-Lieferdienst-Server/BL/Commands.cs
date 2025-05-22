@@ -85,9 +85,9 @@ public class Commands
 
             public object Execute(User User, string? args)
             {
+                //TODO: fix so that adress is also read from database.
                 string[] i = args.Split(" ");
                 if (i.Length != 2) throw new Exception("User must takes two arguments");
-                    //TODO: Update database from e-mail to email
 
                 SqlCommand command = new SqlCommand().SelectByNonPredefined(tableUser, [("email",i[0]),("password",i[1])]);
 
@@ -108,7 +108,6 @@ public class Commands
 
             public object Execute(User user, string? args)
             {
-                string tablename = "User";
                 if (user == null)
                 {
                     User i = JsonSerialize.Deserialize<User>(args);
