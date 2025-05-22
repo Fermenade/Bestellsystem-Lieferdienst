@@ -1,5 +1,6 @@
 using System.Net.Sockets;
 using Client_Server_Code_Library;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Org.BouncyCastle.Tls.Crypto;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
@@ -51,6 +52,7 @@ public class Client(Socket client) : ClientStream(client)
                 UserCommand command = new UserCommand(user, data);
 
                 request.Data = JsonSerialize.Serialize(CommandManager.ExecuteCommand(command));
+                request.Data = request.Data.Substring(1, request.Data.Length - 2);
 
                 string[] e = data.Split(" ");
                 if (e[1] == "USER")
@@ -58,6 +60,7 @@ public class Client(Socket client) : ClientStream(client)
                     if (e[0] == "GET")
                     {
                         user = JsonSerialize.Deserialize<User>(request.Data);
+                        //TODO: check why [request data has this stubid brakets]
                     }
                     else
                     {

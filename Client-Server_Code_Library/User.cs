@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Client_Server_Code_Library;
 
 public class User
@@ -9,6 +11,8 @@ public class User
     public string Email;
     public string Password;
     public Address Address;
+
+    [JsonConstructor]
     public User(int userId, int usertypeId, string firstName, string lastName, string email, string password)
         : this(firstName, lastName, email, password)
     {
