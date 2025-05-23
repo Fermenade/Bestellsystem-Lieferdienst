@@ -61,7 +61,12 @@ public class Commands
             public object Execute(User User, string? args)
             {
                 SqlCommand command = new SqlCommand().SelectAll(tableProductGroup);
-                return _dbHelper.GetDataFromDatabase<ProductCategory>(command);
+                List<string> categorielist = [];
+                foreach (var VARIABLE in _dbHelper.GetDataFromDatabase(command))
+                {
+                    categorielist.Add(VARIABLE[1].ToString());
+                }
+                return categorielist.ToArray();
             }
         }
         public class GetProduct : ICommand

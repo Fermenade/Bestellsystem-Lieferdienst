@@ -1,4 +1,5 @@
 ﻿using Bestellsystem_Lieferdienst_Client.PL;
+using Bestellsystem_Lieferdienst.BL;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -232,8 +233,14 @@ namespace Bestellsystem_Lieferdienst_Client
             //Disable resizablility
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            ShoppingCart e = new ShoppingCart();
             ResumeLayout(false);
+
+            cbxCategory.Items.Add("Alle");
+            cbxCategory.SelectedIndex = 0;
+            foreach (var VARIABLE in GetData.GetAllProductCategories())
+            {
+                cbxCategory.Items.Add(VARIABLE);
+            }
         }
         private PictureBox pBXProduct2;
         private Label lbxProduct2Name;

@@ -7,7 +7,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
     public class SqlCommand
     {
         public string SqlStatement { get; private set; } = string.Empty;
-        public (string, object)[]? Parameters { get; private set; }
+        public (string, object)[] Parameters { get; private set; } = [];
 
         public SqlCommand Insert<T>(string table, T data)
         {
