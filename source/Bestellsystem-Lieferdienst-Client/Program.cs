@@ -7,6 +7,7 @@ namespace Bestellsystem_Lieferdienst_Client
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
+          public static Form form = new StartForm();
         [STAThread]
         static void Main()
         {
@@ -14,7 +15,8 @@ namespace Bestellsystem_Lieferdienst_Client
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Client.client.ConnectToServer();
-            Application.Run(new StartForm());
+            Application.Run(form);
+
 
             // // Connect to the server on localhost and port 5000
             // TcpClient tcpclient = new TcpClient("127.0.0.1", 5000);

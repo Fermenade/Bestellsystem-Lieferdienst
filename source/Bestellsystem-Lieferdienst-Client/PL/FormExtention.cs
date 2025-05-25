@@ -2,7 +2,7 @@
 {
     public static class FormExtention
     {
-        public static void LoadView(this ContainerControl form, UserControl view)
+        public static void LoadView(this ContainerControl form, ContainerControl view)
         {
             form.Controls.Clear();
             view.Dock = DockStyle.Fill;

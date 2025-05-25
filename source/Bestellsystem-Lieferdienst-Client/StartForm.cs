@@ -11,7 +11,6 @@ namespace Bestellsystem_Lieferdienst_Client
             InitializeComponent();
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
-            //GetData.GetUser("max@muster.com", "1234");
         }
 
         //Generated
@@ -20,6 +19,7 @@ namespace Bestellsystem_Lieferdienst_Client
         private void btn_Login_Click(object sender, EventArgs e)
         {
             //this.LoadView();
+            GetData.GetAllProducts();
         }
 
         private void btn_Register_Click(object sender, EventArgs e)

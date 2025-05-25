@@ -304,13 +304,12 @@ public class Commands
         public class Ping : ICommand
         {
             public string Name => "ping";
-            public bool? TakesParameter => true;
+            public bool? TakesParameter => false;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
             public object Execute(User User, string? args)
             {
-                throw new NotImplementedException();
-                //send("client pong")
+                return "pong";
             }
         }
     }
