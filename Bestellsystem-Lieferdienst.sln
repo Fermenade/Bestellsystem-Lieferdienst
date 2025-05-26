@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestellsystem-Lieferdienst-Client", "source\Bestellsystem-Lieferdienst-Client\Bestellsystem-Lieferdienst-Client.csproj", "{5DF6BCCC-6AFC-4178-B06E-F76B22434ED5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{186DEEE3-C17B-4C45-ADB0-AE6059C9ACDA} = {186DEEE3-C17B-4C45-ADB0-AE6059C9ACDA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestellsystem-Lieferdienst-Server", "source\Bestellsystem-Lieferdienst-Server\Bestellsystem-Lieferdienst-Server.csproj", "{D9AF040E-B218-4EFB-825D-0ADEFF75A7DA}"
 EndProject

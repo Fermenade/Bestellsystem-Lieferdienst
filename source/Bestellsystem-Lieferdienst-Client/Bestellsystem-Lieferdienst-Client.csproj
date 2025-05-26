@@ -24,11 +24,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
+      <Folder Include="DAL\" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DAL\" />
+      <ProjectReference Include="..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
     </ItemGroup>
 
 </Project>

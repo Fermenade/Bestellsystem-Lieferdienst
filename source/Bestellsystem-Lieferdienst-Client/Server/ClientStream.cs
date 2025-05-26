@@ -47,7 +47,7 @@ public class ClientStream : TcpClient
                 catch (IOException ex)
                 {
                     Debug.WriteLine("Connection forcefully closed.");
-                    ServerDisconnected();
+                    ServerDisconnected(new ConnectionLost());
                     //TODO:fixme
                     break;
                 }
@@ -78,7 +78,7 @@ public class ClientStream : TcpClient
         }
     }
 
-    public void ServerDisconnected()
+    public void ServerDisconnected(ContainerControl view)
     {
         if (Program.form.InvokeRequired)
         {
@@ -98,7 +98,7 @@ public class ClientStream : TcpClient
             //var i = new ConnectionLost();
             //i.Dock = DockStyle.Fill;
             //Program.form.Controls.Add(i);
-            Program.form.LoadView(new ConnectionLost());
+            Program.form.LoadView(view);
         }
     }
 

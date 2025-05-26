@@ -1,5 +1,6 @@
 using Client_Server_Code_Library;
 using System.Diagnostics;
+using Bestellsystem_Lieferdienst.PL;
 
 
 namespace Bestellsystem_Lieferdienst.Server;
@@ -37,7 +38,7 @@ public class Client : ClientStream
             {
                 Debug.WriteLine("Couldn't establish connection with server.");
                 connection = false;
-                ServerDisconnected();
+                ServerDisconnected(new ConnectionLost());
             }
             catch (Exception ex)
             {
