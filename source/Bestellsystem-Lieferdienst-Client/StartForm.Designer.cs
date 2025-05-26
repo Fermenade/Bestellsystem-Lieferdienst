@@ -33,10 +33,6 @@ namespace Bestellsystem_Lieferdienst_Client
         {
             btn_Login = new Button();
             btn_Register = new Button();
-            pBXProduct2 = new PictureBox();
-            lbxProduct2Name = new Label();
-            lbxProduct2Price = new Label();
-            btnProduct2AddToCart = new Button();
             cbxCategory = new ComboBox();
             lbxCategory = new Label();
             textBox1 = new TextBox();
@@ -45,7 +41,6 @@ namespace Bestellsystem_Lieferdienst_Client
             lbxProduct1Price = new Label();
             lbxProduct1Name = new Label();
             pBXProduct1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pBXProduct2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pBXProduct1).BeginInit();
             SuspendLayout();
             // 
@@ -70,46 +65,6 @@ namespace Bestellsystem_Lieferdienst_Client
             btn_Register.Text = "Registrieren";
             btn_Register.UseVisualStyleBackColor = true;
             btn_Register.Click += btn_Register_Click;
-            // 
-            // pBXProduct2
-            // 
-            pBXProduct2.Image = Bestellsystem_Lieferdienst.Properties.Resources.doener;
-            pBXProduct2.Location = new Point(387, 88);
-            pBXProduct2.Name = "pBXProduct2";
-            pBXProduct2.Size = new Size(124, 132);
-            pBXProduct2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pBXProduct2.TabIndex = 8;
-            pBXProduct2.TabStop = false;
-            // 
-            // lbxProduct2Name
-            // 
-            lbxProduct2Name.AutoSize = true;
-            lbxProduct2Name.Location = new Point(387, 223);
-            lbxProduct2Name.Name = "lbxProduct2Name";
-            lbxProduct2Name.Size = new Size(39, 15);
-            lbxProduct2Name.TabIndex = 9;
-            lbxProduct2Name.Text = "Döner";
-            lbxProduct2Name.Click += lblProduct1Name_Click;
-            // 
-            // lbxProduct2Price
-            // 
-            lbxProduct2Price.AutoSize = true;
-            lbxProduct2Price.Location = new Point(387, 238);
-            lbxProduct2Price.Name = "lbxProduct2Price";
-            lbxProduct2Price.Size = new Size(40, 15);
-            lbxProduct2Price.TabIndex = 10;
-            lbxProduct2Price.Text = "8 Euro";
-            lbxProduct2Price.Click += label1_Click;
-            // 
-            // btnProduct2AddToCart
-            // 
-            btnProduct2AddToCart.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnProduct2AddToCart.Location = new Point(432, 223);
-            btnProduct2AddToCart.Name = "btnProduct2AddToCart";
-            btnProduct2AddToCart.Size = new Size(79, 27);
-            btnProduct2AddToCart.TabIndex = 11;
-            btnProduct2AddToCart.Text = "Warenkorb";
-            btnProduct2AddToCart.UseVisualStyleBackColor = true;
             // 
             // cbxCategory
             // 
@@ -196,16 +151,12 @@ namespace Bestellsystem_Lieferdienst_Client
             Controls.Add(textBox1);
             Controls.Add(lbxCategory);
             Controls.Add(cbxCategory);
-            Controls.Add(btnProduct2AddToCart);
-            Controls.Add(lbxProduct2Price);
-            Controls.Add(lbxProduct2Name);
-            Controls.Add(pBXProduct2);
             Controls.Add(btn_Register);
             Controls.Add(btn_Login);
             Margin = new Padding(1);
             Name = "StartForm";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)pBXProduct2).EndInit();
+            Load += StartForm_Load;
             ((System.ComponentModel.ISupportInitialize)pBXProduct1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -230,10 +181,6 @@ namespace Bestellsystem_Lieferdienst_Client
                 cbxCategory.Items.Add(VARIABLE);
             }
         }
-        private PictureBox pBXProduct2;
-        private Label lbxProduct2Name;
-        private Label lbxProduct2Price;
-        private Button btnProduct2AddToCart;
         private ComboBox cbxCategory;
         private Label lbxCategory;
         private TextBox textBox1;
