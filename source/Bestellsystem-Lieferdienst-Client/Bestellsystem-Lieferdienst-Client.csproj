@@ -10,12 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Update="PL\LoginUserControl.cs">
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Update="PL\LoginUserControl.Designer.cs">
-            <DependentUpon>LoginUserControl.Designer.cs</DependentUpon>
-        </Compile>
         <Compile Update="PL\SignupUserControl.cs">
             <SubType>UserControl</SubType>
         </Compile>

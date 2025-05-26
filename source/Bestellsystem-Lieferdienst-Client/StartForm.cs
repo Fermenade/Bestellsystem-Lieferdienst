@@ -1,7 +1,6 @@
 using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.PL;
-using System.Diagnostics;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -20,7 +19,8 @@ namespace Bestellsystem_Lieferdienst_Client
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            this.LoadView(new LoginUserControl());
+            //this.LoadView();
+            GetData.GetAllProducts();
         }
 
         private void btn_Register_Click(object sender, EventArgs e)

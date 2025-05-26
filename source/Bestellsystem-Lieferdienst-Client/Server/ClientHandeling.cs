@@ -7,14 +7,16 @@ namespace Bestellsystem_Lieferdienst.Server;
 public class Client : ClientStream
 {
     public static Client client = new("127.0.0.1", 5000);
-    private string ip;
-    private int port;
+    public string ip { get; private set; }
+    public int port { get; private set; }
     public Client(string ip, Int32 port)
     {
         this.ip = ip;
         this.port = port;
     }
-    public void ConnectToServer()
+
+    public void ConnectToServer() => ConnectToServer(ip, port);
+    public void ConnectToServer(string ip, int port)
     {
         //Generated
         BeginConnect(ip, port, ConnectCallback, this);
@@ -39,6 +41,7 @@ public class Client : ClientStream
     void StartHandling()
     {
         ReceiveMessages();
+        
         try
         {
             MessageReceived += ProcessReceiveMessages;

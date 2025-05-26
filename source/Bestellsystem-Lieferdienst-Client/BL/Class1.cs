@@ -10,11 +10,13 @@ namespace Bestellsystem_Lieferdienst.BL
         public static Product GetProduct(int id) => Client.client.SendAndReturn<Product>($"GET PRODUCT {id}");
 
         public static User GetUser(string username, string password) =>
-            Client.client.SendAndReturn<User>($"GET USER {username} {password}");
+            Client.client.SendAndReturn<User>($"GET USER '{username} {password}'");
 
-        public static ProductCategory[] GetAllProductCategories() =>
-            Client.client.SendAndReturn<ProductCategory[]>("GET ALLCATEGORIES");
+        public static string[] GetAllProductCategories() =>
+            Client.client.SendAndReturn<string[]>("GET ALLCATEGORIES");
 
-        public static User GetUser() => Client.client.SendAndReturn<User>("GET USER");
+        public static void SetUser(User user) => Client.client.SendAndReturn<object>("SET USER "+user);
+
+        //public static User GetUser(string email, string password) => Client.client.SendAndReturn<User>("GET USER ");
     }
 }

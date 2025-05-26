@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
-public class ClientStream(Socket client) : NetworkStream(client,true)
+public class ClientStream(Socket client) : NetworkStream(client, true)
 {
 
     private bool _clientReceiveHandlingStarted = false;
@@ -35,16 +35,13 @@ public class ClientStream(Socket client) : NetworkStream(client,true)
                     string response = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
                     MessageReceived?.Invoke(response);
                 }
-                catch (Exception ex)
+                catch (IOException ex)
                 {
                     Console.WriteLine($"Error when receiving message: {ex.Message}");
-
-                    if (ex.Message == "Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..")
-                    {
-                        Console.WriteLine("Client forcibly close the connection.\nExiting..");
-                        ClientDisconnected.Invoke();
-                        break;
-                    }
+                    
+                    Console.WriteLine("Client forcibly close the connection.\nExiting..");
+                    ClientDisconnected.Invoke();
+                    break;
                 }
             }
         });

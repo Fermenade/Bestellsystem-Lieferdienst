@@ -6,5 +6,5 @@ public class Product
     string ProductName;
     string ProductDescription;
     int ProductPrice;
-    ProductCategory[] ProductCategories;
+    string[] ProductCategories;
 }

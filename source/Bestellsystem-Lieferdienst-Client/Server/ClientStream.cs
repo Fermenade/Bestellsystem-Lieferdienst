@@ -2,6 +2,9 @@ using Client_Server_Code_Library;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
+using System.Windows.Forms.Design;
+using Bestellsystem_Lieferdienst_Client;
+using Bestellsystem_Lieferdienst.PL;
 
 
 namespace Bestellsystem_Lieferdienst.Server;
@@ -12,7 +15,7 @@ public class ClientStream : TcpClient
 
 
     private bool _clientReceiveHandlingStarted = false;
-    private bool InitializeFinished = false;
+    public bool InitializeFinished = false;
 
     /// <summary>
     /// Starts the server tcpclient receiver.
@@ -44,7 +47,6 @@ public class ClientStream : TcpClient
                 catch (IOException ex)
                 {
                     Debug.WriteLine("Connection forcefully closed.");
-
                     break;
                 }
             }
@@ -55,21 +57,34 @@ public class ClientStream : TcpClient
     async void SendBinaryAsync(byte[] bytes)
     {
         //So normally the client won't send any information just after starting, but just to make sure that this doesn't do any problems
-        //in the future here is the fix. 
-        while (!InitializeFinished)
+        //in the future here is the fix.
+        if (!Connected)
         {
-            //Gud fix :thumbsup:
+            Program.form.LoadView(new ConnectionLost());
+            return;
+        }
+        else
+        {
+            while (!InitializeFinished)
+            {
+                //Gud fix :thumbsup:
+            }
         }
 
 
-        try
-        {
-            await stream.WriteAsync(bytes);
-        }
-        catch (Exception e)
-        {
-            throw; // TODO handle exception
-        }
+            try
+            {
+                await stream.WriteAsync(bytes);
+            }
+            catch (Exception e)
+            {
+                throw; // TODO handle exception
+            }
+    }
+
+    void ClientDisconnected()
+    {
+
     }
 
     public void MessageSendAsync(string message)
