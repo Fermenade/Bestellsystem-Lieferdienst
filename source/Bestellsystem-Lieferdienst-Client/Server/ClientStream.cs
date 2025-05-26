@@ -47,14 +47,13 @@ public class ClientStream : TcpClient
                 catch (IOException ex)
                 {
                     Debug.WriteLine("Connection forcefully closed.");
-                    ServerDisconnected(new ConnectionLost());
+                    ServerDisconnected();
                     //TODO:fixme
                     break;
                 }
             }
         });
         InitializeFinished = true;
-        Program.form.LoadView(new StartForm());
     }
     async void SendBinaryAsync(byte[] bytes)
     {
@@ -78,7 +77,7 @@ public class ClientStream : TcpClient
         }
     }
 
-    public void ServerDisconnected(ContainerControl view)
+    public void ServerDisconnected()
     {
         if (Program.form.InvokeRequired)
         {
@@ -98,7 +97,7 @@ public class ClientStream : TcpClient
             //var i = new ConnectionLost();
             //i.Dock = DockStyle.Fill;
             //Program.form.Controls.Add(i);
-            Program.form.LoadView(view);
+            Program.form.LoadView(new ConnectionLost());
         }
     }
 

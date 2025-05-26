@@ -1,6 +1,7 @@
+using Bestellsystem_Lieferdienst.PL;
+using Bestellsystem_Lieferdienst_Client;
 using Client_Server_Code_Library;
 using System.Diagnostics;
-using Bestellsystem_Lieferdienst.PL;
 
 
 namespace Bestellsystem_Lieferdienst.Server;
@@ -33,17 +34,41 @@ public class Client : ClientStream
                 StartHandling();
 
                 //TODO: Client/Server must receive a notice of the other that it got the message, else it will try again.
+                ServerConnected();
             }
             catch (System.Net.Sockets.SocketException)
             {
                 Debug.WriteLine("Couldn't establish connection with server.");
                 connection = false;
-                ServerDisconnected(new ConnectionLost());
+                ServerDisconnected();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
             }
+        }
+    }
+    public void ServerConnected()
+    {
+        if (Program.form.InvokeRequired)
+        {
+            try
+            {
+                Program.form.Invoke(
+                    ServerConnected); //This is because, a call of ServerDisconnected would cause a cross thread exception.
+            }
+            catch (System.ObjectDisposedException)
+            {
+
+            }
+        }
+        else
+        {
+            //Program.form.Controls.Clear();
+            //var i = new ConnectionLost();
+            //i.Dock = DockStyle.Fill;
+            //Program.form.Controls.Add(i);
+            Program.form.LoadView(new StartForm());
         }
     }
     void StartHandling()
