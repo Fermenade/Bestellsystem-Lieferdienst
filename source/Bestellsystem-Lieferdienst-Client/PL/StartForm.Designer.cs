@@ -71,7 +71,7 @@ namespace Bestellsystem_Lieferdienst_Client
             // pBXProduct2
             // 
             pBXProduct2.Image = Bestellsystem_Lieferdienst.Properties.Resources.doener;
-            pBXProduct2.Location = new Point(520, 136);
+            pBXProduct2.Location = new Point(476, 132);
             pBXProduct2.Name = "pBXProduct2";
             pBXProduct2.Size = new Size(124, 132);
             pBXProduct2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -81,7 +81,7 @@ namespace Bestellsystem_Lieferdienst_Client
             // lbxProduct2Name
             // 
             lbxProduct2Name.AutoSize = true;
-            lbxProduct2Name.Location = new Point(520, 271);
+            lbxProduct2Name.Location = new Point(476, 267);
             lbxProduct2Name.Name = "lbxProduct2Name";
             lbxProduct2Name.Size = new Size(39, 15);
             lbxProduct2Name.TabIndex = 9;
@@ -91,7 +91,7 @@ namespace Bestellsystem_Lieferdienst_Client
             // lbxProduct2Price
             // 
             lbxProduct2Price.AutoSize = true;
-            lbxProduct2Price.Location = new Point(520, 286);
+            lbxProduct2Price.Location = new Point(476, 282);
             lbxProduct2Price.Name = "lbxProduct2Price";
             lbxProduct2Price.Size = new Size(40, 15);
             lbxProduct2Price.TabIndex = 10;
@@ -101,7 +101,7 @@ namespace Bestellsystem_Lieferdienst_Client
             // btnProduct2AddToCart
             // 
             btnProduct2AddToCart.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnProduct2AddToCart.Location = new Point(565, 271);
+            btnProduct2AddToCart.Location = new Point(521, 267);
             btnProduct2AddToCart.Name = "btnProduct2AddToCart";
             btnProduct2AddToCart.Size = new Size(79, 27);
             btnProduct2AddToCart.TabIndex = 11;
@@ -155,7 +155,7 @@ namespace Bestellsystem_Lieferdienst_Client
             // 
             lbl_OurProducts.AutoSize = true;
             lbl_OurProducts.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbl_OurProducts.Location = new Point(458, 90);
+            lbl_OurProducts.Location = new Point(469, 86);
             lbl_OurProducts.Name = "lbl_OurProducts";
             lbl_OurProducts.Size = new Size(88, 25);
             lbl_OurProducts.TabIndex = 17;
