@@ -54,6 +54,7 @@ public class ClientStream : TcpClient
             }
         });
         InitializeFinished = true;
+        Program.form.LoadView(new StartForm());
     }
     async void SendBinaryAsync(byte[] bytes)
     {
