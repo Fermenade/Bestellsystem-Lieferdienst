@@ -15,6 +15,7 @@ namespace Bestellsystem_Lieferdienst
         public MainForm()
         {
             InitializeComponent();
+            InitializeManualComponent();
         }
     }
 }

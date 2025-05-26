@@ -201,7 +201,7 @@ namespace Bestellsystem_Lieferdienst_Client
             Controls.Add(btn_Login);
             Margin = new Padding(1);
             Name = "StartForm";
-            Text = "Form1";
+            Size = new Size(932, 604);
             ((System.ComponentModel.ISupportInitialize)pBXProduct2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pBXProduct1).EndInit();
             ResumeLayout(false);
