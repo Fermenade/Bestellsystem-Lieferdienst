@@ -1,5 +1,10 @@
 using Bestellsystem_Lieferdienst.BL;
 using Client_Server_Code_Library;
+using System.Security.Cryptography;
+using System.Text;
+using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst.Server;
+using Bestellsystem_Lieferdienst.PL;
 
 namespace Bestellsystem_Lieferdienst_Client.PL;
 
@@ -81,7 +86,32 @@ public partial class SignupUserControl : UserControl
             user = null;
             return false;
         }
-
         return true;
+    }
+
+    private void lb_Error_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void btn_BackToMain_Click(object sender, EventArgs e)
+    {
+    }
+}
+
+public static class StringExtensions
+{
+    public static string ToSHA256(this string input)
+    {
+        // generated
+        SHA256 sha = SHA256Managed.Create();
+        byte[] bytes = Encoding.UTF8.GetBytes(input);
+        byte[] hash = sha.ComputeHash(bytes);
+
+        StringBuilder output = new StringBuilder(hash.Length * 2);
+        foreach (byte b in hash)
+            output.AppendFormat("{0:x2}", b); // Convert each byte to a string and append to the formatter
+
+        return output.ToString();
     }
 }

@@ -11,6 +11,7 @@ namespace Bestellsystem_Lieferdienst_Client
             InitializeComponent();
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
+
         }
 
         //Generated
@@ -47,6 +48,9 @@ namespace Bestellsystem_Lieferdienst_Client
 
         }
 
+        
+        }
+
         // private void btnRegister_Click(object sender, EventArgs e)
         // {
         //     LoadView(new RegisterUserControl());
@@ -80,4 +84,3 @@ namespace Bestellsystem_Lieferdienst_Client
         //                 }
         //         }
     }
-}
