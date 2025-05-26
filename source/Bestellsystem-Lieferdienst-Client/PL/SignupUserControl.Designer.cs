@@ -53,12 +53,13 @@ partial class SignupUserControl
         lb_ApartmentNr = new Label();
         tbx_HouseNr = new TextBox();
         lb_HouseNr = new Label();
+        btn_BackToMain = new Button();
         SuspendLayout();
         // 
         // btn_Signup
         // 
-        btn_Signup.Location = new Point(159, 251);
-        btn_Signup.Margin = new Padding(1, 1, 1, 1);
+        btn_Signup.Location = new Point(211, 251);
+        btn_Signup.Margin = new Padding(1);
         btn_Signup.Name = "btn_Signup";
         btn_Signup.Size = new Size(68, 26);
         btn_Signup.TabIndex = 0;
@@ -78,7 +79,7 @@ partial class SignupUserControl
         // tbx_Email
         // 
         tbx_Email.Location = new Point(84, 37);
-        tbx_Email.Margin = new Padding(1, 1, 1, 1);
+        tbx_Email.Margin = new Padding(1);
         tbx_Email.Name = "tbx_Email";
         tbx_Email.Size = new Size(85, 23);
         tbx_Email.TabIndex = 2;
@@ -86,7 +87,7 @@ partial class SignupUserControl
         // tbx_Password
         // 
         tbx_Password.Location = new Point(83, 93);
-        tbx_Password.Margin = new Padding(1, 1, 1, 1);
+        tbx_Password.Margin = new Padding(1);
         tbx_Password.Name = "tbx_Password";
         tbx_Password.Size = new Size(85, 23);
         tbx_Password.TabIndex = 4;
@@ -113,7 +114,7 @@ partial class SignupUserControl
         // tbx_Lastname
         // 
         tbx_Lastname.Location = new Point(83, 192);
-        tbx_Lastname.Margin = new Padding(1, 1, 1, 1);
+        tbx_Lastname.Margin = new Padding(1);
         tbx_Lastname.Name = "tbx_Lastname";
         tbx_Lastname.Size = new Size(85, 23);
         tbx_Lastname.TabIndex = 9;
@@ -130,7 +131,7 @@ partial class SignupUserControl
         // tbx_Firstname
         // 
         tbx_Firstname.Location = new Point(83, 140);
-        tbx_Firstname.Margin = new Padding(1, 1, 1, 1);
+        tbx_Firstname.Margin = new Padding(1);
         tbx_Firstname.Name = "tbx_Firstname";
         tbx_Firstname.Size = new Size(85, 23);
         tbx_Firstname.TabIndex = 7;
@@ -147,7 +148,7 @@ partial class SignupUserControl
         // tbx_Street
         // 
         tbx_Street.Location = new Point(227, 192);
-        tbx_Street.Margin = new Padding(1, 1, 1, 1);
+        tbx_Street.Margin = new Padding(1);
         tbx_Street.Name = "tbx_Street";
         tbx_Street.Size = new Size(85, 23);
         tbx_Street.TabIndex = 17;
@@ -164,7 +165,7 @@ partial class SignupUserControl
         // tbx_City
         // 
         tbx_City.Location = new Point(227, 140);
-        tbx_City.Margin = new Padding(1, 1, 1, 1);
+        tbx_City.Margin = new Padding(1);
         tbx_City.Name = "tbx_City";
         tbx_City.Size = new Size(85, 23);
         tbx_City.TabIndex = 15;
@@ -181,7 +182,7 @@ partial class SignupUserControl
         // tbx_ZippCode
         // 
         tbx_ZippCode.Location = new Point(227, 92);
-        tbx_ZippCode.Margin = new Padding(1, 1, 1, 1);
+        tbx_ZippCode.Margin = new Padding(1);
         tbx_ZippCode.Name = "tbx_ZippCode";
         tbx_ZippCode.Size = new Size(85, 23);
         tbx_ZippCode.TabIndex = 13;
@@ -198,7 +199,7 @@ partial class SignupUserControl
         // tbx_Country
         // 
         tbx_Country.Location = new Point(228, 37);
-        tbx_Country.Margin = new Padding(1, 1, 1, 1);
+        tbx_Country.Margin = new Padding(1);
         tbx_Country.Name = "tbx_Country";
         tbx_Country.Size = new Size(85, 23);
         tbx_Country.TabIndex = 11;
@@ -215,7 +216,7 @@ partial class SignupUserControl
         // tbx_ApartmentNr
         // 
         tbx_ApartmentNr.Location = new Point(322, 92);
-        tbx_ApartmentNr.Margin = new Padding(1, 1, 1, 1);
+        tbx_ApartmentNr.Margin = new Padding(1);
         tbx_ApartmentNr.Name = "tbx_ApartmentNr";
         tbx_ApartmentNr.Size = new Size(85, 23);
         tbx_ApartmentNr.TabIndex = 21;
@@ -232,7 +233,7 @@ partial class SignupUserControl
         // tbx_HouseNr
         // 
         tbx_HouseNr.Location = new Point(323, 37);
-        tbx_HouseNr.Margin = new Padding(1, 1, 1, 1);
+        tbx_HouseNr.Margin = new Padding(1);
         tbx_HouseNr.Name = "tbx_HouseNr";
         tbx_HouseNr.Size = new Size(85, 23);
         tbx_HouseNr.TabIndex = 19;
@@ -246,10 +247,22 @@ partial class SignupUserControl
         lb_HouseNr.TabIndex = 18;
         lb_HouseNr.Text = "Hausnr.";
         // 
+        // btn_BackToMain
+        // 
+        btn_BackToMain.Location = new Point(83, 251);
+        btn_BackToMain.Margin = new Padding(1);
+        btn_BackToMain.Name = "btn_BackToMain";
+        btn_BackToMain.Size = new Size(68, 26);
+        btn_BackToMain.TabIndex = 22;
+        btn_BackToMain.Text = "Zurück";
+        btn_BackToMain.UseVisualStyleBackColor = true;
+        btn_BackToMain.Click += btn_BackToMain_Click;
+        // 
         // SignupUserControl
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(btn_BackToMain);
         Controls.Add(tbx_ApartmentNr);
         Controls.Add(lb_ApartmentNr);
         Controls.Add(tbx_HouseNr);
@@ -272,7 +285,7 @@ partial class SignupUserControl
         Controls.Add(tbx_Email);
         Controls.Add(lb_Email);
         Controls.Add(btn_Signup);
-        Margin = new Padding(1, 1, 1, 1);
+        Margin = new Padding(1);
         Name = "SignupUserControl";
         Size = new Size(530, 287);
         ResumeLayout(false);
@@ -306,4 +319,6 @@ partial class SignupUserControl
     private System.Windows.Forms.Label lb_Password;
 
     #endregion
+
+    private Button btn_BackToMain;
 }
