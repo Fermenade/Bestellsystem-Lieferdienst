@@ -1,6 +1,6 @@
 namespace Bestellsystem_Lieferdienst_Client.PL;
 
-partial class LoginUserControl :UserControl
+partial class LoginUserControl
 {
     private Label lblEmail;
     private TextBox tbxUserName;
@@ -35,7 +35,7 @@ partial class LoginUserControl :UserControl
         lbl_Login.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
         lbl_Login.Location = new Point(116, 38);
         lbl_Login.Name = "lbl_Login";
-        lbl_Login.Size = new Size(75, 30);
+        lbl_Login.Size = new Size(187, 71);
         lbl_Login.TabIndex = 0;
         lbl_Login.Text = "LOGIN";
         // 
@@ -44,7 +44,7 @@ partial class LoginUserControl :UserControl
         lbl_Mail.AutoSize = true;
         lbl_Mail.Location = new Point(77, 100);
         lbl_Mail.Name = "lbl_Mail";
-        lbl_Mail.Size = new Size(44, 15);
+        lbl_Mail.Size = new Size(108, 41);
         lbl_Mail.TabIndex = 1;
         lbl_Mail.Text = "E-Mail:";
         // 
@@ -53,22 +53,22 @@ partial class LoginUserControl :UserControl
         lbl_Password.AutoSize = true;
         lbl_Password.Location = new Point(77, 161);
         lbl_Password.Name = "lbl_Password";
-        lbl_Password.Size = new Size(57, 15);
+        lbl_Password.Size = new Size(142, 41);
         lbl_Password.TabIndex = 2;
         lbl_Password.Text = "Passwort:";
         // 
         // tbx_Mail
         // 
-        tbx_Mail.Location = new Point(77, 118);
+        tbx_Mail.Location = new Point(77, 126);
         tbx_Mail.Name = "tbx_Mail";
-        tbx_Mail.Size = new Size(156, 23);
+        tbx_Mail.Size = new Size(156, 47);
         tbx_Mail.TabIndex = 3;
         // 
         // tbx_Pass
         // 
         tbx_Pass.Location = new Point(77, 179);
         tbx_Pass.Name = "tbx_Pass";
-        tbx_Pass.Size = new Size(156, 23);
+        tbx_Pass.Size = new Size(156, 47);
         tbx_Pass.TabIndex = 4;
         // 
         // btn_GoToMain
@@ -99,7 +99,7 @@ partial class LoginUserControl :UserControl
         Controls.Add(lbl_Mail);
         Controls.Add(lbl_Login);
         Name = "LoginUserControl";
-        Size = new Size(298, 370);
+        Size = new Size(839, 672);
         ResumeLayout(false);
         PerformLayout();
 

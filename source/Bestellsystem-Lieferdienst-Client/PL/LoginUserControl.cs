@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Bestellsystem_Lieferdienst_Client.PL
 {
-    partial class LoginUserControl
+    partial class LoginUserControl: UserControl
     {
         public LoginUserControl()
         {
             InitializeComponent();
         }
+
     }
 }

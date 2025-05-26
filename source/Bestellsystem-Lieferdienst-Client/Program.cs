@@ -1,3 +1,4 @@
+using Bestellsystem_Lieferdienst;
 using Bestellsystem_Lieferdienst.Server;
 
 namespace Bestellsystem_Lieferdienst_Client
@@ -7,7 +8,7 @@ namespace Bestellsystem_Lieferdienst_Client
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-        public static Form form = new StartForm();
+        public static Form form = new MainForm();
         [STAThread]
         static void Main()
         {

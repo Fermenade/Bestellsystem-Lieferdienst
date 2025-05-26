@@ -7,6 +7,7 @@
             form.Controls.Clear();
             view.Dock = DockStyle.Fill;
             form.Controls.Add(view);
+
         }
     }
 }

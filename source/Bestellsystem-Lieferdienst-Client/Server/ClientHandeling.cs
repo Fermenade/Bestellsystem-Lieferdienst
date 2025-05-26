@@ -7,6 +7,7 @@ namespace Bestellsystem_Lieferdienst.Server;
 public class Client : ClientStream
 {
     public static Client client = new("127.0.0.1", 5000);
+    private static bool connection = true;
     public string ip { get; private set; }
     public int port { get; private set; }
     public Client(string ip, Int32 port)
@@ -34,13 +35,13 @@ public class Client : ClientStream
             }
             catch (System.Net.Sockets.SocketException)
             {
-                Debug.WriteLine("");
+                Debug.WriteLine("Couldn't establish connection with server.");
+                connection = false;
                 ServerDisconnected();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
-                
             }
         }
     }

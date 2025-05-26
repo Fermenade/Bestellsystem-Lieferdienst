@@ -22,13 +22,13 @@ namespace Bestellsystem_Lieferdienst.PL
                 label4.Text = ex.Message;
             }
 
-            Task.Run((() =>
-            {
-                while (!Client.client.Connected || !Client.client.InitializeFinished)
-                {
+            //Task.Run((() =>
+            //{
+            //    while (!Client.client.Connected || !Client.client.InitializeFinished)
+            //    {
 
-                }
-            }));
+            //    }
+            //}));
             this.LoadView(new StartForm());
         }
     }

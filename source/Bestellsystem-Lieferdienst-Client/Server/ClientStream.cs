@@ -4,6 +4,7 @@ using Client_Server_Code_Library;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
+using System.Windows.Forms;
 
 
 namespace Bestellsystem_Lieferdienst.Server;
@@ -54,23 +55,16 @@ public class ClientStream : TcpClient
         });
         InitializeFinished = true;
     }
-
     async void SendBinaryAsync(byte[] bytes)
     {
         //So normally the client won't send any information just after starting, but just to make sure that this doesn't do any problems
         //in the future here is the fix.
-
+        if (!Client.Connected) return;
         while (!InitializeFinished)
         {
             //TODO:fixme
             //Gud fix :thumbsup:
         }
-        if (!Connected)
-        {
-            ServerDisconnected();
-            return;
-        }
-
 
 
         try
@@ -85,7 +79,26 @@ public class ClientStream : TcpClient
 
     public void ServerDisconnected()
     {
-        Program.form.LoadView(new ConnectionLost());
+        if (Program.form.InvokeRequired)
+        {
+            try
+            {
+                Program.form.Invoke(
+                    ServerDisconnected); //This is because, a call of ServerDisconnected would cause a cross thread exception.
+            }
+            catch (System.ObjectDisposedException)
+            {
+
+            }
+        }
+        else
+        {
+            Program.form.Controls.Clear();
+            var i = new ConnectionLost();
+            i.Dock = DockStyle.Fill;
+            Program.form.Controls.Add(i);
+            Program.form.LoadView(new ConnectionLost());
+        }
     }
 
     public void MessageSendAsync(string message)
