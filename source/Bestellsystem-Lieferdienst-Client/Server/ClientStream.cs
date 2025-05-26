@@ -93,10 +93,10 @@ public class ClientStream : TcpClient
         }
         else
         {
-            Program.form.Controls.Clear();
-            var i = new ConnectionLost();
-            i.Dock = DockStyle.Fill;
-            Program.form.Controls.Add(i);
+            //Program.form.Controls.Clear();
+            //var i = new ConnectionLost();
+            //i.Dock = DockStyle.Fill;
+            //Program.form.Controls.Add(i);
             Program.form.LoadView(new ConnectionLost());
         }
     }
