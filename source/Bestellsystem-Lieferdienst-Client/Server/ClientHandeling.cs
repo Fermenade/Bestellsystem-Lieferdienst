@@ -32,16 +32,22 @@ public class Client : ClientStream
 
                 //TODO: Client/Server must receive a notice of the other that it got the message, else it will try again.
             }
+            catch (System.Net.Sockets.SocketException)
+            {
+                Debug.WriteLine("");
+                ServerDisconnected();
+            }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
+                
             }
         }
     }
     void StartHandling()
     {
         ReceiveMessages();
-        
+
         try
         {
             MessageReceived += ProcessReceiveMessages;

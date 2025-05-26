@@ -38,7 +38,7 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
                 catch (IOException ex)
                 {
                     Console.WriteLine($"Error when receiving message: {ex.Message}");
-                    
+
                     Console.WriteLine("Client forcibly close the connection.\nExiting..");
                     ClientDisconnected.Invoke();
                     break;

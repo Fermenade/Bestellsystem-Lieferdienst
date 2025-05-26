@@ -7,10 +7,11 @@ namespace Bestellsystem_Lieferdienst_Client
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-          public static Form form = new StartForm();
+        public static Form form = new StartForm();
         [STAThread]
         static void Main()
         {
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

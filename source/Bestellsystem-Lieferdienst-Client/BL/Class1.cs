@@ -15,7 +15,7 @@ namespace Bestellsystem_Lieferdienst.BL
         public static string[] GetAllProductCategories() =>
             Client.client.SendAndReturn<string[]>("GET ALLCATEGORIES");
 
-        public static void SetUser(User user) => Client.client.SendAndReturn<object>("SET USER "+user);
+        public static void SetUser(User user) => Client.client.SendAndReturn<object>("SET USER " + user);
 
         //public static User GetUser(string email, string password) => Client.client.SendAndReturn<User>("GET USER ");
     }

@@ -51,7 +51,7 @@ namespace Bestellsystem_Lieferdienst_Client
             // 
             // btn_Login
             // 
-            btn_Login.Location = new Point(1234, 11);
+            btn_Login.Location = new Point(1674, 35);
             btn_Login.Margin = new Padding(2, 3, 2, 3);
             btn_Login.Name = "btn_Login";
             btn_Login.Size = new Size(124, 55);
@@ -199,7 +199,7 @@ namespace Bestellsystem_Lieferdienst_Client
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1382, 722);
+            ClientSize = new Size(1952, 794);
             Controls.Add(btnProduct1AddToCart);
             Controls.Add(lbxProduct1Price);
             Controls.Add(lbxProduct1Name);

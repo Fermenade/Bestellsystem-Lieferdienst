@@ -94,7 +94,7 @@ public class Commands
                 string[] i = args.Split(" ");
                 if (i.Length != 2) throw new Exception("User must takes two arguments");
 
-                SqlCommand command = new SqlCommand().SelectByNonPredefined(tableUser, [("email",i[0]),("password",i[1])]);
+                SqlCommand command = new SqlCommand().SelectByNonPredefined(tableUser, [("email", i[0]), ("password", i[1])]);
 
                 return _dbHelper.GetDataFromDatabase<User>(command);
             }

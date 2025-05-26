@@ -1,5 +1,4 @@
 using MySql.Data.MySqlClient;
-using System.Data;
 using System.Reflection;
 
 
@@ -25,7 +24,7 @@ public class DatabaseHelper(string connectionString)
             catch (MySqlException ex) // Catching specific exception related to MySQL
             {
 
-                throw new Exception("Failed to insert item: "+ query.SqlStatement);
+                throw new Exception("Failed to insert item: " + query.SqlStatement);
 
             }
         }
@@ -130,7 +129,7 @@ public class DatabaseHelper(string connectionString)
         {
             foreach (var VARIABLE in query.Parameters)
             {
-                command.Parameters.AddWithValue(VARIABLE.Item1,VARIABLE.Item2);
+                command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
             }
             using (MySqlDataReader reader = command.ExecuteReader())
             {

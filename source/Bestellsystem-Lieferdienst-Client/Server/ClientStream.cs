@@ -1,10 +1,9 @@
+using Bestellsystem_Lieferdienst.PL;
+using Bestellsystem_Lieferdienst_Client;
 using Client_Server_Code_Library;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
-using System.Windows.Forms.Design;
-using Bestellsystem_Lieferdienst_Client;
-using Bestellsystem_Lieferdienst.PL;
 
 
 namespace Bestellsystem_Lieferdienst.Server;
@@ -47,6 +46,8 @@ public class ClientStream : TcpClient
                 catch (IOException ex)
                 {
                     Debug.WriteLine("Connection forcefully closed.");
+                    ServerDisconnected();
+                    //TODO:fixme
                     break;
                 }
             }
@@ -58,33 +59,33 @@ public class ClientStream : TcpClient
     {
         //So normally the client won't send any information just after starting, but just to make sure that this doesn't do any problems
         //in the future here is the fix.
+
+        while (!InitializeFinished)
+        {
+            //TODO:fixme
+            //Gud fix :thumbsup:
+        }
         if (!Connected)
         {
-            Program.form.LoadView(new ConnectionLost());
+            ServerDisconnected();
             return;
         }
-        else
+
+
+
+        try
         {
-            while (!InitializeFinished)
-            {
-                //Gud fix :thumbsup:
-            }
+            await stream.WriteAsync(bytes);
         }
-
-
-            try
-            {
-                await stream.WriteAsync(bytes);
-            }
-            catch (Exception e)
-            {
-                throw; // TODO handle exception
-            }
+        catch (Exception e)
+        {
+            throw; // TODO handle exception
+        }
     }
 
-    void ClientDisconnected()
+    public void ServerDisconnected()
     {
-
+        Program.form.LoadView(new ConnectionLost());
     }
 
     public void MessageSendAsync(string message)

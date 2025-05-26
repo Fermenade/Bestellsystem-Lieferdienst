@@ -1,6 +1,4 @@
-﻿using Mysqlx.Crud;
-using MySqlX.XDevAPI.Relational;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Bestellsystem_Lieferdienst_Server.DAL
 {
