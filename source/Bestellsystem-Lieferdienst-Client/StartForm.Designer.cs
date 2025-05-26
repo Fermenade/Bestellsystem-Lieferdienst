@@ -118,7 +118,6 @@ namespace Bestellsystem_Lieferdienst_Client
             cbxCategory.Name = "cbxCategory";
             cbxCategory.Size = new Size(121, 23);
             cbxCategory.TabIndex = 12;
-            cbxCategory.SelectedIndexChanged += cbxCategory_SelectedIndexChanged;
             // 
             // lbxCategory
             // 

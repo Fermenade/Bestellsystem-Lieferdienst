@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst.Server;
+using Bestellsystem_Lieferdienst.PL;
 
 namespace Bestellsystem_Lieferdienst_Client.PL;
 
@@ -84,6 +85,8 @@ public partial class SignupUserControl : UserControl
             user = null;
             return false;
         }
+        return true;
+    }
 
     private void lb_Error_Click(object sender, EventArgs e)
     {
@@ -92,7 +95,6 @@ public partial class SignupUserControl : UserControl
 
     private void btn_BackToMain_Click(object sender, EventArgs e)
     {
-
     }
 }
 
