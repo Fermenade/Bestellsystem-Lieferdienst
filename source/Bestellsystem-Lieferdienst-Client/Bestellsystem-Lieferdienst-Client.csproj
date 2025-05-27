@@ -11,6 +11,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="DAL\**" />
+      <EmbeddedResource Remove="DAL\**" />
+      <None Remove="DAL\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Compile Update="PL\SignupUserControl.cs">
             <SubType>UserControl</SubType>
         </Compile>
@@ -21,10 +27,6 @@
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="DAL\" />
     </ItemGroup>
 
     <ItemGroup>
