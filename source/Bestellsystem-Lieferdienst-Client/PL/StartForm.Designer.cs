@@ -48,10 +48,10 @@ namespace Bestellsystem_Lieferdienst_Client
             // 
             // btn_Login
             // 
-            btn_Login.Location = new Point(832, 24);
+            btn_Login.Location = new Point(1327, 17);
             btn_Login.Margin = new Padding(1);
             btn_Login.Name = "btn_Login";
-            btn_Login.Size = new Size(51, 20);
+            btn_Login.Size = new Size(98, 35);
             btn_Login.TabIndex = 0;
             btn_Login.Text = "Login";
             btn_Login.UseVisualStyleBackColor = true;
@@ -59,10 +59,10 @@ namespace Bestellsystem_Lieferdienst_Client
             // 
             // btn_Register
             // 
-            btn_Register.Location = new Point(746, 24);
+            btn_Register.Location = new Point(1186, 17);
             btn_Register.Margin = new Padding(1);
             btn_Register.Name = "btn_Register";
-            btn_Register.Size = new Size(79, 20);
+            btn_Register.Size = new Size(114, 38);
             btn_Register.TabIndex = 7;
             btn_Register.Text = "Registrieren";
             btn_Register.UseVisualStyleBackColor = true;
@@ -71,9 +71,9 @@ namespace Bestellsystem_Lieferdienst_Client
             // pBXProduct2
             // 
             pBXProduct2.Image = Bestellsystem_Lieferdienst.Properties.Resources.doener;
-            pBXProduct2.Location = new Point(476, 132);
+            pBXProduct2.Location = new Point(701, 175);
             pBXProduct2.Name = "pBXProduct2";
-            pBXProduct2.Size = new Size(124, 132);
+            pBXProduct2.Size = new Size(182, 195);
             pBXProduct2.SizeMode = PictureBoxSizeMode.StretchImage;
             pBXProduct2.TabIndex = 8;
             pBXProduct2.TabStop = false;
@@ -81,9 +81,9 @@ namespace Bestellsystem_Lieferdienst_Client
             // lbxProduct2Name
             // 
             lbxProduct2Name.AutoSize = true;
-            lbxProduct2Name.Location = new Point(476, 267);
+            lbxProduct2Name.Location = new Point(709, 388);
             lbxProduct2Name.Name = "lbxProduct2Name";
-            lbxProduct2Name.Size = new Size(39, 15);
+            lbxProduct2Name.Size = new Size(61, 25);
             lbxProduct2Name.TabIndex = 9;
             lbxProduct2Name.Text = "Döner";
             lbxProduct2Name.Click += lblProduct1Name_Click;
@@ -91,9 +91,9 @@ namespace Bestellsystem_Lieferdienst_Client
             // lbxProduct2Price
             // 
             lbxProduct2Price.AutoSize = true;
-            lbxProduct2Price.Location = new Point(476, 282);
+            lbxProduct2Price.Location = new Point(709, 413);
             lbxProduct2Price.Name = "lbxProduct2Price";
-            lbxProduct2Price.Size = new Size(40, 15);
+            lbxProduct2Price.Size = new Size(63, 25);
             lbxProduct2Price.TabIndex = 10;
             lbxProduct2Price.Text = "8 Euro";
             lbxProduct2Price.Click += label1_Click;
@@ -101,9 +101,9 @@ namespace Bestellsystem_Lieferdienst_Client
             // btnProduct2AddToCart
             // 
             btnProduct2AddToCart.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnProduct2AddToCart.Location = new Point(521, 267);
+            btnProduct2AddToCart.Location = new Point(780, 411);
             btnProduct2AddToCart.Name = "btnProduct2AddToCart";
-            btnProduct2AddToCart.Size = new Size(79, 27);
+            btnProduct2AddToCart.Size = new Size(103, 27);
             btnProduct2AddToCart.TabIndex = 11;
             btnProduct2AddToCart.Text = "Warenkorb";
             btnProduct2AddToCart.UseVisualStyleBackColor = true;
@@ -111,42 +111,42 @@ namespace Bestellsystem_Lieferdienst_Client
             // cbxCategory
             // 
             cbxCategory.FormattingEnabled = true;
-            cbxCategory.Location = new Point(264, 182);
+            cbxCategory.Location = new Point(291, 158);
             cbxCategory.Name = "cbxCategory";
-            cbxCategory.Size = new Size(121, 23);
+            cbxCategory.Size = new Size(121, 33);
             cbxCategory.TabIndex = 12;
             // 
             // lbxCategory
             // 
             lbxCategory.AutoSize = true;
-            lbxCategory.Location = new Point(263, 164);
+            lbxCategory.Location = new Point(291, 130);
             lbxCategory.Name = "lbxCategory";
-            lbxCategory.Size = new Size(57, 15);
+            lbxCategory.Size = new Size(87, 25);
             lbxCategory.TabIndex = 13;
             lbxCategory.Text = "Kategorie";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(264, 86);
+            textBox1.Location = new Point(291, 86);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(121, 23);
+            textBox1.Size = new Size(121, 31);
             textBox1.TabIndex = 14;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
             // lbxSearch
             // 
             lbxSearch.AutoSize = true;
-            lbxSearch.Location = new Point(264, 66);
+            lbxSearch.Location = new Point(291, 58);
             lbxSearch.Name = "lbxSearch";
-            lbxSearch.Size = new Size(39, 15);
+            lbxSearch.Size = new Size(59, 25);
             lbxSearch.TabIndex = 15;
             lbxSearch.Text = "Suche";
             // 
             // btn_SucheBestätigen
             // 
-            btn_SucheBestätigen.Location = new Point(264, 112);
+            btn_SucheBestätigen.Location = new Point(418, 82);
             btn_SucheBestätigen.Name = "btn_SucheBestätigen";
-            btn_SucheBestätigen.Size = new Size(75, 23);
+            btn_SucheBestätigen.Size = new Size(78, 38);
             btn_SucheBestätigen.TabIndex = 16;
             btn_SucheBestätigen.Text = "Suchen";
             btn_SucheBestätigen.UseVisualStyleBackColor = true;
@@ -155,9 +155,9 @@ namespace Bestellsystem_Lieferdienst_Client
             // 
             lbl_OurProducts.AutoSize = true;
             lbl_OurProducts.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbl_OurProducts.Location = new Point(469, 86);
+            lbl_OurProducts.Location = new Point(545, 86);
             lbl_OurProducts.Name = "lbl_OurProducts";
-            lbl_OurProducts.Size = new Size(88, 25);
+            lbl_OurProducts.Size = new Size(132, 40);
             lbl_OurProducts.TabIndex = 17;
             lbl_OurProducts.Text = "Produkte";
             // 
@@ -177,7 +177,7 @@ namespace Bestellsystem_Lieferdienst_Client
             Controls.Add(btn_Login);
             Margin = new Padding(1);
             Name = "StartForm";
-            Size = new Size(932, 604);
+            Size = new Size(1452, 849);
             Load += StartForm_Load;
             ((System.ComponentModel.ISupportInitialize)pBXProduct2).EndInit();
             ResumeLayout(false);
@@ -195,10 +195,10 @@ namespace Bestellsystem_Lieferdienst_Client
 
             cbxCategory.Items.Add("Alle");
             cbxCategory.SelectedIndex = 0;
-            //foreach (var VARIABLE in GetData.GetAllProductCategories())
-            //{
-            //    cbxCategory.Items.Add(VARIABLE);
-            //}
+            foreach (var VARIABLE in GetData.GetAllProductCategories())
+            {
+                cbxCategory.Items.Add(VARIABLE);
+            }
         }
         private PictureBox pBXProduct2;
         private Label lbxProduct2Name;

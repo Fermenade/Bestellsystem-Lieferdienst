@@ -1,4 +1,6 @@
-﻿namespace Bestellsystem_Lieferdienst.PL
+﻿using Bestellsystem_Lieferdienst_Client;
+
+namespace Bestellsystem_Lieferdienst.PL
 {
     public static class FormExtention
     {

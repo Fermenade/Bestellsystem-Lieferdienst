@@ -37,8 +37,7 @@ public class ClientStream : TcpClient
                     int bytesRead = stream.Read(responseBuffer, 0, responseBuffer.Length);
                     if (bytesRead == 0)
                     {
-                        // Connection closed
-                        break;
+                        throw new IOException();
                     }
 
                     string response = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
@@ -83,20 +82,14 @@ public class ClientStream : TcpClient
         {
             try
             {
-                Program.form.Invoke(
-                    ServerDisconnected); //This is because, a call of ServerDisconnected would cause a cross thread exception.
+                Program.form.Invoke(ServerDisconnected); //This is because, a call of ServerDisconnected would cause a cross thread exception.
             }
             catch (System.ObjectDisposedException)
             {
-
             }
         }
         else
         {
-            //Program.form.Controls.Clear();
-            //var i = new ConnectionLost();
-            //i.Dock = DockStyle.Fill;
-            //Program.form.Controls.Add(i);
             Program.form.LoadView(new ConnectionLost());
         }
     }
@@ -109,25 +102,7 @@ public class ClientStream : TcpClient
     }
 
     public T SendAndReturn<T>(string command) => SendAndReturnAsync<T>(command).Result;
-    //private async Task<T> SendAndReturnAsync<T>(string command)
-    //{
-    //    PendingPackage newPackage = new PendingPackage(command);
-    //    MessageSendAsync(JsonSerialize.Serialize(newPackage));
-    //    string i = await Task.Run(() =>
-    //    {//It just works
-    //        var x = newPackage.WaitForAnswer();
-    //        int o = 0;
-    //        while (!x.IsCompleted)
-    //        {
-    //            //TODO: Why does this work and not the other???
-    //            Debug.WriteLine(o);
-    //            o++;
-    //        }
 
-    //        return x.Result;
-    //    });
-    //    return JsonSerialize.Deserialize<T>(i);
-    //}
     private Task<T> SendAndReturnAsync<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
