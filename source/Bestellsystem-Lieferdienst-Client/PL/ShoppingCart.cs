@@ -1,28 +1,51 @@
+using System.Security.Cryptography.X509Certificates;
+using Bestellsystem_Lieferdienst.PL;
 using Client_Server_Code_Library;
+using System.ComponentModel;
 
 namespace Bestellsystem_Lieferdienst_Client.PL;
 
-public partial class ShoppingCart : UserControl
+public class ShoppingCardControl : FlowLayoutPanel
 {
-    static List<UserProduct> products;
-    private int spacing = 100;
-    public ShoppingCart()
-    {
-        InitializeComponent();
-    }
-    public void AddItem(Product p)
-    {
-        products.Add(new(p));
-    }
-}
+    private List<ShoppingCardEntry>? Products { get; set; }
 
-public class UserProduct
-{
-    Product product;
-    uint ammount;
-    public UserProduct(Product product)
+    public ShoppingCardControl()
     {
-        this.product = product;
-        this.ammount = 1;
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        this.Products = new List<ShoppingCardEntry>();
+        this.AutoSize = true;
+    }
+
+    // Expose a property to bind the data source to
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+
+    // Expose a property to bind the data source to
+    public List<ShoppingCardEntry>? DataSource
+    {
+        get { return Products; }
+        set
+        {
+            Products = value;
+            UpdateDisplay();
+        }
+    }
+
+    private void UpdateDisplay()
+    {
+        // Clear existing controls
+        Controls.Clear();
+
+        // Create and add ShoppingCardEntry panels based on the data source
+        if (Products != null)
+        {
+            foreach (var entry in Products)
+            {
+                Controls.Add(entry);
+            }
+        }
     }
 }

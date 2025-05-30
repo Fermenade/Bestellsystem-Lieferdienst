@@ -1,5 +1,7 @@
 ﻿using Bestellsystem_Lieferdienst_Client.PL;
 using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst.Server;
+using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -188,18 +190,6 @@ namespace Bestellsystem_Lieferdienst_Client
         private System.Windows.Forms.Button btn_Login;
 
         #endregion
-
-        public void InitializeManualComponent()
-        {
-            //Disable resizablility
-
-            cbxCategory.Items.Add("Alle");
-            cbxCategory.SelectedIndex = 0;
-            foreach (var VARIABLE in GetData.GetAllProductCategories())
-            {
-                cbxCategory.Items.Add(VARIABLE);
-            }
-        }
         private PictureBox pBXProduct2;
         private Label lbxProduct2Name;
         private Label lbxProduct2Price;
@@ -210,5 +200,20 @@ namespace Bestellsystem_Lieferdienst_Client
         private Label lbxSearch;
         private Button btn_SucheBestätigen;
         private Label lbl_OurProducts;
+        private ShoppingCart shoppingcart = new ShoppingCart();
+
+
+        void InitializeManualComponent()
+        {
+            if (Client.client.User != null)
+            {
+                btn_Login.Dispose();
+                btn_Register.Dispose();
+
+                //TODO: make button for user options.
+            }
+
+            Controls.Add(shoppingcart);
+        }
     }
 }

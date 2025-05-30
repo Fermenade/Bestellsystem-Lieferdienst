@@ -11,15 +11,31 @@ namespace Bestellsystem_Lieferdienst_Client
             InitializeComponent();
             InitializeManualComponent();
             //https://learn.microsoft.com/en-us/dotnet/api/System.Guid?view=net-9.0
+            GetAndInitData();
         }
 
+        void GetAndInitData()
+        {
+            cbxCategory.Items.Add("Alle");
+            cbxCategory.SelectedIndex = 0;
+            foreach (var VARIABLE in GetData.GetAllProductCategories())
+            {
+                cbxCategory.Items.Add(VARIABLE);
+            }
+
+            for (int i = 0; i < 100; i++)
+            {
+                shoppingcart(new("Dämer","Dämer mit reis", 10, ["e"]));
+            }
+
+            //GetData.GetAllProducts();
+        }
         //Generated
         //End
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            //this.LoadView();
-            GetData.GetAllProducts();
+            this.LoadView(new LoginUserControl());
         }
 
         private void btn_Register_Click(object sender, EventArgs e)
@@ -52,37 +68,4 @@ namespace Bestellsystem_Lieferdienst_Client
 
         }
     }
-
-    // private void btnRegister_Click(object sender, EventArgs e)
-    // {
-    //     LoadView(new RegisterUserControl());
-    // }
-    //         void GetDataFromDatabase()
-    //         {
-    //             DatabaseHelper dbHelper = new DatabaseHelper(connectionString);
-    //             var u = dbHelper.GetDataFromID<User>(6, "user");
-    //             Console.WriteLine(u);
-    //             // string query = "SELECT * FROM `user`";
-    //             // var a = dbHelper.GetDataFromDatabase<Address>(query);
-    //             // foreach (var item in a)
-    //             // {
-    //             //     Console.WriteLine(item.ToString());
-    //             // }
-    //         }
-    //
-    //         void InsertDefaultData()
-    //         {
-    //             DatabaseHelper database = new(connectionString);
-    //             List<string> Usertyp = new List<string>() { "Customer", "Employee", "Admin" };
-    //
-    //                 foreach (string VARIABLE in Usertyp)
-    //                 {
-    //                     string data = $"""
-    //                                    INSERT INTO `benutzertyp`(`name`)
-    //                                    VALUES ({VARIABLE})
-    //                                    """;
-    //
-    //                     database.ExecuteNonQuery(data);
-    //                 }
-    //         }
 }

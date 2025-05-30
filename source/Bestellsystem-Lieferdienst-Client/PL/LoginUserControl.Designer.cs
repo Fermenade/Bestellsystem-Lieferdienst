@@ -35,7 +35,7 @@ partial class LoginUserControl
         lbl_Login.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
         lbl_Login.Location = new Point(116, 38);
         lbl_Login.Name = "lbl_Login";
-        lbl_Login.Size = new Size(187, 71);
+        lbl_Login.Size = new Size(115, 45);
         lbl_Login.TabIndex = 0;
         lbl_Login.Text = "LOGIN";
         // 
@@ -44,7 +44,7 @@ partial class LoginUserControl
         lbl_Mail.AutoSize = true;
         lbl_Mail.Location = new Point(77, 100);
         lbl_Mail.Name = "lbl_Mail";
-        lbl_Mail.Size = new Size(108, 41);
+        lbl_Mail.Size = new Size(65, 25);
         lbl_Mail.TabIndex = 1;
         lbl_Mail.Text = "E-Mail:";
         // 
@@ -53,7 +53,7 @@ partial class LoginUserControl
         lbl_Password.AutoSize = true;
         lbl_Password.Location = new Point(77, 161);
         lbl_Password.Name = "lbl_Password";
-        lbl_Password.Size = new Size(142, 41);
+        lbl_Password.Size = new Size(86, 25);
         lbl_Password.TabIndex = 2;
         lbl_Password.Text = "Passwort:";
         // 
@@ -61,30 +61,31 @@ partial class LoginUserControl
         // 
         tbx_Mail.Location = new Point(77, 126);
         tbx_Mail.Name = "tbx_Mail";
-        tbx_Mail.Size = new Size(156, 47);
+        tbx_Mail.Size = new Size(156, 31);
         tbx_Mail.TabIndex = 3;
         // 
         // tbx_Pass
         // 
         tbx_Pass.Location = new Point(77, 179);
         tbx_Pass.Name = "tbx_Pass";
-        tbx_Pass.Size = new Size(156, 47);
+        tbx_Pass.Size = new Size(156, 31);
         tbx_Pass.TabIndex = 4;
         // 
         // btn_GoToMain
         // 
-        btn_GoToMain.Location = new Point(77, 233);
+        btn_GoToMain.Location = new Point(77, 268);
         btn_GoToMain.Name = "btn_GoToMain";
-        btn_GoToMain.Size = new Size(75, 23);
+        btn_GoToMain.Size = new Size(86, 48);
         btn_GoToMain.TabIndex = 5;
         btn_GoToMain.Text = "Zurück";
         btn_GoToMain.UseVisualStyleBackColor = true;
+        btn_GoToMain.Click += btn_GoToMain_Click;
         // 
         // btn_Login
         // 
-        btn_Login.Location = new Point(158, 233);
+        btn_Login.Location = new Point(189, 268);
         btn_Login.Name = "btn_Login";
-        btn_Login.Size = new Size(75, 23);
+        btn_Login.Size = new Size(85, 48);
         btn_Login.TabIndex = 6;
         btn_Login.Text = "Login";
         btn_Login.UseVisualStyleBackColor = true;

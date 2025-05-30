@@ -117,4 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="pictureBox1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>352, 27</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAD8AAAA/CAYAAABXXxDfAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAW
+        JQAAFiUBSVIk8AAAAbtJREFUaEPt2tFqwkAUhGFfoW3UorX0/V8yJQWhnF/3zEqGBM5efDeTMDvrjTc5
+        zPN8qApBJQgqQVAJgkoQVIKgEgSVIFjb7fozvyp2rQ3B2uKFesSutSFY0zSdcKEe0/vJ+gMgaInj9ihu
+        bkHQEg/ao7i5BUFLPGiP4uYWBC3xoD2Km1sQtJyOn/Pidv3GoZfz198zt/PpgrMX9+dxcwsCxXLReHh8
+        xymeveyJ7ygQKMblx+XH5cfl4zt38b1nQx2dGQQKx1BHZwaBwjHU0ZlBoHAMdXRmECgcQx2dGQQKx1BH
+        ZwaBwjHU0ZlBoHAMdXRmECgcQx2dGQQKx1BHZwaBwjHU0ZlBoHAMdXRmECgcQx2dGQQKx1BHZwaBwjHU
+        0ZlBoHAMdXRmECgcQx2dGQQKx1BHZwaBwjHU0ZlBoHAMdXRmECgcQx2dGQQKx1BHZwaBwjHU0ZlBoOgZ
+        +vE2zf/F56+8G8/e7eUd4tnj8g/eyyBQjMuPy4/Lb275VCVuVCBQLH9DccCWWn+LLQhUccCW4jYVgh5x
+        xBbiph4Iej37NMzt2PnZ2SMIKkFQCYJKEFSCoBIElSCoBEElv5dz2EckG2K5AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <metadata name="label1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>41, 22</value>
+  </metadata>
+  <metadata name="numericUpDown1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>151, 23</value>
+  </metadata>
+  <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
 </root>

@@ -9,6 +9,7 @@ namespace Bestellsystem_Lieferdienst.Server;
 public class Client : ClientStream
 {
     public static Client client = new("192.168.0.67", 5000);
+    public User? User = null;
     private static bool connection = true;
     public string ip { get; private set; }
     public int port { get; private set; }

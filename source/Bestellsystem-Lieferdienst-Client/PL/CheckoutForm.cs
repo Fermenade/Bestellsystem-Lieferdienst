@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Bestellsystem_Lieferdienst.PL
 {
-    public partial class UserControl1 : UserControl
+    public partial class CheckoutForm : UserControl
     {
-        public UserControl1()
+        public CheckoutForm()
         {
             InitializeComponent();
         }

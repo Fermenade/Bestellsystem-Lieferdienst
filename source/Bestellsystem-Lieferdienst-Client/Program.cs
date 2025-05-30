@@ -9,6 +9,7 @@ namespace Bestellsystem_Lieferdienst_Client
         ///  The main entry point for the application.
         /// </summary>
         public static Form form = new MainForm();
+
         [STAThread]
         static void Main()
         {

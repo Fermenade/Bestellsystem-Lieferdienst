@@ -1,6 +1,6 @@
 ﻿namespace Bestellsystem_Lieferdienst.PL
 {
-    partial class UserControl1
+    partial class CheckoutForm
     {
         /// <summary> 
         /// Erforderliche Designervariable.

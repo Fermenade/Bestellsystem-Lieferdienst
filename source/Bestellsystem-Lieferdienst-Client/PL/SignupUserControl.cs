@@ -96,6 +96,7 @@ public partial class SignupUserControl : UserControl
 
     private void btn_BackToMain_Click(object sender, EventArgs e)
     {
+        this.LoadView(new StartForm());
     }
 }
 
