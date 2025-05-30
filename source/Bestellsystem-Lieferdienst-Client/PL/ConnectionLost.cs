@@ -11,25 +11,12 @@ namespace Bestellsystem_Lieferdienst.PL
             InitializeManualComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Client.client.ConnectToServer(textBox2.Text, (int)numericUpDown1.Value);
-            }
-            catch (Exception ex)
-            {
-                label4.Text = ex.Message;
-            }
-
-            //Task.Run((() =>
-            //{
-            //    while (!Client.client.Connected || !Client.client.InitializeFinished)
-            //    {
-
-            //    }
-            //}));
-            this.LoadView(new StartForm());
+            label4.Text = "connecting...";
+            Client.client.Dispose();
+            Client.client = new(textBox2.Text, (int)numericUpDown1.Value);
+            Client.client.ConnectToServer();
         }
     }
 }

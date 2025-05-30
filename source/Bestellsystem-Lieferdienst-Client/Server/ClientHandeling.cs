@@ -8,7 +8,7 @@ namespace Bestellsystem_Lieferdienst.Server;
 
 public class Client : ClientStream
 {
-    public static Client client = new("127.0.0.1", 5000);
+    public static Client client = new("192.168.0.67", 5000);
     private static bool connection = true;
     public string ip { get; private set; }
     public int port { get; private set; }
@@ -33,7 +33,6 @@ public class Client : ClientStream
 
                 StartHandling();
 
-                //TODO: Client/Server must receive a notice of the other that it got the message, else it will try again.
                 ServerConnected();
             }
             catch (System.Net.Sockets.SocketException)
@@ -48,26 +47,24 @@ public class Client : ClientStream
             }
         }
     }
-    public void ServerConnected()
+    void ServerConnected()
     {
+        while (!Program.form.IsHandleCreated)//This crazy hack is needed so that a cross thread exception is solved out of whatever reason.
+        { } //Btw. this one line took only 5 days to figure out.
         if (Program.form.InvokeRequired)
         {
             try
             {
-                Program.form.Invoke(
-                    ServerConnected); //This is because, a call of ServerDisconnected would cause a cross thread exception.
+                Program.form.Invoke(ServerConnected); // Use Action delegate
             }
             catch (System.ObjectDisposedException)
             {
-
+                // Handle the case where the form is disposed
             }
         }
         else
         {
-            //Program.form.Controls.Clear();
-            //var i = new ConnectionLost();
-            //i.Dock = DockStyle.Fill;
-            //Program.form.Controls.Add(i);
+
             Program.form.LoadView(new StartForm());
         }
     }
