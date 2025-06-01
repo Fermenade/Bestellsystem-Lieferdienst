@@ -22,11 +22,11 @@ namespace Bestellsystem_Lieferdienst_Client
             cbxCategory.SelectedIndex = 0;
             foreach (var VARIABLE in GetData.GetAllProductCategories())
             {
-                cbxCategory.Items.Add(VARIABLE);
+                cbxCategory.Items.AddRange(VARIABLE);
             }
 
-            Product[] x = GetData.GetAllProducts();
-            productsView.SetItems(x);
+            //Product[] x = GetData.GetAllProducts();
+            //productsView.SetItems(x);
         }
 
 
