@@ -8,8 +8,8 @@ namespace Client_Server_Code_Library
 {
     public class ProductCategory
     {
-        private int id;
-        private string name;
+        public int id;
+        public string name;
         public ProductCategory(int id, string name)
         {
             this.id = id;
