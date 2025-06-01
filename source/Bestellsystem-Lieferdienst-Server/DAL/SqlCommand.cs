@@ -1,11 +1,13 @@
-﻿using System.Reflection;
+﻿using Mysqlx.Crud;
+using MySqlX.XDevAPI.Relational;
+using System.Reflection;
 
 namespace Bestellsystem_Lieferdienst_Server.DAL
 {
     public class SqlCommand
     {
         public string SqlStatement { get; private set; } = string.Empty;
-        public (string, object)[] Parameters { get; private set; } = [];
+        public (string, object)[]? Parameters { get; private set; }
 
         public SqlCommand Insert<T>(string table, T data)
         {
@@ -28,7 +30,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
             return this;
         }
-
+        //1/2 Generated
         public SqlCommand SelectColumnsByJoin(
             string returnTable,
             string joinTable,
@@ -60,6 +62,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             SqlStatement = $"SELECT * FROM {FormatIdentifier(table)}";
             return this;
         }
+
         public SqlCommand SelectByNonPredefined(string table, (string, object)[] identifier)
         {
             var conditions = string.Join(" AND ", identifier.Select(i => $"{FormatIdentifier(i.Item1)} = @{i.Item1}"));
@@ -69,13 +72,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
             return this;
         }
-        /// <summary>
-        /// This method should not be used because it can cause problems if multiple ids are available
-        /// use carefully!
-        /// </summary>
-        /// <param name="table"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
+
         public SqlCommand SelectById(string table, int id)
         {
             var idParam = CreateIdParameter(table, id);
