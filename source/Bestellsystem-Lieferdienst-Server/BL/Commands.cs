@@ -8,7 +8,7 @@ namespace Bestellsystem_Lieferdienst_Server.BL;
 public class Commands
 {
     static string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
-    static DatabaseHelper _dbHelper = new DatabaseHelper(_connectionString);
+    static DatabaseHelper _dbHelper = new(_connectionString);
 
     public static string tableProduct = "product";
     public static string tableProductGroup = "productgroup";
