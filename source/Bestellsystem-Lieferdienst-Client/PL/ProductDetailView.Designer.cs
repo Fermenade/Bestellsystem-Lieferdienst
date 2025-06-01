@@ -1,6 +1,6 @@
 ﻿namespace Bestellsystem_Lieferdienst.PL
 {
-    partial class produktansicht
+    partial class ProductDetailView
     {
         /// <summary>
         /// Required designer variable.

@@ -26,7 +26,7 @@ namespace Bestellsystem_Lieferdienst_Client
                 cbxCategory.Items.Add(VARIABLE);
             }
 
-            var x = GetData.GetAllProducts();
+            Product[] x = GetData.GetAllProducts();
             productsView.SetItems(x);
         }
 

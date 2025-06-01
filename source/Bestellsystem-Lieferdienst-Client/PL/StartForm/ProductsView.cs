@@ -32,8 +32,13 @@ namespace Bestellsystem_Lieferdienst.PL.StartForm
             foreach (var name in filtered)
             {
                 var control = new ProductEntry(name);
+                control.Click += Control_Click;
                 Controls.Add(control);
             }
+        }
+        private void Control_Click(object? sender, EventArgs e)
+        {
+            this.LoadView(new ProductDetailView((Product)sender));
         }
     }
 }

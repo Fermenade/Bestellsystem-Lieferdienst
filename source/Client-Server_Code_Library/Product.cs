@@ -5,17 +5,17 @@ public class Product
     public int ID;
     public string Name;
     public string Description;
-    public int Price;
+    public decimal Price;
     public string[] Categories;
 
-    public Product(string name, string description, int price, string[] categories)
+    public Product(string name, string description, decimal price, string[] categories)
     {
         this.Name = name;
         this.Description = description;
         this.Price = price;
         this.Categories = categories;
     }
-    public Product(int id, string name, string description, int price, string[] categories)
+    public Product(int id, string name, string description, decimal price, string[] categories)
     {
         ID = id;
         Name = name;
