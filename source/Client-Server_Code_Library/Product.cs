@@ -2,25 +2,25 @@
 
 public class Product
 {
-    int ProductID;
-    string ProductName;
-    string ProductDescription;
-    int ProductPrice;
-    string[] ProductCategories;
+    public int ID;
+    public string Name;
+    public string Description;
+    public int Price;
+    public string[] Categories;
 
-    public Product(string productName, string productDescription, int productPrice, string[] productCategories)
+    public Product(string name, string description, int price, string[] categories)
     {
-        this.ProductName = productName;
-        this.ProductDescription = productDescription;
-        this.ProductPrice = productPrice;
-        this.ProductCategories = productCategories;
+        this.Name = name;
+        this.Description = description;
+        this.Price = price;
+        this.Categories = categories;
     }
-    public Product(int productID, string productName, string productDescription, int productPrice, string[] productCategories)
+    public Product(int id, string name, string description, int price, string[] categories)
     {
-        ProductID = productID;
-        ProductName = productName;
-        ProductDescription = productDescription;
-        ProductPrice = productPrice;
-        ProductCategories = productCategories;
+        ID = id;
+        Name = name;
+        Description = description;
+        Price = price;
+        Categories = categories;
     }
 }

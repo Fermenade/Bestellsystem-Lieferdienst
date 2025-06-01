@@ -1,10 +1,8 @@
 using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst.PL;
 using Client_Server_Code_Library;
 using System.Security.Cryptography;
 using System.Text;
-using Bestellsystem_Lieferdienst.BL;
-using Bestellsystem_Lieferdienst.Server;
-using Bestellsystem_Lieferdienst.PL;
 
 namespace Bestellsystem_Lieferdienst_Client.PL;
 

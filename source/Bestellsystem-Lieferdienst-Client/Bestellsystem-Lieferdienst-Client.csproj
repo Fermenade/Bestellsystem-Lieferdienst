@@ -19,7 +19,6 @@
         <Compile Update="PL\SignupUserControl.cs">
             <SubType>UserControl</SubType>
         </Compile>
-        <Compile Update="PL\ShoppingCart.cs" />
     </ItemGroup>
 
     <ItemGroup>

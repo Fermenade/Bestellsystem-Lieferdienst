@@ -1,4 +1,5 @@
 using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst.BL.ShopingCart;
 using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.PL;
 
@@ -23,9 +24,9 @@ namespace Bestellsystem_Lieferdienst_Client
                 cbxCategory.Items.Add(VARIABLE);
             }
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 40; i++)
             {
-                shoppingcart(new("Dämer","Dämer mit reis", 10, ["e"]));
+                CartManager.AddProduct(new($"Name{i}", "description", 12, [""]));
             }
 
             //GetData.GetAllProducts();

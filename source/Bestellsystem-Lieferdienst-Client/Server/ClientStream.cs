@@ -4,7 +4,6 @@ using Client_Server_Code_Library;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
-using System.Windows.Forms;
 
 
 namespace Bestellsystem_Lieferdienst.Server;
@@ -118,6 +117,7 @@ public class ClientStream : TcpClient
                 Thread.Sleep(10); // Sleep for 10 milliseconds
             }
 
+            Debug.Write($"Recieved: {x.Result}");
             return JsonSerialize.Deserialize<T>(x.Result);
         });
     }
