@@ -29,12 +29,37 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             return this;
         }
 
+        public SqlCommand SelectColumnsByJoin(
+            string returnTable,
+            string joinTable,
+            IReadOnlyList<string> columns,
+            (string, object)[]? joinIdentifier,
+            (string, object)[]? identifier)
+        {
+            var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
+
+            string joinCondition = joinIdentifier?.Length > 0
+                ? string.Join(" AND ", joinIdentifier.Select(j => $"{FormatIdentifier(j.Item1)} = @{j.Item1}"))
+                : "1=1"; // always true join condition
+
+            string whereCondition = identifier?.Length > 0
+                ? "WHERE " + string.Join(" AND ", identifier.Select(i => $"{FormatIdentifier(i.Item1)} = @{i.Item1}"))
+                : string.Empty; // no WHERE clause
+
+            SqlStatement = $"SELECT {selectedColumns} FROM {FormatIdentifier(returnTable)} " +
+                           $"JOIN {FormatIdentifier(joinTable)} ON {joinCondition} " +
+                           $"{whereCondition}";
+
+            Parameters = (joinIdentifier ?? []).Concat(identifier ?? []).ToArray();
+
+            return this;
+        }
+
         public SqlCommand SelectAll(string table)
         {
             SqlStatement = $"SELECT * FROM {FormatIdentifier(table)}";
             return this;
         }
-
         public SqlCommand SelectByNonPredefined(string table, (string, object)[] identifier)
         {
             var conditions = string.Join(" AND ", identifier.Select(i => $"{FormatIdentifier(i.Item1)} = @{i.Item1}"));
@@ -44,7 +69,13 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
             return this;
         }
-
+        /// <summary>
+        /// This method should not be used because it can cause problems if multiple ids are available
+        /// use carefully!
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public SqlCommand SelectById(string table, int id)
         {
             var idParam = CreateIdParameter(table, id);

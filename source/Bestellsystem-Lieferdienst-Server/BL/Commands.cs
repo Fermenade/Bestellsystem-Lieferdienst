@@ -12,6 +12,7 @@ public class Commands
 
     public static string tableProduct = "product";
     public static string tableProductGroup = "productgroup";
+    public static string cTableProduct_ProductGroup = "product_has_productgroup";
     public static string tableOrder = "order";
     public static string tableAddress = "address";
     public static string tableUsertype = "usertype";
@@ -49,51 +50,69 @@ public class Commands
             public object Execute(User User, string? args)
             {
                 SqlCommand command = new SqlCommand().SelectAll(tableProduct);
-                return _dbHelper.GetDataFromDatabase<Product>(command);
+                List<Product> products = new List<Product>();
+                products.AddRange(_dbHelper.GetDataFromDatabase<Product>(command));
+
+                foreach (var VARIABLE in products)
+                {
+                    command = new SqlCommand().SelectColumnsByJoin(tableProductGroup, cTableProduct_ProductGroup,
+                        ["name"], [("product_has_productgroup.productID", VARIABLE.ID)], null);
+                    List<string> categories = new();
+                    foreach (var VARIABLE1 in _dbHelper.GetDataFromDatabase(command))
+                    {
+                        categories.Add(VARIABLE1.ToString());
+
+                    }
+
+                    VARIABLE.Categories = categories.ToArray();
+                }
+
+                return products;
+
             }
         }
-        public class GetAllCategories : ICommand
+    }
+    public class GetAllCategories : ICommand
+    {
+        public string Name => "ALLCATEGORIES";
+        public bool? TakesParameter => false;
+        public Usertype MinPrivilegeRequired => Usertype.User;
+
+        public object Execute(User User, string? args)
         {
-            public string Name => "ALLCATEGORIES";
-            public bool? TakesParameter => false;
-            public Usertype MinPrivilegeRequired => Usertype.User;
+            SqlCommand command = new SqlCommand().SelectAll(tableProductGroup);
 
-            public object Execute(User User, string? args)
-            {
-                SqlCommand command = new SqlCommand().SelectAll(tableProductGroup);
-
-                return _dbHelper.GetDataFromDatabase<ProductCategory>(command);
-            }
+            return _dbHelper.GetDataFromDatabase<ProductCategory>(command);
         }
-        public class GetProduct : ICommand
-        {
-            public string Name => "PRODUCT";
-            public bool? TakesParameter => true;
-            public Usertype MinPrivilegeRequired => Usertype.User;
+    }
+    public class GetProduct : ICommand
+    {
+        public string Name => "PRODUCT";
+        public bool? TakesParameter => true;
+        public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public object Execute(User User, string? args)
-            {
-                SqlCommand command = new SqlCommand().SelectById(tableProduct, int.Parse(args));
-                return _dbHelper.GetDataFromID<Product>(command);
-            }
+        public object Execute(User User, string? args)
+        {
+            SqlCommand command = new SqlCommand().SelectById(tableProduct, int.Parse(args));
+            return _dbHelper.GetDataFromID<Product>(command);
         }
+    }
 
-        public class GetUser : ICommand
+    public class GetUser : ICommand
+    {
+        public string Name => "USER";
+        public bool? TakesParameter => true;
+        public Usertype MinPrivilegeRequired => Usertype.User;
+
+        public object Execute(User User, string? args)
         {
-            public string Name => "USER";
-            public bool? TakesParameter => true;
-            public Usertype MinPrivilegeRequired => Usertype.User;
+            //TODO: fix so that adress is also read from database.
+            string[] i = args.Split(" ");
+            if (i.Length != 2) throw new Exception("User must takes two arguments");
 
-            public object Execute(User User, string? args)
-            {
-                //TODO: fix so that adress is also read from database.
-                string[] i = args.Split(" ");
-                if (i.Length != 2) throw new Exception("User must takes two arguments");
+            SqlCommand command = new SqlCommand().SelectByNonPredefined(tableUser, [("email", i[0]), ("password", i[1])]);
 
-                SqlCommand command = new SqlCommand().SelectByNonPredefined(tableUser, [("email", i[0]), ("password", i[1])]);
-
-                return _dbHelper.GetDataFromDatabase<User>(command);
-            }
+            return _dbHelper.GetDataFromDatabase<User>(command);
         }
     }
 

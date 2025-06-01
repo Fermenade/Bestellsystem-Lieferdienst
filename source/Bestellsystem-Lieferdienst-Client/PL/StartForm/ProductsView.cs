@@ -24,8 +24,8 @@ namespace Bestellsystem_Lieferdienst.PL.StartForm
 
             var filtered = allItems
                 .Where(name =>
-                    name.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase)|| 
-                    name.Description.Contains(nameFilter,StringComparison.OrdinalIgnoreCase) && 
+                    name.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase) ||
+                    name.Description.Contains(nameFilter, StringComparison.OrdinalIgnoreCase) &&
                     name.Categories.Contains(categorieFilter)
                     );
 
