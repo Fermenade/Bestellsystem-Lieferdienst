@@ -1,7 +1,6 @@
 using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.PL;
-using Bestellsystem_Lieferdienst.BL.StartForm;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client
