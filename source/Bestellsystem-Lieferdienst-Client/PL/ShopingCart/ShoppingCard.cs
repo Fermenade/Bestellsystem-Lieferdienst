@@ -36,7 +36,7 @@
                 var cartItem = control.CartItem;
                 if (!CartManager.CartItems.Contains(cartItem))
                 {
-                    
+
                     Controls.Remove(itemControlMap[cartItem]);
                     itemControlMap.Remove(cartItem);
                     return;
@@ -77,36 +77,5 @@
                 }
             }
         }
-        //private void RenderCartItems()
-            //{
-            //    //TODO: this gets called very very often, fix me!
-            //    Controls.Clear();
-            //    LoadManualControls();
-            //    foreach (var item in CartManager.CartItems)
-            //    {
-            //        var control = new ShoppingCartItemControl();
-            //        control.SetCartItem(item);
-
-            //        control.IncreaseClicked += (s, e) =>
-            //        {
-            //            item.Quantity++;
-            //        };
-
-            //        control.DecreaseClicked += (s, e) =>
-            //        {
-            //            item.Quantity--;
-            //            if (item.Quantity <= 0)
-            //                CartManager.RemoveProduct(item.Product);
-            //        };
-
-            //        control.RemoveClicked += (s, e) =>
-            //        {
-            //            CartManager.RemoveProduct(item.Product);
-            //        };
-
-            //        control.Margin = new Padding(5);
-            //        Controls.Add(control);
-            //    }
-            //}
-        }
+    }
 }
