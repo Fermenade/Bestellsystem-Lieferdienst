@@ -1,5 +1,5 @@
 ﻿namespace Client_Server_Code_Library;
-public class Receipe
+public class Order
 {
     int ReceipeID;
     int UserID;

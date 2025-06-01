@@ -15,6 +15,13 @@ public class Product
         this.Price = price;
         this.Categories = categories;
     }
+    public Product(int id, string name, string description, decimal price)
+    {
+        ID = id;
+        Name = name;
+        Description = description;
+        Price = price;
+    }
     public Product(int id, string name, string description, decimal price, string[] categories)
     {
         ID = id;
