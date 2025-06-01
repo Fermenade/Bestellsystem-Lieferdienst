@@ -84,7 +84,7 @@ public class Client : ClientStream
     }
     void ProcessReceiveMessages(string message)
     {
-        Console.WriteLine($"Received message '{message}' from server");
+        Debug.WriteLine($"Received message '{message}' from server");
 
         Package request = JsonSerialize.Deserialize<Package>(message);
 

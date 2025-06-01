@@ -117,7 +117,6 @@ public class ClientStream : TcpClient
                 Thread.Sleep(10); // Sleep for 10 milliseconds
             }
 
-            Debug.Write($"Recieved: {x.Result}");
             return JsonSerialize.Deserialize<T>(x.Result);
         });
     }
