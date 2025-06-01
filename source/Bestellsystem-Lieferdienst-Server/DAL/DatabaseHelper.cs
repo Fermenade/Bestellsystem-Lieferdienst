@@ -120,13 +120,14 @@ public class DatabaseHelper(string connectionString)
     /// <exception cref="Exception">Error reading data from database</exception>
     /// <exception cref="Exception">Could not find any matching data.</exception>
     /// <returns>A nested array of all entries returned by the query.</returns>
-    public object[][] GetDataFromDatabase(SqlCommand query)
+    public object[][]? GetDataFromDatabase(SqlCommand query)
     {
         List<object[]> data = new List<object[]>();
         _connection.Open();
 
         using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
         {
+            
             foreach (var VARIABLE in query.Parameters)
             {
                 command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
@@ -147,11 +148,6 @@ public class DatabaseHelper(string connectionString)
             }
         }
         _connection.Close();
-
-        if (data.Count == 0)
-        {
-            throw new Exception("Could not find data from database.");
-        }
         return data.ToArray();
     }
 }
