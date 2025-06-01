@@ -1,6 +1,8 @@
-﻿using Bestellsystem_Lieferdienst_Client.PL;
+﻿using System.Runtime.CompilerServices;
+using Bestellsystem_Lieferdienst_Client.PL;
 using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst.PL;
+using Bestellsystem_Lieferdienst.PL.StartForm;
 using Bestellsystem_Lieferdienst.Server;
 using Client_Server_Code_Library;
 
@@ -36,17 +38,12 @@ namespace Bestellsystem_Lieferdienst_Client
         {
             btn_Login = new Button();
             btn_Register = new Button();
-            pBXProduct2 = new PictureBox();
-            lbxProduct2Name = new Label();
-            lbxProduct2Price = new Label();
-            btnProduct2AddToCart = new Button();
             cbxCategory = new ComboBox();
             lbxCategory = new Label();
             textBox1 = new TextBox();
             lbxSearch = new Label();
             btn_SucheBestätigen = new Button();
             lbl_OurProducts = new Label();
-            ((System.ComponentModel.ISupportInitialize)pBXProduct2).BeginInit();
             SuspendLayout();
             // 
             // btn_Login
@@ -71,46 +68,6 @@ namespace Bestellsystem_Lieferdienst_Client
             btn_Register.UseVisualStyleBackColor = true;
             btn_Register.Click += btn_Register_Click;
             // 
-            // pBXProduct2
-            // 
-            pBXProduct2.Image = Bestellsystem_Lieferdienst.Properties.Resources.doener;
-            pBXProduct2.Location = new Point(601, 137);
-            pBXProduct2.Name = "pBXProduct2";
-            pBXProduct2.Size = new Size(182, 195);
-            pBXProduct2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pBXProduct2.TabIndex = 8;
-            pBXProduct2.TabStop = false;
-            // 
-            // lbxProduct2Name
-            // 
-            lbxProduct2Name.AutoSize = true;
-            lbxProduct2Name.Location = new Point(609, 350);
-            lbxProduct2Name.Name = "lbxProduct2Name";
-            lbxProduct2Name.Size = new Size(61, 25);
-            lbxProduct2Name.TabIndex = 9;
-            lbxProduct2Name.Text = "Döner";
-            lbxProduct2Name.Click += lblProduct1Name_Click;
-            // 
-            // lbxProduct2Price
-            // 
-            lbxProduct2Price.AutoSize = true;
-            lbxProduct2Price.Location = new Point(609, 375);
-            lbxProduct2Price.Name = "lbxProduct2Price";
-            lbxProduct2Price.Size = new Size(63, 25);
-            lbxProduct2Price.TabIndex = 10;
-            lbxProduct2Price.Text = "8 Euro";
-            lbxProduct2Price.Click += label1_Click;
-            // 
-            // btnProduct2AddToCart
-            // 
-            btnProduct2AddToCart.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnProduct2AddToCart.Location = new Point(680, 373);
-            btnProduct2AddToCart.Name = "btnProduct2AddToCart";
-            btnProduct2AddToCart.Size = new Size(103, 27);
-            btnProduct2AddToCart.TabIndex = 11;
-            btnProduct2AddToCart.Text = "Warenkorb";
-            btnProduct2AddToCart.UseVisualStyleBackColor = true;
-            // 
             // cbxCategory
             // 
             cbxCategory.FormattingEnabled = true;
@@ -118,6 +75,7 @@ namespace Bestellsystem_Lieferdienst_Client
             cbxCategory.Name = "cbxCategory";
             cbxCategory.Size = new Size(121, 33);
             cbxCategory.TabIndex = 12;
+            cbxCategory.SelectedIndexChanged += cbxCategory_SelectedIndexChanged;
             // 
             // lbxCategory
             // 
@@ -153,6 +111,7 @@ namespace Bestellsystem_Lieferdienst_Client
             btn_SucheBestätigen.TabIndex = 16;
             btn_SucheBestätigen.Text = "Suchen";
             btn_SucheBestätigen.UseVisualStyleBackColor = true;
+            btn_SucheBestätigen.Click += btn_SucheBestätigen_Click;
             // 
             // lbl_OurProducts
             // 
@@ -172,17 +131,12 @@ namespace Bestellsystem_Lieferdienst_Client
             Controls.Add(textBox1);
             Controls.Add(lbxCategory);
             Controls.Add(cbxCategory);
-            Controls.Add(btnProduct2AddToCart);
-            Controls.Add(lbxProduct2Price);
-            Controls.Add(lbxProduct2Name);
-            Controls.Add(pBXProduct2);
             Controls.Add(btn_Register);
             Controls.Add(btn_Login);
             Margin = new Padding(1);
             Name = "StartForm";
             Size = new Size(1452, 849);
             Load += StartForm_Load;
-            ((System.ComponentModel.ISupportInitialize)pBXProduct2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -191,10 +145,7 @@ namespace Bestellsystem_Lieferdienst_Client
         private System.Windows.Forms.Button btn_Login;
 
         #endregion
-        private PictureBox pBXProduct2;
-        private Label lbxProduct2Name;
-        private Label lbxProduct2Price;
-        private Button btnProduct2AddToCart;
+        
         private ComboBox cbxCategory;
         private Label lbxCategory;
         private TextBox textBox1;
@@ -202,6 +153,7 @@ namespace Bestellsystem_Lieferdienst_Client
         private Button btn_SucheBestätigen;
         private Label lbl_OurProducts;
         private ShoppingCartView shoppingcart = new ShoppingCartView();
+        private ProductsView productsView = new ProductsView();
 
 
         void InitializeManualComponent()
@@ -213,7 +165,9 @@ namespace Bestellsystem_Lieferdienst_Client
 
                 //TODO: make button for user options.
             }
-
+            productsView.BackColor = Color.Aquamarine;
+            productsView.Dock = DockStyle.Bottom;//TODO: fixme
+            Controls.Add(productsView);
             Controls.Add(shoppingcart);
         }
     }

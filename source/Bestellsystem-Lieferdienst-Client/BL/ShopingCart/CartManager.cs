@@ -6,7 +6,7 @@ namespace Bestellsystem_Lieferdienst.BL.ShopingCart
     //Generated
     public static class CartManager
     {
-        public static BindingList<CartItem> CartItems { get; } = new BindingList<CartItem>();
+        public static BindingList<CartItem> CartItems { get; } = new();
 
         public static void AddProduct(Product product)
         {

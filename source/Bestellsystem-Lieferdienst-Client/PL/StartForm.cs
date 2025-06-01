@@ -1,7 +1,8 @@
 using Bestellsystem_Lieferdienst.BL;
-using Bestellsystem_Lieferdienst.BL.ShopingCart;
 using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.PL;
+using Bestellsystem_Lieferdienst.BL.StartForm;
+using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -17,6 +18,7 @@ namespace Bestellsystem_Lieferdienst_Client
 
         void GetAndInitData()
         {
+            //TODO:should the data filtered on the client or directly at the server?
             cbxCategory.Items.Add("Alle");
             cbxCategory.SelectedIndex = 0;
             foreach (var VARIABLE in GetData.GetAllProductCategories())
@@ -24,15 +26,10 @@ namespace Bestellsystem_Lieferdienst_Client
                 cbxCategory.Items.Add(VARIABLE);
             }
 
-            for (int i = 0; i < 40; i++)
-            {
-                CartManager.AddProduct(new($"Name{i}", "description", 12, [""]));
-            }
-
-            //GetData.GetAllProducts();
+            var x = GetData.GetAllProducts();
+            productsView.SetItems(x);
         }
-        //Generated
-        //End
+
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
@@ -44,21 +41,6 @@ namespace Bestellsystem_Lieferdienst_Client
             this.LoadView(new SignupUserControl());
         }
 
-        private void pBXProduct1Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblProduct1Name_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -67,6 +49,16 @@ namespace Bestellsystem_Lieferdienst_Client
         private void StartForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn_SucheBestätigen_Click(object sender, EventArgs e)
+        {
+            productsView.ApplyFilter(textBox1.Text, cbxCategory.SelectedItem.ToString());
+        }
+
+        private void cbxCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            productsView.ApplyFilter(textBox1.Text, cbxCategory.SelectedItem.ToString());
         }
     }
 }

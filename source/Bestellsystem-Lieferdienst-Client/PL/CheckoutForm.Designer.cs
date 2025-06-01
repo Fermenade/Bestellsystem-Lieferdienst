@@ -132,7 +132,7 @@
             lbl_BestellungGesamtpreis.TabIndex = 9;
             lbl_BestellungGesamtpreis.Text = "Preis";
             // 
-            // UserControl1
+            // ProductsView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
