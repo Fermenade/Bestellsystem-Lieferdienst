@@ -14,6 +14,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         {
             // Get properties of the type T that are not marked with IgnoreInsertAttribute
             var properties = typeof(T).GetFields()
+                .Skip(1) //This is to skip the id. TODO: check if n:m insert break here (they'll prob break)
                 .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
 
             // Get the column names from the properties
