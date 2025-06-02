@@ -147,6 +147,7 @@ public class Commands
                              i.address_addressID = _dbHelper.InsertItemIntoTable(command);
                         }
 
+                        i.usertypeID = (int)Usertype.Customer;
                         command = new SqlCommand().Insert(tableUser, i);
                         _dbHelper.InsertItemIntoTable(command);
 
