@@ -1,5 +1,4 @@
 using Bestellsystem_Lieferdienst.BL;
-using Bestellsystem_Lieferdienst.PL;
 using Client_Server_Code_Library;
 using System.Security.Cryptography;
 using System.Text;
@@ -34,12 +33,11 @@ public partial class SignupUserControl : UserControl
             }
             else
             {
-                string firstname = tbx_Firstname.Text,
-                    lastname = tbx_Lastname.Text,
+                string 
                     email = tbx_Email.Text,
                     password = tbx_Password.Text;
 
-                user = new User(firstname, lastname, email, password);
+                user = new User(email, password);
             }
         }
         catch (Exception ex)
