@@ -10,20 +10,25 @@ public class DatabaseHelper(string connectionString)
 
     public int InsertItemIntoTable(SqlCommand query)
     {
-
-        using (var command = new MySqlCommand(query.SqlStatement, _connection))
+        using (MySqlConnection _connection = new(connectionString))
         {
-            foreach (var VARIABLE in query.Parameters)
+            _connection.Open();
+
+            using (var command = new MySqlCommand(query.SqlStatement, _connection))
             {
-                command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
-            }
-            try
-            {
-               return command.ExecuteNonQuery();
-            }
-            catch (MySqlException ex) // Catching specific exception related to MySQL
-            {
-                throw new Exception("Failed to insert item: " + query.SqlStatement);
+                foreach (var VARIABLE in query.Parameters)
+                {
+                    command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
+                }
+
+                try
+                {
+                    return command.ExecuteNonQuery();
+                }
+                catch (MySqlException ex) // Catching specific exception related to MySQL
+                {
+                    throw new Exception("Failed to insert item: " + query.SqlStatement);
+                }
             }
         }
     }
@@ -35,7 +40,6 @@ public class DatabaseHelper(string connectionString)
     /// <returns>The amount of rows affected.</returns>
     public int ExecuteNonQuery(SqlCommand query)
     {
-        _connection.Open();
         using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
         {
             foreach (var VARIABLE in query.Parameters)
@@ -43,7 +47,6 @@ public class DatabaseHelper(string connectionString)
                 command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
             }
 
-            _connection.Close();
             return command.ExecuteNonQuery(); //TODO: Make it run async
         }
     }
@@ -123,31 +126,34 @@ public class DatabaseHelper(string connectionString)
     public object[][]? GetDataFromDatabase(SqlCommand query)
     {
         List<object[]> data = new List<object[]>();
-        _connection.Open();
-
-        using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
+        using (MySqlConnection _connection = new(connectionString))
         {
+            _connection.Open();
 
-            foreach (var VARIABLE in query.Parameters)
+            using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
             {
-                command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
-            }
-            using (MySqlDataReader reader = command.ExecuteReader())
-            {
-                if (reader == null) throw new Exception("Error reading data from database");
-                while (reader.Read())
+
+                foreach (var VARIABLE in query.Parameters)
                 {
-                    List<object> temp = new List<object>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        temp.Add(reader.GetValue(i));
-                    }
+                    command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
+                }
 
-                    data.Add(temp.ToArray());
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader == null) throw new Exception("Error reading data from database");
+                    while (reader.Read())
+                    {
+                        List<object> temp = new List<object>();
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            temp.Add(reader.GetValue(i));
+                        }
+
+                        data.Add(temp.ToArray());
+                    }
                 }
             }
+            return data.ToArray();
         }
-        _connection.Close();
-        return data.ToArray();
     }
 }
