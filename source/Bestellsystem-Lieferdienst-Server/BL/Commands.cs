@@ -58,7 +58,7 @@ public class Commands
                 foreach (var VARIABLE in products)
                 {
                     command = new SqlCommand().SelectColumnsByJoin(tableProductGroup, cTableProduct_ProductGroup,
-                        ["name"], [("productID", VARIABLE.ID)], null);
+                        ["name"], [("productID", VARIABLE.ID)], null, ["name"]);
                     List<string> categories = new();
                     foreach (var VARIABLE1 in _dbHelper.GetDataFromDatabase(command))
                     {
@@ -116,7 +116,9 @@ public class Commands
                 SqlCommand command =
                     new SqlCommand().SelectByNonPredefined(tableUser, [("email", i[0]), ("password", i[1])]);
 
-                return _dbHelper.GetDataFromDatabase<User>(command);
+                var user = _dbHelper.GetDataFromDatabase<User>(command);
+                //user[0].Address = new Address();
+                return user;
             }
         }
 
@@ -135,16 +137,27 @@ public class Commands
                     if (user == null)
                     {
                         User i = JsonSerialize.Deserialize<User>(args);
-                        SqlCommand command = new SqlCommand().Insert(tableUser, i);
+
+                        Address address = i.Address;
+                        SqlCommand command;
+                        int x;
+                        if (address != null)
+                        {
+                             command = new SqlCommand().Insert(tableAddress, address,["addressID"]);
+                             i.address_addressID = _dbHelper.InsertItemIntoTable(command);
+                        }
+
+                        command = new SqlCommand().Insert(tableUser, i);
                         _dbHelper.InsertItemIntoTable(command);
 
-                        //TODOMaybe add Unique ID between Client and server when client looses connection. it can send a reconnect command with the ID.
-                        return "UserHappened";
                     }
                     else
                     {
+                        //this should never happen
                         throw new Exception("Tried to create a new user for a already logged in user.");
                     }
+
+                    return null;
                 }
             }
 

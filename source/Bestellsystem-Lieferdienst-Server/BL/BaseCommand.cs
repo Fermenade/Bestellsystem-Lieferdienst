@@ -101,7 +101,7 @@ public abstract class BaseCommand : ICommand
         {
             throw new ArgumentException("Command must have at least one argument");
         }
-        if ((int)userCommand.Command.MinPrivilegeRequired <= (userCommand.User?.UsertypeID ?? 0))
+        if ((int)userCommand.Command.MinPrivilegeRequired <= (userCommand.User?.usertypeID ?? 0))
         {
             return userCommand.Command.Execute(userCommand.User, userCommand.Argument);
         }

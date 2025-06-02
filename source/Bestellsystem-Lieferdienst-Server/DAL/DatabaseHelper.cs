@@ -8,7 +8,7 @@ public class DatabaseHelper(string connectionString)
 {
     private MySqlConnection _connection = new(connectionString); //if this fails database couldn't be reached.
 
-    public void InsertItemIntoTable(SqlCommand query)
+    public int InsertItemIntoTable(SqlCommand query)
     {
 
         using (var command = new MySqlCommand(query.SqlStatement, _connection))
@@ -19,7 +19,7 @@ public class DatabaseHelper(string connectionString)
             }
             try
             {
-                command.ExecuteNonQuery();
+               return command.ExecuteNonQuery();
             }
             catch (MySqlException ex) // Catching specific exception related to MySQL
             {
@@ -75,6 +75,8 @@ public class DatabaseHelper(string connectionString)
         //Generated
         List<T> results = [];
         var o = GetDataFromDatabase(query);
+        if (o.Length == 0) return [];
+
         ConstructorInfo? matchedConstructor = null;
 
         //Check if the class has a matching constructor
@@ -127,7 +129,7 @@ public class DatabaseHelper(string connectionString)
 
         using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
         {
-            
+
             foreach (var VARIABLE in query.Parameters)
             {
                 command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);

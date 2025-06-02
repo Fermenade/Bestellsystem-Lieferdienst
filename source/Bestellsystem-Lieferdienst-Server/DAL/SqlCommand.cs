@@ -1,20 +1,28 @@
-﻿using Mysqlx.Crud;
-using MySqlX.XDevAPI.Relational;
+﻿using Client_Server_Code_Library;
 using System.Reflection;
 
 namespace Bestellsystem_Lieferdienst_Server.DAL
 {
     public class SqlCommand
     {
+        //Trust me, this class will improve our all life :thumbsup: 
         public string SqlStatement { get; private set; } = string.Empty;
         public (string, object)[]? Parameters { get; private set; } = [];
 
-        public SqlCommand Insert<T>(string table, T data)
+        //Generated 1/2
+        public SqlCommand Insert<T>(string table, T data, string[] returnColumns = null)
         {
-            var properties = typeof(T).GetProperties();
-            var columnNames = properties.Select(p => p.Name);
+            // Get properties of the type T that are not marked with IgnoreInsertAttribute
+            var properties = typeof(T).GetFields()
+                .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
 
-            SqlStatement = BuildInsertStatement(table, columnNames);
+            // Get the column names from the properties
+            var columnNames = properties.Select(p => p.Name).ToList();
+
+            // Build the insert statement with OUTPUT clause
+            SqlStatement = BuildInsertStatement(table, columnNames, returnColumns);
+
+            // Convert properties to parameters
             Parameters = ConvertToParameters(properties, data);
 
             return this;
@@ -22,7 +30,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
         public SqlCommand Update<T>(string table, T data)
         {
-            var properties = typeof(T).GetProperties();
+            var properties = typeof(T).GetFields();
             var columnNames = properties.Select(p => p.Name);
 
             SqlStatement = BuildUpdateStatement(table, columnNames);
@@ -30,13 +38,15 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
             return this;
         }
+
         //1/2 Generated
         public SqlCommand SelectColumnsByJoin(
             string returnTable,
             string joinTable,
             IReadOnlyList<string> columns,
             (string, object)[]? joinIdentifier,
-            (string, object)[]? identifier)
+            (string, object)[]? identifier,
+            IReadOnlyList<string>? groupBy = null)
         {
             var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
 
@@ -48,9 +58,15 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
                 ? "WHERE " + string.Join(" AND ", identifier.Select(i => $"{FormatIdentifier(i.Item1)} = @{i.Item1}"))
                 : string.Empty; // no WHERE clause
 
+            // Build GROUP BY condition (if provided)
+            string groupByClause = groupBy != null && groupBy.Count > 0
+                ? "GROUP BY " + string.Join(", ", groupBy.Select(FormatIdentifier))
+                : string.Empty; // no GROUP BY clause if null or empty
+
+            // Final SQL Statement
             SqlStatement = $"SELECT {selectedColumns} FROM {FormatIdentifier(returnTable)} " +
-                           $"JOIN {FormatIdentifier(joinTable)} ON {joinCondition} " +
-                           $"{whereCondition}";
+                $"JOIN {FormatIdentifier(joinTable)} ON {joinCondition} " +
+            $"{whereCondition} {groupByClause}";
 
             Parameters = (joinIdentifier ?? []).Concat(identifier ?? []).ToArray();
 
@@ -110,15 +126,29 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         private static (string, object)[] CreateIdParameter(string table, int id) =>
             [($"@{table}Id", id)];
 
-        private static (string, object)[] ConvertToParameters(PropertyInfo[] properties, object data) =>
+        private static (string, object)[] ConvertToParameters(IEnumerable<FieldInfo> properties, object data) =>
             properties.Select(p => ($"@{p.Name}", p.GetValue(data) ?? DBNull.Value)).ToArray();
 
-        private static string BuildInsertStatement(string table, IEnumerable<string> columns)
+        //Generated
+        public static string BuildInsertStatement(string table, IEnumerable<string> columns, string[] returnColumns = null)
         {
+            // Format the list of columns for the SQL statement
             var colList = string.Join(", ", columns.Select(FormatIdentifier));
             var valList = string.Join(", ", columns.Select(c => $"@{c}"));
-            return $"INSERT INTO {FormatIdentifier(table)} ({colList}) VALUES ({valList})";
+
+            // Build the base insert statement
+            var insertStatement = $"INSERT INTO {FormatIdentifier(table)} ({colList}) VALUES ({valList})";
+
+            // If returnColumns is provided, add the OUTPUT clause
+            if (returnColumns != null && returnColumns.Any())
+            {
+                var outputList = string.Join(", ", returnColumns.Select(c => $"INSERTED.{FormatIdentifier(c)}"));
+                insertStatement = $"{insertStatement} OUTPUT {outputList}";
+            }
+
+            return insertStatement;
         }
+
 
         private static string BuildUpdateStatement(string table, IEnumerable<string> columns)
         {
