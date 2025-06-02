@@ -1,6 +1,7 @@
 using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.PL;
+using Bestellsystem_Lieferdienst.BL.ShopingCart;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client
@@ -19,7 +20,6 @@ namespace Bestellsystem_Lieferdienst_Client
         {
             //TODO:should the data filtered on the client or directly at the server?
             cbxCategory.Items.Add("Alle");
-            cbxCategory.SelectedIndex = 0;
             foreach (var VARIABLE in GetData.GetAllProductCategories())
             {
                 cbxCategory.Items.Add(VARIABLE.name);
@@ -27,6 +27,7 @@ namespace Bestellsystem_Lieferdienst_Client
 
             Product[] x = GetData.GetAllProducts();
             productsView.SetItems(x);
+            cbxCategory.SelectedIndex = 0;
         }
 
 

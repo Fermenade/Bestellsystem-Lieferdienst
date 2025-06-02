@@ -9,7 +9,7 @@ namespace Bestellsystem_Lieferdienst.PL.StartForm
         {
             InitializeComponent();
             this.lbxProduct2Name.Text = product.Name;
-            this.lbxProduct2Price.Text = product.Price.ToString();
+            this.lbxProduct2Price.Text = $"{product.Price:C}";
             this.btnProduct2AddToCart.Click += (o, s) =>
             {
                 CartManager.AddProduct(product);

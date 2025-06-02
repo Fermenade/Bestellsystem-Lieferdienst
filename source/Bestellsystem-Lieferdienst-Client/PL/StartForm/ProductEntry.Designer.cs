@@ -61,7 +61,7 @@
             lbxProduct2Price.Name = "lbxProduct2Price";
             lbxProduct2Price.Size = new Size(63, 25);
             lbxProduct2Price.TabIndex = 10;
-            lbxProduct2Price.Text = "8 Euro";
+            lbxProduct2Price.Text = "99,99€";
             // 
             // btnProduct2AddToCart
             // 
