@@ -10,7 +10,7 @@ namespace Bestellsystem_Lieferdienst.BL.ShopingCart
 
         public static void AddProduct(Product product)
         {
-            var existing = CartItems.FirstOrDefault(ci => ci.Product.Name == product.Name);
+            var existing = CartItems.FirstOrDefault(ci => ci.Product == product);
             if (existing != null)
             {
                 existing.Quantity++;

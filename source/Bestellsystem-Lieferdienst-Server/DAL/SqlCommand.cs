@@ -36,7 +36,8 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             string joinTable,
             IReadOnlyList<string> columns,
             (string, object)[]? joinIdentifier,
-            (string, object)[]? identifier)
+            (string, object)[]? identifier
+            )
         {
             var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
 

@@ -4,10 +4,10 @@
     //Generated
     using System.Windows.Forms;
 
-    public partial class ShoppingCartView : FlowLayoutPanel
+    public partial class ShoppingCart : FlowLayoutPanel
     {
-        private readonly Dictionary<CartItem, ShoppingCartItemControl> itemControlMap = new();
-        public ShoppingCartView()
+        public readonly Dictionary<CartItem, ShoppingCartItemControl> itemControlMap = new();
+        public ShoppingCart()
         {
             InitializeComponent();
 

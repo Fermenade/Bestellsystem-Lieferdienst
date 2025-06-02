@@ -1,4 +1,6 @@
-﻿using Client_Server_Code_Library;
+﻿using System.Data.Common;
+using Bestellsystem_Lieferdienst_Client;
+using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst.PL.StartForm
 {
@@ -9,36 +11,40 @@ namespace Bestellsystem_Lieferdienst.PL.StartForm
             InitializeComponent();
         }
 
-        private List<Product> allItems = new List<Product>();
+        private List<Product> allItems = new();
 
         public void SetItems(IEnumerable<Product> items)
         {
             allItems = items.ToList();
-            ApplyFilter(string.Empty, string.Empty);
         }
 
-        public void ApplyFilter(string nameFilter, string categorieFilter)
+        public void ApplyFilter(string nameFilter, string categoryFilter)
         {
             Controls.Clear();
-            if (categorieFilter == "Alle") categorieFilter = "";
 
             var filtered = allItems
                 .Where(name =>
-                    name.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase) ||
-                    name.Description.Contains(nameFilter, StringComparison.OrdinalIgnoreCase) &&
-                    name.Categories.Contains(categorieFilter)
+                    (
+                        name.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase) ||
+                        name.Description.Contains(nameFilter, StringComparison.OrdinalIgnoreCase)
+                    )
+                    && 
+                    (
+                        name.Categories.Contains(categoryFilter) ||
+                        "Alle" == categoryFilter
+                        )
                     );
 
             foreach (var name in filtered)
             {
                 var control = new ProductEntry(name);
-                control.Click += Control_Click;
+                control.Click += (o, e) =>
+                {
+                    Program.form.LoadView(new ProductDetailView(name));
+
+                };
                 Controls.Add(control);
             }
-        }
-        private void Control_Click(object? sender, EventArgs e)
-        {
-            this.LoadView(new ProductDetailView((Product)sender));
         }
     }
 }
