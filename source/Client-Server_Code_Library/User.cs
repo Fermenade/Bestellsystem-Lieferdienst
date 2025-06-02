@@ -24,9 +24,9 @@ public class User
     public User(string email, string password)
     {
         if (email == "") throw new("Email is empty");
-        email = email;
+        this.email = email;
         if (password == "") throw new("Password is empty");
-        password = password;
+        this.password = password;
     }
 
     public override string ToString()
