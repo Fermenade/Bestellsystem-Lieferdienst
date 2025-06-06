@@ -1,4 +1,8 @@
-﻿using Bestellsystem_Lieferdienst.PL.ShopingCart;
+﻿using Bestellsystem_Lieferdienst.BL.ShopingCart;
+using Bestellsystem_Lieferdienst.PL.ShopingCart;
+using System.ComponentModel;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Bestellsystem_Lieferdienst.PL
 {
@@ -18,6 +22,7 @@ namespace Bestellsystem_Lieferdienst.PL
             if (disposing && (components != null))
             {
                 components.Dispose();
+                CartManager.CartItems.ListChanged -= listChangedHandler;
             }
             base.Dispose(disposing);
         }
@@ -151,9 +156,5 @@ namespace Bestellsystem_Lieferdienst.PL
         private Label lbl_StraßeHausnummer;
         private Button btn_KaufAbschließen;
         private ShoppingCartView shoppingCart = new();
-        void InitializeManualComponent()
-        {
-            Controls.Add(shoppingCart);
-        }
     }
 }
