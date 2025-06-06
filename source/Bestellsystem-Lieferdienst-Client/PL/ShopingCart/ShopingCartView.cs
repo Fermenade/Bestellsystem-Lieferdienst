@@ -52,19 +52,27 @@ namespace Bestellsystem_Lieferdienst.PL.ShopingCart
             
             
             Label lblTotalTotal = new Label { Text = $"{0:C}", Left = 140, Width = 100, Top = 15, ForeColor = Color.Black };
+            Button btn_button = new Button { Text = "Kaufen", Left = 260, Width = 60, Top = 20, ForeColor = Color.Black , Enabled = (shoppingCart.itemControlMap.Count!=0)};
+            btn_button.Click += (s, e) =>
+            {
+                Parent.LoadView(new CheckoutForm());
+            };
             CartManager.CartItems.ListChanged += (s, e) =>
             {
-                decimal totalsum = 0;
+                if (this.shoppingCart.itemControlMap.Count == 0)
+                {
+                    btn_button.Enabled = false;
+                }
+                else
+                {
+                    btn_button.Enabled = true;
+                }
+                    decimal totalsum = 0;
                 foreach (var i in CartManager.CartItems)
                 {
                     totalsum += i.TotalPrice;
                 }
                 lblTotalTotal.Text = $"{totalsum:C}";
-            };
-            Button btn_button = new Button { Text = "Kaufen", Left = 260, Width = 60, Top = 20, ForeColor = Color.Black };
-            btn_button.Click += (s, e) =>
-            {
-                Parent.LoadView(new CheckoutForm());
             };
             // Create Sticky Bottom Panel
             panelBottom = new Panel
