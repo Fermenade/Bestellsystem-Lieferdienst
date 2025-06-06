@@ -34,7 +34,7 @@ public class Client : ClientStream
 
                 StartHandling();
 
-                ServerConnected();
+                Task.Run(ServerConnected);
             }
             catch (System.Net.Sockets.SocketException)
             {

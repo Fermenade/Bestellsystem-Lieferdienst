@@ -60,7 +60,7 @@ public class Client(Socket client) : ClientStream(client)
                     }
                     else
                     {
-                        user = JsonSerialize.Deserialize<User>(e[3]);
+                        user = JsonSerialize.Deserialize<User>(e[2]);
                     }
                 }
             }
