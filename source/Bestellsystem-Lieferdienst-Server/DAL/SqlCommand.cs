@@ -8,7 +8,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
     {
         //Trust me, this class will improve our all life :thumbsup: 
         public string SqlStatement { get; private set; } = string.Empty;
-        List<(string, object)> Parameters { get; private set; };
+        public List<(string, object)> Parameters { get; private set; }
 
         //Generated 1/2
         public SqlCommand Insert<T>(string table, T data, string[] returnColumns = null)
@@ -58,7 +58,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             string returnTable,
             string joinTable,
             IReadOnlyList<string> columns,
-            (string, object)[]? joinIdentifier,
+            (string, string)[]? joinIdentifier,
             (string, object)[]? identifier,
             IReadOnlyList<string>? groupBy = null)
         {
@@ -69,11 +69,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
 
             string joinCondition = string.Join(" AND ", joinIdentifier.Select(VARIABLE =>
-                    {
-                        string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
-                        Parameters.Add((uniqueName,VARIABLE.Item2));
-                        return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
-                    }
+                    $"{FormatIdentifier(VARIABLE.Item1)} = {VARIABLE.Item2}"
                 )
             );
 
@@ -82,7 +78,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
                         {
                             string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
                             Parameters.Add((uniqueName, VARIABLE.Item2));
-                            return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
+                            return $"{FormatIdentifier(VARIABLE.Item1)} = @{uniqueName}";
                         }
                     )
                 )

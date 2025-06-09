@@ -133,7 +133,7 @@ public class DatabaseHelper(string connectionString)
             using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
             {
 
-                foreach (var VARIABLE in query.Parameters)
+                foreach (var VARIABLE in query.Parameters ?? [])
                 {
                     command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
                 }

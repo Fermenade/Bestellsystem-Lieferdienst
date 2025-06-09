@@ -63,7 +63,6 @@ public class Commands
                     foreach (var VARIABLE1 in _dbHelper.GetDataFromDatabase(command))
                     {
                         categories.Add(VARIABLE1[0].ToString());
-
                     }
 
                     VARIABLE.Categories = categories.ToArray();
