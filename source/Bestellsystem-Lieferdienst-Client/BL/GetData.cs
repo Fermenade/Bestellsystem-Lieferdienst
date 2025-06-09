@@ -6,20 +6,19 @@ namespace Bestellsystem_Lieferdienst.BL
 {
     public static class GetData
     {
-        public static Product[] GetAllProducts() => Client.client.SendAndReturn<Product[]>("GET ALLPRODUCTS");
+        public static Task<Product[]> GetAllProducts() => Client.client.SendAndReturnAsync<Product[]>("GET ALLPRODUCTS");
 
-        public static Product GetProduct(int id) => Client.client.SendAndReturn<Product>($"GET PRODUCT {id}");
+        public static Task<Product> GetProduct(int id) => Client.client.SendAndReturnAsync<Product>($"GET PRODUCT {id}");
 
-        public static User GetUser(string username, string password) =>
-            Client.client.SendAndReturn<User>($"GET USER '{username} {password}'");
+        public static Task<User> GetUser(User user) =>
+            Client.client.SendAndReturnAsync<User>($"GET USER {user}");
 
-        public static ProductCategory[] GetAllProductCategories() =>
-            Client.client.SendAndReturn<ProductCategory[]>("GET ALLCATEGORIES");
+        public static Task<ProductCategory[]> GetAllProductCategories() => Client.client.SendAndReturnAsync<ProductCategory[]>("GET ALLCATEGORIES");
 
-        public static bool SetUser(User user) => Client.client.SendAndReturn<bool>("SET USER " + user);
-        public static bool SetOrder(CartItem[] items) => Client.client.SendAndReturn<bool>("SET ORDER "+items);
+        public static Task<bool> SetUser(User user) => Client.client.SendAndReturnAsync<bool>("SET USER " + user);
+        public static Task<bool> SetOrder(CartItem[] items) => Client.client.SendAndReturnAsync<bool>("SET ORDER " + items);
 
-        public static bool UpdateUser(User user) => Client.client.SendAndReturn<bool>("UPDATE USER " + user);
+        public static Task<bool> UpdateUser(User user) => Client.client.SendAndReturnAsync<bool>("UPDATE USER " + user);
         //public static User GetUser(string email, string password) => Client.client.SendAndReturn<User>("GET USER ");
     }
 }

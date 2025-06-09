@@ -54,7 +54,7 @@ public class ClientStream : TcpClient
         });
         InitializeFinished = true;
     }
-    async void SendBinaryAsync(byte[] bytes)
+    async void SendBinary(byte[] bytes)
     {
         //So normally the client won't send any information just after starting, but just to make sure that this doesn't do any problems
         //in the future here is the fix.
@@ -94,32 +94,23 @@ public class ClientStream : TcpClient
         }
     }
 
-    public void MessageSendAsync(string message)
+    public void MessageSend(string message)
     {
         byte[] data = BinaryCoder.BinaryEncoder(message);
-        SendBinaryAsync(data);
+        SendBinary(data);
         Debug.WriteLine($"Sent message {message}");
     }
 
-    public T SendAndReturn<T>(string command) => SendAndReturnAsync<T>(command).Result;
+    //public T SendAndReturn<T>(string command) => Task.Run(() => SendAndReturnAsync<T>(command)).Result;
+    
 
-    private Task<T> SendAndReturnAsync<T>(string command)
+    public async Task<T> SendAndReturnAsync<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
-        MessageSendAsync(JsonSerialize.Serialize(newPackage));
+        MessageSend(JsonSerialize.Serialize(newPackage));
 
-        // Create a task that will complete when newPackage.WaitForAnswer() is done
-        return Task.Run(() =>
-        {
-            var x = newPackage.WaitForAnswer();
-            while (!x.IsCompleted)
-            {
-                // Optionally, you can add a small delay to prevent busy waiting
-                Thread.Sleep(10); // Sleep for 10 milliseconds
-            }
-
-            return JsonSerialize.Deserialize<T>(x.Result);
-        });
+        string x = await newPackage.WaitForAnswerAsync().ConfigureAwait(false);
+        return JsonSerialize.Deserialize<T>(x);
     }
 
     public event MessageDelegate MessageReceived;

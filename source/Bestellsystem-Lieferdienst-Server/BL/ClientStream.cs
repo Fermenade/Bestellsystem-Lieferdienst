@@ -62,7 +62,7 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
     public async Task<T> SendAndReturn<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
-        string i = await newPackage.WaitForAnswer();//RequestRecieve
+        string i = await newPackage.WaitForAnswerAsync();//RequestRecieve
         return JsonSerialize.Deserialize<T>(i);
     }
 

@@ -26,7 +26,7 @@ public class PendingPackage : Package
         return false;
     }
 
-    public Task<string> WaitForAnswer()
+    public Task<string> WaitForAnswerAsync()
     {
         return pendingPackages[this.UID].Task; // Return the existing Task
     }
@@ -34,12 +34,6 @@ public class PendingPackage : Package
 public class Package
 {
     public Guid UID;
-
-    //TODO: add time out if the other does not respond within a specified time frame the package will be sent again. if that fails too connection will
-    //be set into crisis mode (e.g. popup that tells user that connection was lost.)
-
-
-    //TODO: fixme
 
 
     //Ok here is the basic idea:

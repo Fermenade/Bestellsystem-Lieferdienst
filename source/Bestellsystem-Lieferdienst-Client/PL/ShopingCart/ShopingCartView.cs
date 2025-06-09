@@ -1,16 +1,9 @@
 ﻿using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst.BL.ShopingCart;
-using Bestellsystem_Lieferdienst_Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Bestellsystem_Lieferdienst.PL.ShopingCart
 {
-    internal class ShoppingCartView:Panel
+    internal class ShoppingCartView : Panel
     {
         private const int width = 460;
         private ShoppingCart shoppingCart = new();
@@ -47,12 +40,12 @@ namespace Bestellsystem_Lieferdienst.PL.ShopingCart
                 BorderStyle = BorderStyle.FixedSingle,
                 BackColor = Color.AliceBlue,
             };
-            panelTop.Controls.AddRange(new [] { lblTitle, lblAmount, lblTotal });
+            panelTop.Controls.AddRange(new[] { lblTitle, lblAmount, lblTotal });
 
-            
-            
+
+
             Label lblTotalTotal = new Label { Text = $"{0:C}", Left = 140, Width = 100, Top = 15, ForeColor = Color.Black };
-            Button btn_button = new Button { Text = "Kaufen", Left = 260, Width = 60, Top = 20, ForeColor = Color.Black , Enabled = (shoppingCart.itemControlMap.Count!=0)};
+            Button btn_button = new Button { Text = "Kaufen", Left = 260, Width = 60, Top = 20, ForeColor = Color.Black, Enabled = (shoppingCart.itemControlMap.Count != 0) };
             btn_button.Click += (s, e) =>
             {
                 Parent.LoadView(new CheckoutForm());
@@ -67,7 +60,7 @@ namespace Bestellsystem_Lieferdienst.PL.ShopingCart
                 {
                     btn_button.Enabled = true;
                 }
-                    decimal totalsum = 0;
+                decimal totalsum = 0;
                 foreach (var i in CartManager.CartItems)
                 {
                     totalsum += i.TotalPrice;
@@ -81,7 +74,7 @@ namespace Bestellsystem_Lieferdienst.PL.ShopingCart
                 Dock = DockStyle.Bottom,
                 BackColor = Color.LightGreen
             };
-            panelBottom.Controls.AddRange(new Control [] { lblTotalTotal, btn_button});
+            panelBottom.Controls.AddRange(new Control[] { lblTotalTotal, btn_button });
 
             // Add to form
             Controls.Add(shoppingCart);

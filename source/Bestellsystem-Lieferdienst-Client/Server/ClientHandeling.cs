@@ -85,12 +85,30 @@ public class Client : ClientStream
     void ProcessReceiveMessages(string message)
     {
         Debug.WriteLine($"Received message '{message}' from server");
-
-        Package request = JsonSerialize.Deserialize<Package>(message);
-
-        if (!PendingPackage.isPendingPackage(request))
+        Package request;
+        try
         {
+            request = JsonSerialize.Deserialize<Package>(message);
+        }
+        catch (Exception ex)
+        {
+            MainForm.ShowError("Received something that didn't look like a package");
+            return;
+        }
 
+        bool isPendingPackage;
+        try
+        {
+            isPendingPackage = PendingPackage.isPendingPackage(request);
+        }
+        catch (Exception e)
+        {
+            MainForm.ShowError(e.Message);
+            return;
+        }
+
+        if (!isPendingPackage)
+        {
             //This logic if this is not nativ request.
             string data = request.Data;
             try
@@ -119,7 +137,8 @@ public class Client : ClientStream
                 }
             }
 
-            MessageSendAsync(request.ToString());
+            MessageSend(request.ToString());
         }
+
     }
 }
