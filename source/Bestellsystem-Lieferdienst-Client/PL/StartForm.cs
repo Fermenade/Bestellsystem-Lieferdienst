@@ -14,16 +14,16 @@ namespace Bestellsystem_Lieferdienst_Client
             GetAndInitData();
         }
 
-        void GetAndInitData()
+        async void GetAndInitData()
         {
             //TODO:should the data filtered on the client or directly at the server?
             cbxCategory.Items.Add("Alle");
-            foreach (var VARIABLE in GetData.GetAllProductCategories())
+            foreach (var VARIABLE in await GetData.GetAllProductCategories())
             {
                 cbxCategory.Items.Add(VARIABLE.name);
             }
 
-            Product[] x = GetData.GetAllProducts();
+            Product[] x = await GetData.GetAllProducts();
             productsView.SetItems(x);
             cbxCategory.SelectedIndex = 0;
         }

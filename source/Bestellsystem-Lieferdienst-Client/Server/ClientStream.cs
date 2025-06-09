@@ -101,28 +101,16 @@ public class ClientStream : TcpClient
         Debug.WriteLine($"Sent message {message}");
     }
 
-    public T SendAndReturn<T>(string command) => SendAndReturnAsync<T>(command).Result;
+    //public T SendAndReturn<T>(string command) => Task.Run(() => SendAndReturnAsync<T>(command)).Result;
+    
 
-    private async Task<T> SendAndReturnAsync<T>(string command)
+    public async Task<T> SendAndReturnAsync<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
         MessageSend(JsonSerialize.Serialize(newPackage));
 
-        var x = await newPackage.WaitForAnswerAsync(); // Assuming WaitForAnswerAsync is an async method
+        string x = await newPackage.WaitForAnswerAsync().ConfigureAwait(false);
         return JsonSerialize.Deserialize<T>(x);
-
-        // Create a task that will complete when newPackage.WaitForAnswerAsync() is done
-        //return Task.Run(() =>
-        //{
-        //    var x = newPackage.WaitForAnswerAsync();
-        //    while (!x.IsCompleted)
-        //    {
-        //        // Optionally, you can add a small delay to prevent busy waiting
-        //        Thread.Sleep(10); // Sleep for 10 milliseconds
-        //    }
-
-        //    return JsonSerialize.Deserialize<T>(x.Result);
-        //});
     }
 
     public event MessageDelegate MessageReceived;
