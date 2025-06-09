@@ -39,6 +39,20 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
             return this;
         }
+        //1/2 Generated
+        private (string, (string, object)[]) CreateConditionAndParams((string, object)[]? identifiers)
+        {
+            if (identifiers?.Length > 0)
+            {
+                var condition = string.Join(" AND ", identifiers.Select((i, index) => $"{FormatIdentifier(i.Item1)} = @{index}_{i.Item1}"));
+                var paramsArray = identifiers.Select((i, index) => ($"@{index}_{i.Item1}", i.Item2)).ToArray();
+                return (condition, paramsArray);
+            }
+            else
+            {
+                return ("1=1", Array.Empty<(string, object)>());
+            }
+        }
 
         //1/2 Generated
         public SqlCommand SelectColumnsByJoin(
@@ -51,13 +65,8 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         {
             var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
 
-            string joinCondition = joinIdentifier?.Length > 0
-                ? string.Join(" AND ", joinIdentifier.Select(j => $"{FormatIdentifier(j.Item1)} = @{j.Item1}"))
-                : "1=1"; // always true join condition
-
-            string whereCondition = identifier?.Length > 0
-                ? "WHERE " + string.Join(" AND ", identifier.Select(i => $"{FormatIdentifier(i.Item1)} = @{i.Item1}"))
-                : string.Empty; // no WHERE clause
+            var (joinCondition, joinParams) = CreateConditionAndParams(joinIdentifier);
+            var (whereCondition, whereParams) = CreateConditionAndParams(identifier);
 
             // Build GROUP BY condition (if provided)
             string groupByClause = groupBy != null && groupBy.Count > 0
