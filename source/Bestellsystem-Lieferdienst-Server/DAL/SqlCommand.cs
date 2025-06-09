@@ -1,4 +1,5 @@
 ﻿using Client_Server_Code_Library;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Bestellsystem_Lieferdienst_Server.DAL
@@ -7,7 +8,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
     {
         //Trust me, this class will improve our all life :thumbsup: 
         public string SqlStatement { get; private set; } = string.Empty;
-        public (string, object)[]? Parameters { get; private set; } = [];
+        List<(string, object)> Parameters { get; private set; };
 
         //Generated 1/2
         public SqlCommand Insert<T>(string table, T data, string[] returnColumns = null)
@@ -63,9 +64,14 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         {
             var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
 
+            Parameters = new List<(string, object)>(joinIdentifier.Length+identifier.Length);
+
+
+
             string joinCondition = string.Join(" AND ", joinIdentifier.Select(VARIABLE =>
                     {
                         string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
+                        Parameters.Add((uniqueName,VARIABLE.Item2));
                         return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
                     }
                 )
@@ -75,6 +81,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
                 ? "WHERE " + string.Join(" AND ", identifier.Select(VARIABLE =>
                         {
                             string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
+                            Parameters.Add((uniqueName, VARIABLE.Item2));
                             return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
                         }
                     )
@@ -94,8 +101,6 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
                 $"JOIN {FormatIdentifier(joinTable)} ON {joinCondition} " +
             $"{whereCondition} {groupByClause}";
 
-            Parameters = (joinIdentifier ?? []).Concat(identifier ?? []).ToArray();
-
             return this;
         }
 
@@ -105,7 +110,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             return this;
         }
 
-        public SqlCommand SelectByNonPredefined(string table, (string, object)[] identifier)
+        public SqlCommand SelectByNonPredefined(string table, List<(string, object)> identifier)
         {
             var conditions = string.Join(" AND ", identifier.Select(i => $"{FormatIdentifier(i.Item1)} = @{i.Item1}"));
 
@@ -149,11 +154,11 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             return this;
         }
 
-        private static (string, object)[] CreateIdParameter(string table, int id) =>
+        private static List<(string, object)> CreateIdParameter(string table, int id) =>
             [($"@{table}Id", id)];
 
-        private static (string, object)[] ConvertToParameters(IEnumerable<FieldInfo> properties, object data) =>
-            properties.Select(p => ($"@{p.Name}", p.GetValue(data) ?? DBNull.Value)).ToArray();
+        private static List<(string, object)> ConvertToParameters(IEnumerable<FieldInfo> properties, object data) =>
+            properties.Select(p => ($"@{p.Name}", p.GetValue(data) ?? DBNull.Value)).ToList();
 
         //Generated
         public static string BuildInsertStatement(string table, IEnumerable<string> columns, string[] returnColumns = null)

@@ -59,6 +59,8 @@ namespace Bestellsystem_Lieferdienst.PL
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 192, 192);
             Controls.Add(lb_Error);
+            Left = 0;
+            Top = 0;
             Controls.Add(btn_close);
             Name = "ErrorPopup";
             Size = new Size(879, 150);

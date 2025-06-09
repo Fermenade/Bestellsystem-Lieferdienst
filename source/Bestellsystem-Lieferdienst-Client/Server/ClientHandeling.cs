@@ -92,7 +92,7 @@ public class Client : ClientStream
         }
         catch (Exception ex)
         {
-            MainForm.ShowError("Received something that didn't look like a package");
+            MessageBox.Show(ex.Message);
             return;
         }
 
@@ -101,9 +101,9 @@ public class Client : ClientStream
         {
             isPendingPackage = PendingPackage.isPendingPackage(request);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            MainForm.ShowError(e.Message);
+            MessageBox.Show(ex.Message);
             return;
         }
 

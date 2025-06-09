@@ -1,5 +1,7 @@
-﻿using Bestellsystem_Lieferdienst.PL;
+﻿using System.Runtime.CompilerServices;
+using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client;
+using Bestellsystem_Lieferdienst.BL;
 
 namespace Bestellsystem_Lieferdienst
 {
@@ -9,11 +11,6 @@ namespace Bestellsystem_Lieferdienst
         {
             InitializeComponent();
             InitializeManualComponent();
-        }
-
-        public static void ShowError(string error)
-        {
-            Program.form.Controls.Add(new ErrorPopup(error));
         }
     }
 }
