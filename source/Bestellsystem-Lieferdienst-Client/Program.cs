@@ -18,6 +18,7 @@ namespace Bestellsystem_Lieferdienst_Client
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            Client.client = new Client("192.168.0.67", 5000);
             Client.client.ConnectToServer();
 
             Application.Run(form);

@@ -25,8 +25,7 @@ public class User
     {
         if (email == "") throw new("Email is empty");
         this.email = email;
-        if (password == "") throw new("Password is empty");
-        this.password = password;
+        this.password = password;//Yes, user can have empty password.
     }
 
     public override string ToString()

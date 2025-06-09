@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using Bestellsystem_Lieferdienst.BL;
+﻿using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst_Client;
 using Client_Server_Code_Library;
 
@@ -29,7 +28,7 @@ namespace Bestellsystem_Lieferdienst.PL.StartForm
                         name.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase) ||
                         name.Description.Contains(nameFilter, StringComparison.OrdinalIgnoreCase)
                     )
-                    && 
+                    &&
                     (
                         name.Categories.Contains(categoryFilter) ||
                         "Alle" == categoryFilter

@@ -143,8 +143,8 @@ public class Commands
                         int x;
                         if (address != null)
                         {
-                             command = new SqlCommand().Insert(tableAddress, address,["addressID"]);
-                             i.address_addressID = _dbHelper.InsertItemIntoTable(command);
+                            command = new SqlCommand().Insert(tableAddress, address, ["addressID"]);
+                            i.address_addressID = _dbHelper.InsertItemIntoTable(command);
                         }
 
                         i.usertypeID = (int)Usertype.Customer;
