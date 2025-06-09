@@ -63,21 +63,26 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         {
             var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
 
-            string joinCondition = string.Join(" AND ", joinIdentifier.Select(VARIABLE => 
-                    {
-                    string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
-                    return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
-                    }
-                    )
-            );
-
-            string whereCondition = string.Join(" AND ", identifier.Select(VARIABLE =>
+            string joinCondition = string.Join(" AND ", joinIdentifier.Select(VARIABLE =>
                     {
                         string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
                         return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
                     }
                 )
             );
+
+            string whereCondition = identifier?.Length > 0
+                ? "WHERE " + string.Join(" AND ", identifier.Select(VARIABLE =>
+                        {
+                            string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
+                            return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
+                        }
+                    )
+                )
+                : string.Empty;
+            //string whereCondition = identifier?.Length > 0
+            //    ? "WHERE " + string.Join(" AND ", identifier.Select(i => $"{FormatIdentifier(i.Item1)} = @{i.Item1}"))
+            //    : string.Empty; // no WHERE clause
 
             // Build GROUP BY condition (if provided)
             string groupByClause = groupBy != null && groupBy.Count > 0
