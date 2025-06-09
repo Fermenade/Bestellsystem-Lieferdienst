@@ -102,7 +102,7 @@ public class ClientStream : TcpClient
     }
 
     //public T SendAndReturn<T>(string command) => Task.Run(() => SendAndReturnAsync<T>(command)).Result;
-    
+
 
     public async Task<T> SendAndReturnAsync<T>(string command)
     {

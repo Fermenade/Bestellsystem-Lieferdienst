@@ -40,18 +40,16 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             return this;
         }
         //1/2 Generated
-        private (string, (string, object)[]) CreateConditionAndParams((string, object)[]? identifiers)
+        private string GetUniqueParameterName(string baseName)
         {
-            if (identifiers?.Length > 0)
+            string uniqueName = baseName;
+            int counter = 1;
+
+            while (Parameters.Any(name => name.Item1 == uniqueName))
             {
-                var condition = string.Join(" AND ", identifiers.Select((i, index) => $"{FormatIdentifier(i.Item1)} = @{index}_{i.Item1}"));
-                var paramsArray = identifiers.Select((i, index) => ($"@{index}_{i.Item1}", i.Item2)).ToArray();
-                return (condition, paramsArray);
+                uniqueName = $"{baseName}_{counter++}";
             }
-            else
-            {
-                return ("1=1", Array.Empty<(string, object)>());
-            }
+            return uniqueName;
         }
 
         //1/2 Generated
@@ -65,8 +63,21 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         {
             var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
 
-            var (joinCondition, joinParams) = CreateConditionAndParams(joinIdentifier);
-            var (whereCondition, whereParams) = CreateConditionAndParams(identifier);
+            string joinCondition = string.Join(" AND ", joinIdentifier.Select(VARIABLE => 
+                    {
+                    string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
+                    return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
+                    }
+                    )
+            );
+
+            string whereCondition = string.Join(" AND ", identifier.Select(VARIABLE =>
+                    {
+                        string uniqueName = GetUniqueParameterName(VARIABLE.Item1);
+                        return $"{FormatIdentifier(uniqueName)} = @{uniqueName}";
+                    }
+                )
+            );
 
             // Build GROUP BY condition (if provided)
             string groupByClause = groupBy != null && groupBy.Count > 0
