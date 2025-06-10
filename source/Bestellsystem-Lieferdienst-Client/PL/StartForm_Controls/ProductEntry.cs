@@ -9,9 +9,9 @@ public partial class ProductEntry : UserControl
     public ProductEntry(Product product)
     {
         InitializeComponent();
-        if (product.picture != null)
+        if (product.Picture != null)
         {
-            using MemoryStream ms = new MemoryStream(product.picture);
+            using MemoryStream ms = new MemoryStream(product.Picture);
             // Create an image from the byte array
             pBXProduct2.Image = Image.FromStream(ms);
         }

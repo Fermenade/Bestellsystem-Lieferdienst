@@ -12,9 +12,9 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         {
             this.product = product;
             InitializeComponent();
-            if (product.picture != null)
+            if (product.Picture != null)
             {
-                using (MemoryStream ms = new(product.picture))
+                using (MemoryStream ms = new(product.Picture))
                 {
                     pBXMainProductPic.Image = Image.FromStream(ms);
                 }
