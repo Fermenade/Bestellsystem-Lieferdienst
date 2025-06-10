@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using MySql.Data.MySqlClient;
 using System.Reflection;
 
@@ -91,6 +92,11 @@ public class DatabaseHelper(string connectionString)
                 {
                     if (o[0][i].GetType() != x[i].ParameterType)
                     {
+                        if (o[0][i] is DBNull && IsNullable(x[i].ParameterType))
+                        {
+                            o[0][i] = null;
+                            continue;
+                        }
                         validConsturctorExists = false;
                         break;
                     }
@@ -115,6 +121,15 @@ public class DatabaseHelper(string connectionString)
         }
 
         return results.ToArray();
+    }
+    //generated
+    private bool IsNullable(Type type)
+    {
+        if (Nullable.GetUnderlyingType(type) != null)
+        {
+            return true;
+        }
+        return !type.IsValueType;
     }
     /// <summary>
     /// Takes a sql query, executes it and returns the output as two-dimensional object array.

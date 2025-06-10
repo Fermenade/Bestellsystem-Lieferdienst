@@ -21,6 +21,13 @@ public class User
         usertypeID = usertypeId;
         Address = address;
     }
+    public User(int userId, int usertypeId, string email, string password, object? addressID)//This constructor is just for the database
+        : this(email, password)
+    {
+        userID = userId;
+        usertypeID = usertypeId;
+        //address_addressID = addressID.GetType();
+    }
     public User(string email, string password)
     {
         if (email == "") throw new("Email is empty");

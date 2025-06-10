@@ -73,7 +73,7 @@ public interface ICommand
     string Name { get; }
     bool? TakesParameter { get; }
     Usertype MinPrivilegeRequired { get; }
-    object Execute(User? user, string? command);
+    object Execute(string? command);
 }
 
 public abstract class BaseCommand : ICommand
@@ -103,7 +103,7 @@ public abstract class BaseCommand : ICommand
         }
         if ((int)userCommand.Command.MinPrivilegeRequired <= (userCommand.User?.usertypeID ?? 0))
         {
-            return userCommand.Command.Execute(userCommand.User, userCommand.Argument);
+            return userCommand.Command.Execute(userCommand.Argument);
         }
         else
         {
@@ -112,7 +112,7 @@ public abstract class BaseCommand : ICommand
         //,   Console.WriteLine($"Executing {Name} with args: {string.Join(", ", args)}");
     }
 
-    public object Execute(User user, string command) //This has to be empty 
+    public object Execute(string command) //This has to be empty 
     {
         return null;
     }
