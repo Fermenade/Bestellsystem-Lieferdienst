@@ -64,8 +64,12 @@ public class Commands
                     {
                         categories.Add(VARIABLE1[0].ToString());
                     }
-
                     VARIABLE.Categories = categories.ToArray();
+
+                    if (VARIABLE.picture != null)
+                    {
+
+                    }
                 }
 
                 return products;

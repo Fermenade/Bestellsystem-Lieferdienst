@@ -10,7 +10,7 @@ public class Product
     public string Description;
     public decimal Price;
     public string[] Categories;
-    public byte[] picture;//cuz it's easier.
+    public byte[]? picture;//cuz it's easier.
 
     public Product(string name, string description, decimal price, string[] categories)
     {
