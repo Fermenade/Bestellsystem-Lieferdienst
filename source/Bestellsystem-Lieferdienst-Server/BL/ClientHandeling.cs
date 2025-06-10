@@ -56,7 +56,8 @@ public class Client(Socket client) : ClientStream(client)
                 {
                     if (e[0] == "GET")
                     {
-                        user = JsonSerialize.Deserialize<User>(request.Data);
+                        if(request.Data != "null")
+                            user = JsonSerialize.Deserialize<User>(request.Data);
                     }
                     else
                     {

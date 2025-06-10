@@ -58,11 +58,14 @@ public class DatabaseHelper(string connectionString)
     /// <param name="id">ID of the row</param>
     /// <param name="tableName">Name of the table</param>
     /// <typeparam name="T">T must be type class. The type the data should be converted into.</typeparam>
-    /// <remarks>The ID column is default {tableName}ID</remarks>
-    /// <returns>The selected row of the database converted into the matching type</returns>
-    public T GetDataFromID<T>(SqlCommand query) where T : class
+    /// <remarks>This method truncates any other returned data except the first row</remarks>
+    /// <returns>The first selected row</returns>
+    public T? GetDataFromID<T>(SqlCommand query) where T : class
     {
         var i = GetDataFromDatabase<T>(query);
+        if(i.Length == 0)
+           return null;
+        
         return i[0];
     }
     /// <summary>

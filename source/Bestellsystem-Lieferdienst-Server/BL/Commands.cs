@@ -115,26 +115,18 @@ public class Commands
                 SqlCommand command =
                     new SqlCommand().SelectByNonPredefined(tableUser, [("email", gottenUser.email), ("password", gottenUser.password)]);
 
-                var e = _dbHelper.GetDataFromDatabase<User>(command);
-                User user = null;
+                User? user = _dbHelper.GetDataFromID<User>(command);
 
-
-                switch (e.Length)
+                if (user == null)
                 {
-                    case 0:
-                        return null;
-                    case 1:
-                        user = e[0];
-                        break;
-                    case > 1:
-                        //this should never happen.
-                        throw new Exception("Found more than one matching users");
+                    return null;
                 }
-
                 if (user.address_addressID != null)
                 {
                     command = new SqlCommand().SelectById(tableAddress, (int)user.address_addressID);
+                    user.Address = _dbHelper.GetDataFromID<Address>(command);
                 }
+
                 return user;
             }
         }
