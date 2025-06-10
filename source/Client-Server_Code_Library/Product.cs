@@ -9,14 +9,16 @@ public class Product
     public string Description;
     public decimal Price;
     public string[] Categories;
-    public byte[]? picture;//cuz it's easier.
+    public string? Imagepath;
+    public byte[]? Picture;//cuz it's easier.
 
-    public Product(string name, string description, decimal price, string[] categories)
+    public Product(string name, string description, decimal price, string[] categories, string imagepath)
     {
         this.Name = name;
         this.Description = description;
         this.Price = price;
         this.Categories = categories;
+        this.Imagepath = imagepath;
     }
     public Product(int id, string name, string description, decimal price)
     {

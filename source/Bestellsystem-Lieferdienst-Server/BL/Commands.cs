@@ -66,9 +66,10 @@ public class Commands
                     }
                     VARIABLE.Categories = categories.ToArray();
 
-                    if (VARIABLE.picture != null)
+                    if (VARIABLE.Imagepath != null)
                     {
-
+                        VARIABLE.Picture = File.ReadAllBytes(VARIABLE.Imagepath);
+                        VARIABLE.Imagepath = null;
                     }
                 }
 
