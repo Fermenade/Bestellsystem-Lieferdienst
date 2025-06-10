@@ -1,7 +1,7 @@
 ﻿using Client_Server_Code_Library;
 using System.ComponentModel;
 
-namespace Bestellsystem_Lieferdienst.BL.ShopingCart
+namespace Bestellsystem_Lieferdienst_Client.BL.ShopingCart
 {
     //Generated
     public static class CartManager

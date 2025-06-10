@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Bestellsystem_Lieferdienst.BL
+namespace Bestellsystem_Lieferdienst_Client.BL
 {
     public static class StringExtensions
     {

@@ -1,6 +1,6 @@
-﻿using Bestellsystem_Lieferdienst.PL.ShopingCart;
+﻿using Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls;
 
-namespace Bestellsystem_Lieferdienst.PL
+namespace Bestellsystem_Lieferdienst_Client.PL
 {
     partial class ProductDetailView
     {
@@ -50,7 +50,6 @@ namespace Bestellsystem_Lieferdienst.PL
             // 
             // pBXMainProductPic
             // 
-            pBXMainProductPic.Image = Properties.Resources.doener;
             pBXMainProductPic.InitialImage = null;
             pBXMainProductPic.Location = new Point(530, 50);
             pBXMainProductPic.Margin = new Padding(4, 5, 4, 5);
@@ -149,17 +148,17 @@ namespace Bestellsystem_Lieferdienst.PL
             label1.Name = "label1";
             label1.Size = new Size(0, 40);
             label1.TabIndex = 8;
-            // 
-            // pBXProductPicBestseller1
-            // 
-            pBXProductPicBestseller1.Image = Properties.Resources.dueruem;
-            pBXProductPicBestseller1.Location = new Point(333, 500);
-            pBXProductPicBestseller1.Margin = new Padding(4, 5, 4, 5);
-            pBXProductPicBestseller1.Name = "pBXProductPicBestseller1";
-            pBXProductPicBestseller1.Size = new Size(169, 162);
-            pBXProductPicBestseller1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pBXProductPicBestseller1.TabIndex = 17;
-            pBXProductPicBestseller1.TabStop = false;
+            //// 
+            //// pBXProductPicBestseller1
+            //// 
+            //pBXProductPicBestseller1.Image = Properties.Resources.dueruem;
+            //pBXProductPicBestseller1.Location = new Point(333, 500);
+            //pBXProductPicBestseller1.Margin = new Padding(4, 5, 4, 5);
+            //pBXProductPicBestseller1.Name = "pBXProductPicBestseller1";
+            //pBXProductPicBestseller1.Size = new Size(169, 162);
+            //pBXProductPicBestseller1.SizeMode = PictureBoxSizeMode.StretchImage;
+            //pBXProductPicBestseller1.TabIndex = 17;
+            //pBXProductPicBestseller1.TabStop = false;
             // 
             // btn_WarenkorbProduct2
             // 

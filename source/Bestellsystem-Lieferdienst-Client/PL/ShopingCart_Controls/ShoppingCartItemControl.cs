@@ -1,7 +1,7 @@
-﻿using Bestellsystem_Lieferdienst.BL.ShopingCart;
+﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 using System.ComponentModel;
 
-namespace Bestellsystem_Lieferdienst.PL
+namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
 {
     //Generated
     public partial class ShoppingCartItemControl : UserControl

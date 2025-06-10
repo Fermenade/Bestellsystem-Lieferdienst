@@ -1,7 +1,7 @@
-﻿using Bestellsystem_Lieferdienst.BL;
-using Bestellsystem_Lieferdienst.BL.ShopingCart;
+﻿using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 
-namespace Bestellsystem_Lieferdienst.PL.ShopingCart
+namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
 {
     internal class ShoppingCartView : Panel
     {

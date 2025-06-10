@@ -1,10 +1,10 @@
-using Bestellsystem_Lieferdienst.BL;
-using Bestellsystem_Lieferdienst_Client;
+using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.PL;
 using Client_Server_Code_Library;
 using System.Diagnostics;
 
 
-namespace Bestellsystem_Lieferdienst.Server;
+namespace Bestellsystem_Lieferdienst_Client.Server;
 
 public class Client : ClientStream
 {

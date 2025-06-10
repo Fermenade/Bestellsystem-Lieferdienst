@@ -233,7 +233,6 @@ partial class SignupUserControl
         // SignupUserControl
         // 
         AutoScaleDimensions = new SizeF(10F, 25F);
-        AutoScaleMode = AutoScaleMode.Font;
         Controls.Add(checkBox1);
         Controls.Add(btn_BackToMain);
         Controls.Add(tbx_ApartmentNr);
@@ -256,7 +255,6 @@ partial class SignupUserControl
         Controls.Add(btn_Signup);
         Margin = new Padding(1, 2, 1, 2);
         Name = "SignupUserControl";
-        Size = new Size(1447, 889);
         ResumeLayout(false);
         PerformLayout();
     }

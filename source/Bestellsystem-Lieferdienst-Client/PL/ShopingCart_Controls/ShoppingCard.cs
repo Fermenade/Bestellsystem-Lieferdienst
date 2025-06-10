@@ -1,9 +1,10 @@
-﻿namespace Bestellsystem_Lieferdienst.PL
-{
-    using Bestellsystem_Lieferdienst.BL.ShopingCart;
-    //Generated
-    using System.Windows.Forms;
+﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+using Bestellsystem_Lieferdienst_Client.PL;
+using Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls;
 
+namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
+{
+    //Generated
     public partial class ShoppingCart : FlowLayoutPanel
     {
         public readonly Dictionary<CartItem, ShoppingCartItemControl> itemControlMap = new();

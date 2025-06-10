@@ -1,4 +1,6 @@
-﻿using Bestellsystem_Lieferdienst.BL;
+﻿using Bestellsystem_Lieferdienst_Client;
+using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.PL
@@ -20,14 +22,26 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             User user;
             try
             {
-                user = new User(tbx_Mail.Text, tbx_Pass.Text);
+                user = new User(tbx_Mail.Text, tbx_Pass.Text.ToSHA256());
             }
             catch (Exception exception)
             {
                 lb_error.Text = exception.Message;
                 return;
             }
-            GetData.GetUser(user);
+
+            lb_error.Text = "Am einloggen...";
+            try
+            {
+                Client.client.User = GetData.GetUser(user).Result;
+
+            }
+            catch (System.AggregateException exception)
+            {
+                lb_error.Text = @"Kein User gefunden mit passenden Daten";
+                return;
+            }
+            this.LoadView(new StartForm());
         }
     }
 }

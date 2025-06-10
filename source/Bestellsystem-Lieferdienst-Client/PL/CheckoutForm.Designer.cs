@@ -1,10 +1,10 @@
-﻿using Bestellsystem_Lieferdienst.BL.ShopingCart;
-using Bestellsystem_Lieferdienst.PL.ShopingCart;
+﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls;
 
-namespace Bestellsystem_Lieferdienst.PL
+namespace Bestellsystem_Lieferdienst_Client.PL
 {
     partial class CheckoutForm
     {
@@ -43,6 +43,7 @@ namespace Bestellsystem_Lieferdienst.PL
             tbx_StraßeHausnummer = new TextBox();
             lbl_StraßeHausnummer = new Label();
             btn_KaufAbschließen = new Button();
+            button1 = new Button();
             SuspendLayout();
             // 
             // lbl_BestellungÜberschrift
@@ -126,10 +127,20 @@ namespace Bestellsystem_Lieferdienst.PL
             btn_KaufAbschließen.UseVisualStyleBackColor = true;
             btn_KaufAbschließen.Click += btn_KaufAbschließen_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(867, 43);
+            button1.Name = "button1";
+            button1.Size = new Size(186, 34);
+            button1.TabIndex = 8;
+            button1.Text = "Zurück zur Startseite";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // CheckoutForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
-            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(button1);
             Controls.Add(btn_KaufAbschließen);
             Controls.Add(tbx_StraßeHausnummer);
             Controls.Add(lbl_StraßeHausnummer);
@@ -140,7 +151,6 @@ namespace Bestellsystem_Lieferdienst.PL
             Controls.Add(lbl_BestellungÜberschrift);
             Margin = new Padding(4, 5, 4, 5);
             Name = "CheckoutForm";
-            Size = new Size(1159, 953);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -156,5 +166,6 @@ namespace Bestellsystem_Lieferdienst.PL
         private Label lbl_StraßeHausnummer;
         private Button btn_KaufAbschließen;
         private ShoppingCartView shoppingCart = new();
+        private Button button1;
     }
 }

@@ -1,8 +1,8 @@
-using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL;
 using Client_Server_Code_Library;
 
-namespace Bestellsystem_Lieferdienst_Client
+namespace Bestellsystem_Lieferdienst_Client.PL
 {
     public partial class StartForm : UserControl
     {

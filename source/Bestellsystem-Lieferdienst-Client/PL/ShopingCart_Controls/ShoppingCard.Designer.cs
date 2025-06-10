@@ -1,4 +1,4 @@
-﻿namespace Bestellsystem_Lieferdienst.PL
+﻿namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
 {
     partial class ShoppingCart
     {

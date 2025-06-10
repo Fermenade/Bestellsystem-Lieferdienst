@@ -1,4 +1,4 @@
-﻿namespace Bestellsystem_Lieferdienst
+﻿namespace  Bestellsystem_Lieferdienst_Client
 {
     partial class MainForm
     {

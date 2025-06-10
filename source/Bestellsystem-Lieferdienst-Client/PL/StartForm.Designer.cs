@@ -1,13 +1,12 @@
 ﻿using System.Runtime.CompilerServices;
 using Bestellsystem_Lieferdienst_Client.PL;
-using Bestellsystem_Lieferdienst.BL;
-using Bestellsystem_Lieferdienst.PL;
-using Bestellsystem_Lieferdienst.PL.ShopingCart;
-using Bestellsystem_Lieferdienst.PL.StartForm;
-using Bestellsystem_Lieferdienst.Server;
+using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls;
+using Bestellsystem_Lieferdienst_Client.PL.StartForm_Controls;
+using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
 
-namespace Bestellsystem_Lieferdienst_Client
+namespace Bestellsystem_Lieferdienst_Client.PL
 {
     partial class StartForm
     {

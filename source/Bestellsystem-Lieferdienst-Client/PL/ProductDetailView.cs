@@ -1,8 +1,8 @@
-﻿using Bestellsystem_Lieferdienst.BL;
-using Bestellsystem_Lieferdienst.BL.ShopingCart;
+﻿using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 using Client_Server_Code_Library;
 
-namespace Bestellsystem_Lieferdienst.PL
+namespace Bestellsystem_Lieferdienst_Client.PL
 {
     public partial class ProductDetailView : UserControl
     {
@@ -11,7 +11,10 @@ namespace Bestellsystem_Lieferdienst.PL
         {
             this.product = product;
             InitializeComponent();
-
+            using (MemoryStream ms = new(product.picture))
+            {
+                pBXMainProductPic.Image = Image.FromStream(ms);
+            }
             lbl_ProductName.Text = product.Name;
             lbl_BeschreibungInhalt.Text = product.Description;
             lbl_ProductPrice.Text = $"{this.product.Price:C}";
@@ -34,7 +37,7 @@ namespace Bestellsystem_Lieferdienst.PL
 
         private void btn_BackToMain2_Click(object sender, EventArgs e)
         {
-            this.LoadView(new Bestellsystem_Lieferdienst_Client.StartForm());
+            this.LoadView(new Bestellsystem_Lieferdienst_Client.PL.StartForm());
         }
 
         private void btn_WarenkorbProduktAnsicht_Click(object sender, EventArgs e)

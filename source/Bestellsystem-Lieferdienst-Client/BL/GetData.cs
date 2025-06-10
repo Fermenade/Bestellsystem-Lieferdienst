@@ -1,8 +1,8 @@
-﻿using Bestellsystem_Lieferdienst.BL.ShopingCart;
-using Bestellsystem_Lieferdienst.Server;
+﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
 
-namespace Bestellsystem_Lieferdienst.BL
+namespace Bestellsystem_Lieferdienst_Client.BL
 {
     public static class GetData
     {

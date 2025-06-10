@@ -1,4 +1,4 @@
-﻿namespace Bestellsystem_Lieferdienst.PL.StartForm
+﻿namespace Bestellsystem_Lieferdienst_Client.PL.StartForm_Controls
 {
     partial class ProductEntry
     {
@@ -37,7 +37,6 @@
             // 
             // pBXProduct2
             // 
-            pBXProduct2.Image = Properties.Resources.doener;
             pBXProduct2.Location = new Point(0, 0);
             pBXProduct2.Name = "pBXProduct2";
             pBXProduct2.Size = new Size(182, 195);

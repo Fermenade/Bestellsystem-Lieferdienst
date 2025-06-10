@@ -1,4 +1,4 @@
-﻿using Bestellsystem_Lieferdienst_Client;
+﻿using Bestellsystem_Lieferdienst_Client.PL;
 
 namespace Bestellsystem_Lieferdienst.PL
 {

@@ -1,7 +1,7 @@
 ﻿using Client_Server_Code_Library;
 using System.ComponentModel;
 
-namespace Bestellsystem_Lieferdienst.BL.StartForm
+namespace Bestellsystem_Lieferdienst_Client.BL.StartForm
 {
     public class ProductManager
     {

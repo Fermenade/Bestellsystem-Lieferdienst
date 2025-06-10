@@ -1,6 +1,6 @@
-﻿using Bestellsystem_Lieferdienst.Server;
+﻿using Bestellsystem_Lieferdienst_Client.Server;
 
-namespace Bestellsystem_Lieferdienst.PL
+namespace Bestellsystem_Lieferdienst_Client.PL
 {
     partial class ConnectionLost
     {
