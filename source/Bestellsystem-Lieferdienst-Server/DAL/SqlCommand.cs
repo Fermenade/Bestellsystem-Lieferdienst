@@ -1,5 +1,4 @@
 ﻿using Client_Server_Code_Library;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace Bestellsystem_Lieferdienst_Server.DAL
@@ -64,7 +63,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         {
             var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
 
-            Parameters = new List<(string, object)>(joinIdentifier.Length+identifier.Length);
+            Parameters = new List<(string, object)>(joinIdentifier.Length + identifier.Length);
 
 
 
