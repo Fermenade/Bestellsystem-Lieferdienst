@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Client_Server_Code_Library;
 
@@ -10,7 +9,7 @@ public class Product
     public string Description;
     public decimal Price;
     public string[] Categories;
-    public byte[] picture;//cuz it's easier.
+    public byte[]? picture;//cuz it's easier.
 
     public Product(string name, string description, decimal price, string[] categories)
     {

@@ -1,4 +1,3 @@
-using Bestellsystem_Lieferdienst_Client;
 using Bestellsystem_Lieferdienst_Client.Server;
 
 namespace Bestellsystem_Lieferdienst_Client

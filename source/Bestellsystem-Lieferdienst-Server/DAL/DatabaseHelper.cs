@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using MySql.Data.MySqlClient;
 using System.Reflection;
 
@@ -63,9 +62,9 @@ public class DatabaseHelper(string connectionString)
     public T? GetDataFromID<T>(SqlCommand query) where T : class
     {
         var i = GetDataFromDatabase<T>(query);
-        if(i.Length == 0)
-           return null;
-        
+        if (i.Length == 0)
+            return null;
+
         return i[0];
     }
     /// <summary>

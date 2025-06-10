@@ -1,7 +1,6 @@
-﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+﻿using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 using System.ComponentModel;
-using Bestellsystem_Lieferdienst_Client.BL;
-using Bestellsystem_Lieferdienst_Client.PL;
 
 namespace Bestellsystem_Lieferdienst_Client.PL
 {

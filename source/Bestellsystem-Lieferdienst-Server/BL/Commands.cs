@@ -32,7 +32,7 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.Admin;
 
-            public object Execute( string? args)
+            public object Execute(string? args)
             {
                 throw new NotImplementedException();
             }
@@ -49,7 +49,7 @@ public class Commands
             public bool? TakesParameter => false;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public object Execute( string? args)
+            public object Execute(string? args)
             {
                 SqlCommand command = new SqlCommand().SelectAll(tableProduct);
                 List<Product> products = new List<Product>();
@@ -79,7 +79,7 @@ public class Commands
             public bool? TakesParameter => false;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public object Execute( string? args)
+            public object Execute(string? args)
             {
                 SqlCommand command = new SqlCommand().SelectAll(tableProductGroup);
 
@@ -93,7 +93,7 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public object Execute( string? args)
+            public object Execute(string? args)
             {
                 SqlCommand command = new SqlCommand().SelectById(tableProduct, int.Parse(args));
                 return _dbHelper.GetDataFromID<Product>(command);
@@ -106,7 +106,7 @@ public class Commands
             public bool? TakesParameter => true;
             public Usertype MinPrivilegeRequired => Usertype.User;
 
-            public object Execute( string? args)
+            public object Execute(string? args)
             {
                 //TODO: fix so that adress is also read from database.
 
@@ -143,21 +143,21 @@ public class Commands
 
                 public object Execute(string? args)
                 {
-                    
-                        User i = JsonSerialize.Deserialize<User>(args);
 
-                        Address address = i.Address;
-                        SqlCommand command;
-                        int x;
-                        if (address != null)
-                        {
-                            command = new SqlCommand().Insert(tableAddress, address, ["addressID"]);
-                            i.address_addressID = _dbHelper.InsertItemIntoTable(command);
-                        }
+                    User i = JsonSerialize.Deserialize<User>(args);
 
-                        i.usertypeID = (int)Usertype.Customer;
-                        command = new SqlCommand().Insert(tableUser, i);
-                        _dbHelper.InsertItemIntoTable(command);
+                    Address address = i.Address;
+                    SqlCommand command;
+                    int x;
+                    if (address != null)
+                    {
+                        command = new SqlCommand().Insert(tableAddress, address, ["addressID"]);
+                        i.address_addressID = _dbHelper.InsertItemIntoTable(command);
+                    }
+
+                    i.usertypeID = (int)Usertype.Customer;
+                    command = new SqlCommand().Insert(tableUser, i);
+                    _dbHelper.InsertItemIntoTable(command);
 
 
                     return null;
@@ -171,7 +171,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     Product i = JsonSerialize.Deserialize<Product>(args);
                     SqlCommand command = new SqlCommand().Insert(tableProduct, i);
@@ -187,7 +187,7 @@ public class Commands
                 public bool? TakesParameter => true;
                 public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     Address i = JsonSerialize.Deserialize<Address>(args);
                     SqlCommand command = new SqlCommand().Insert(tableAddress, i);
@@ -204,7 +204,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     Product i = JsonSerialize.Deserialize<Product>(args);
                     SqlCommand command = new SqlCommand().Insert(tableProductGroup, i);
@@ -225,7 +225,7 @@ public class Commands
                 public bool? TakesParameter => true;
                 public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     throw new NotImplementedException();
                 }
@@ -238,7 +238,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     throw new NotImplementedException();
                 }
@@ -251,7 +251,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     throw new NotImplementedException();
                 }
@@ -264,7 +264,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     throw new NotImplementedException();
                 }
@@ -282,7 +282,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Admin;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     //Feature not planed
                     throw new NotImplementedException();
@@ -296,7 +296,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     throw new NotImplementedException();
                 }
@@ -309,7 +309,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Customer;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     throw new NotImplementedException();
                 }
@@ -322,7 +322,7 @@ public class Commands
 
                 public Usertype MinPrivilegeRequired => Usertype.Employee;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     //Feature not planned.
                     throw new NotImplementedException();
@@ -343,7 +343,7 @@ public class Commands
                 public bool? TakesParameter => false;
                 public Usertype MinPrivilegeRequired => Usertype.User;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     return "pong";
                 }
@@ -363,7 +363,7 @@ public class Commands
                 public bool? TakesParameter => false;
                 public Usertype MinPrivilegeRequired => Usertype.User;
 
-                public object Execute( string? args)
+                public object Execute(string? args)
                 {
                     throw new NotImplementedException();
                 }

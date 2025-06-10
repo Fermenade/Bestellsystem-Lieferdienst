@@ -1,6 +1,4 @@
 ﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
-using Bestellsystem_Lieferdienst_Client.PL;
-using Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
 {

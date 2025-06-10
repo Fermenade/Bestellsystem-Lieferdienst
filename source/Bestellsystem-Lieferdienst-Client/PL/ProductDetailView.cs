@@ -11,9 +11,16 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         {
             this.product = product;
             InitializeComponent();
-            using (MemoryStream ms = new(product.picture))
+            if (product.picture != null)
             {
-                pBXMainProductPic.Image = Image.FromStream(ms);
+                using (MemoryStream ms = new(product.picture))
+                {
+                    pBXMainProductPic.Image = Image.FromStream(ms);
+                }
+            }
+            else
+            {
+                pBXMainProductPic.Image = Image.FromFile("../../../Resources/fallbackIMG.png");
             }
             lbl_ProductName.Text = product.Name;
             lbl_BeschreibungInhalt.Text = product.Description;
