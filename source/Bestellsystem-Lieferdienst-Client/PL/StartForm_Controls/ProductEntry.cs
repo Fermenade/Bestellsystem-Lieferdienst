@@ -21,7 +21,7 @@ public partial class ProductEntry : UserControl
         }
 
         this.lbxProduct2Name.Text = product.Name;
-        this.lbxProduct2Price.Text = $"{product.Price:C}";
+        this.lbxProduct2Price.Text = $@"{product.Price:C}";
         this.btnProduct2AddToCart.Click += (o, s) =>
         {
             CartManager.AddProduct(product);
