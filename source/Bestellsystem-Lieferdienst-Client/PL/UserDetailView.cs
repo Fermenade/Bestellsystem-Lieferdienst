@@ -43,12 +43,12 @@ namespace Bestellsystem_Lieferdienst.PL
 
         private void btnChangePassword_Click(object sender, EventArgs e)
         {
+            // Wenn dieser Button nur das passwort ändern soll dann muss noch die Methode angepasst werden.
+            // Falls du dabei hilfe brauchst, schreib mir.
             if (TryCreateUser(tbxEMail.Text,tbxPassword.Text,tbxLand.Text,tbxPLZ.Text,tbxOrt.Text,tbxStraße.Text,tbxHausnummer.Text,tbxApartment.Text, out User user))
             {
-                GetData.SetUser(user);
+                GetData.UpdateUser(user);
             }
-
-
         }
     }
 }
