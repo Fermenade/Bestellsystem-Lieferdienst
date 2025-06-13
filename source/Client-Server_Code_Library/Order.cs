@@ -3,9 +3,8 @@ public class Order
 {
     int OrderID;
     int UserID;
-    private int[] productsID;
+    OrderItem item;
     DateTime dateTime;
 
     private string Übergabeort;
-    //TODO: Product should be quantisisable :)
 }
