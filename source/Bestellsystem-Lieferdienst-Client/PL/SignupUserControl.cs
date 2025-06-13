@@ -17,20 +17,18 @@ public partial class SignupUserControl : UserControl
     }
     private void BtnSignupClick(object sender, EventArgs e)
     {
-        if (TryCreateUser(out User user))
+        if (TryCreateUser(tbx_Email.Text,tbx_Password.Text,tbx_Country.Text,tbx_ZippCode.Text,tbx_City.Text,tbx_Street.Text,tbx_HouseNr.Text,tbx_ApartmentNr.Text,out User user))
         {
             GetData.SetUser(user);
         }
     }
 
-    bool TryCreateUser(out User user)
+    bool TryCreateUser(string email,string password, string country, string zippcode, string city, string street ,string housenumber, string apartmentnumber, out User user)
     {
         user = null;
-        try
-        {
-            string email = tbx_Email.Text,
-                password = tbx_Password.Text.ToSHA256();
-            user = new User(email, password);
+        try {
+
+            user = new User(email, password.ToSHA256());
         }
         catch (Exception ex)
         {
@@ -40,9 +38,7 @@ public partial class SignupUserControl : UserControl
 
         if (checkBox1.Checked)
         {
-            string country = tbx_City.Text,
-                city = tbx_City.Text,
-                street = tbx_Street.Text;
+          
             //Cuz every number normally starts at 1
             int zippCode = 0,
                 houseNumber = 0,

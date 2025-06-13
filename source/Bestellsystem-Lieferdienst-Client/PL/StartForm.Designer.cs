@@ -44,6 +44,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             lbxSearch = new Label();
             btn_SucheBestätigen = new Button();
             lbl_OurProducts = new Label();
+            button1 = new Button();
             SuspendLayout();
             // 
             // btn_Login
@@ -73,7 +74,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             cbxCategory.FormattingEnabled = true;
             cbxCategory.Location = new Point(457, 126);
             cbxCategory.Name = "cbxCategory";
-            cbxCategory.Size = new Size(121, 33);
+            cbxCategory.Size = new Size(121, 49);
             cbxCategory.TabIndex = 12;
             cbxCategory.SelectedIndexChanged += cbxCategory_SelectedIndexChanged;
             // 
@@ -82,7 +83,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             lbxCategory.AutoSize = true;
             lbxCategory.Location = new Point(457, 98);
             lbxCategory.Name = "lbxCategory";
-            lbxCategory.Size = new Size(87, 25);
+            lbxCategory.Size = new Size(145, 41);
             lbxCategory.TabIndex = 13;
             lbxCategory.Text = "Kategorie";
             // 
@@ -90,7 +91,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             // 
             textBox1.Location = new Point(457, 54);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(121, 31);
+            textBox1.Size = new Size(121, 47);
             textBox1.TabIndex = 14;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
@@ -99,7 +100,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             lbxSearch.AutoSize = true;
             lbxSearch.Location = new Point(459, 26);
             lbxSearch.Name = "lbxSearch";
-            lbxSearch.Size = new Size(59, 25);
+            lbxSearch.Size = new Size(98, 41);
             lbxSearch.TabIndex = 15;
             lbxSearch.Text = "Suche";
             // 
@@ -119,12 +120,23 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             lbl_OurProducts.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbl_OurProducts.Location = new Point(597, 86);
             lbl_OurProducts.Name = "lbl_OurProducts";
-            lbl_OurProducts.Size = new Size(132, 40);
+            lbl_OurProducts.Size = new Size(220, 65);
             lbl_OurProducts.TabIndex = 17;
             lbl_OurProducts.Text = "Produkte";
             // 
+            // button1
+            // 
+            button1.Location = new Point(1186, 55);
+            button1.Name = "button1";
+            button1.Size = new Size(188, 58);
+            button1.TabIndex = 18;
+            button1.Text = "Einstellungen";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // StartForm
             // 
+            Controls.Add(button1);
             Controls.Add(lbl_OurProducts);
             Controls.Add(btn_SucheBestätigen);
             Controls.Add(lbxSearch);
@@ -162,13 +174,18 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             {
                 btn_Login.Dispose();
                 btn_Register.Dispose();
-
-                //TODO: make button for user options.
+                button1.Visible = true;
             }
+            else
+            {
+                button1.Dispose();
+            }
+
             productsView.BackColor = Color.Aquamarine;
             productsView.Dock = DockStyle.Bottom;//TODO: fixme
             Controls.Add(productsView);
             Controls.Add(shoppingcart);
         }
+        private Button button1;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Bestellsystem_Lieferdienst_Client.BL;
+﻿using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 using Client_Server_Code_Library;
 
@@ -12,9 +11,9 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         {
             this.product = product;
             InitializeComponent();
-            if (product.picture != null)
+            if (product.Picture != null)
             {
-                using (MemoryStream ms = new(product.picture))
+                using (MemoryStream ms = new(product.Picture))
                 {
                     pBXMainProductPic.Image = Image.FromStream(ms);
                 }

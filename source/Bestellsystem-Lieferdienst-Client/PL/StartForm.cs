@@ -1,3 +1,4 @@
+using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.BL;
 using Client_Server_Code_Library;
 
@@ -56,6 +57,11 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         private void cbxCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             productsView.ApplyFilter(textBox1.Text, cbxCategory.SelectedItem.ToString());
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.LoadView(new UserDetailView());
         }
     }
 }

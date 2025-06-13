@@ -64,12 +64,16 @@ public class Commands
                     {
                         categories.Add(VARIABLE1[0].ToString());
                     }
-
                     VARIABLE.Categories = categories.ToArray();
+
+                    if (VARIABLE.Imagepath != null)
+                    {
+                        VARIABLE.Picture = File.ReadAllBytes(VARIABLE.Imagepath);
+                        VARIABLE.Imagepath = null;
+                    }
                 }
 
                 return products;
-
             }
         }
 
