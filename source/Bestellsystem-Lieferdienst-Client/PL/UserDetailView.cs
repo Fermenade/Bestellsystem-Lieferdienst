@@ -45,10 +45,32 @@ namespace Bestellsystem_Lieferdienst.PL
         {
             // Wenn dieser Button nur das passwort ändern soll dann muss noch die Methode angepasst werden.
             // Falls du dabei hilfe brauchst, schreib mir.
-            if (TryCreateUser(tbxEMail.Text,tbxPassword.Text,tbxLand.Text,tbxPLZ.Text,tbxOrt.Text,tbxStraße.Text,tbxHausnummer.Text,tbxApartment.Text, out User user))
+            // Fertige am besten noch ein label an, dass jegliche fehler des users anzeigt. (Wie bereits in der registrierungsform gemacht)
+            User user;
+            try
             {
-                GetData.UpdateUser(user);
+                user = new User(tbxEMail.Text, tbxPassword.Text.ToSHA256());
             }
+            catch (Exception exception)
+            {
+                //lb_error.Text = exception.Message;
+                return;
+            }
+
+            // Wenn der User keine Adresse beim ändern angegeben hat. oder seine Adresse entfernt hat wie willst du das überprüfen?
+            try
+            {
+                // dieser block soll nur ausgeführt werden, wenn der user etwas angegeben hat. Ansonsten soll er die Benutzer Adresse auf null setzten.
+
+                // TODO: Der Konstruktor muss noch gefüllt werden.
+                user.Address = new Address();
+            }
+            catch (Exception exception)
+            {
+
+                return;
+            }
+            GetData.UpdateUser(user);
         }
     }
 }
