@@ -83,21 +83,14 @@ public class DatabaseHelper(string connectionString)
         var o = GetDataFromDatabase(query);
         if (o.Length == 0) return [];
 
-        ConstructorInfo? matchedConstructor = null;
+        ConstructorInfo? matchedConstructor = typeof(T).GetConstructors().First(p => !Attribute.IsDefined(p, typeof(DatabaseConstructorAttribute)));
 
-        var i = typeof(T).GetConstructors().Where(p => !Attribute.IsDefined(p, typeof(DatabaseConstructorAttribute)));
-        if (i.Count() != 1)
-        {
-            throw new Exception("Found more or less than one matching constructor.");
-        }
-        else
-        {
-            matchedConstructor = i.First();
-        }
+
         if (matchedConstructor == null)
         {
             throw new Exception("Did not find matching constructor.");
         }
+
         foreach (object[] VARIABLE in o)
         {
             // Create an instance of T using the constructor and the arguments
