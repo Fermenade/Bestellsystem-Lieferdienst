@@ -108,6 +108,7 @@ public class DatabaseHelper(string connectionString)
         }
         return !type.IsValueType;
     }
+
     /// <summary>
     /// Takes a sql query, executes it and returns the output as two-dimensional object array.
     /// </summary>
