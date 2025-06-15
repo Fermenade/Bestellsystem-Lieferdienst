@@ -1,10 +1,12 @@
+using System.Runtime.InteropServices;
+
 namespace Client_Server_Code_Library;
 
 public class Address
 {
     int AddressID;
     public string Country;
-    public int ZippCode;
+    public int ZipCode;
     public string City;
     public string Street;
     public int HouseNumber;
@@ -22,12 +24,12 @@ public class Address
         if (apartmentNumber == 0) throw new("Invalid apartment number");
         ApartmentNumber = apartmentNumber;
     }
-    public Address(string country, int zippCode, string city, string street, int houseNumber)
+    public Address(string country, int zipCode, string city, string street, int houseNumber)
     {
         if (country == "") throw new("Invalid country");
         Country = country;
-        if (zippCode == 0) throw new("Invalid zipp number");
-        ZippCode = zippCode;
+        if (zipCode == 0) throw new("Invalid zipp number");
+        ZipCode = zipCode;
         if (city == "") throw new("Invalid city");
         City = city;
         if (street == "") throw new("Invalid street");
@@ -36,11 +38,35 @@ public class Address
         HouseNumber = houseNumber;
     }
 
+    public static Address CreateAddress(string country, string zipCode, string city, string street, string houseNumber, string? apartmentNumber)
+    {
+        if (!int.TryParse(zipCode, out int ZipCode))
+        {
+            throw new ArgumentException($"Invalid zip code: {zipCode}. Zip code must be a number.");
+        }
+
+        if (!int.TryParse(houseNumber, out int HouseNumber))
+        {
+            throw new ArgumentException($"Invalid house number: {houseNumber}. House number must be a number.");
+        }
+
+        if (apartmentNumber != "")
+        {
+            if (!int.TryParse(apartmentNumber, out int ApartmentNumber))
+            {
+                throw new ArgumentException($"Invalid house number: {houseNumber}. House number must be a number.");
+            }
+            return new Address(country, ZipCode, city, street, HouseNumber, ApartmentNumber);
+        }
+
+        return new Address(country, ZipCode, city, street, HouseNumber);
+    }
+
     public override string ToString()
     {
         List<string> str = new List<string>();
         str.Add($"'{Country}'");
-        str.Add($"'{ZippCode}'");
+        str.Add($"'{ZipCode}'");
         str.Add($"'{City}'");
         str.Add($"'{Street}'");
         str.Add($"'{HouseNumber}'");

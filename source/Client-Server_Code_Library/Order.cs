@@ -1,27 +1,32 @@
-﻿namespace Client_Server_Code_Library;
+﻿using System;
+using System.Net;
+
+namespace Client_Server_Code_Library;
 public class Order
 {
-    int? OrderID;
-    int UserID;
-    OrderItem[] Items;
-    DateTime DateTime;
+    public int? OrderID;
+    public int? UserID;
+    public OrderItem[] Items;
+    public DateTime DateTime;
 
-    Address Übergabeort;
+    public Address? Address;
 
     [DatabaseConstructor]
-    public Order(int orderID, int userId, OrderItem[] items, DateTime dateTime)
+    public Order(int orderID, int? userId, OrderItem[] items, DateTime dateTime, Address address) :this(userId,items,dateTime, address)
     {
         OrderID = orderID;
+    }
+
+    public Order(int? userId, OrderItem[] items, DateTime dateTime, Address address)
+    {
         UserID = userId;
         Items = items;
         DateTime = dateTime;
+        Address = address;
     }
 
-    public static Order CreateOrder(OrderItem items, DateTime dateTime)
+    public static Order CreateOrder(Address address, OrderItem[] items, User? user = null)
     {
-        Order order = new Order();
-
-
-        return order;
+        return new Order(user?.userID, items, DateTime.Now, address);
     }
 }

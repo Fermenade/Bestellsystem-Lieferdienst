@@ -36,7 +36,7 @@ namespace Bestellsystem_Lieferdienst.PL
             tbxStraße.Text = Client.client.User.Address.Street.ToString();
             tbxHausnummer.Text = Client.client.User.Address.HouseNumber.ToString();
             tbxApartment.Text = Client.client.User.Address.ApartmentNumber.ToString();
-            tbxPLZ.Text = Client.client.User.Address.ZippCode.ToString();
+            tbxPLZ.Text = Client.client.User.Address.ZipCode.ToString();
             tbxOrt.Text = Client.client.User.Address.City.ToString();
             tbxLand.Text = Client.client.User.Address.Country.ToString();
         }

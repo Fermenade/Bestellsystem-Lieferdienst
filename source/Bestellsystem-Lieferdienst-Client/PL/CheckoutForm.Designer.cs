@@ -36,14 +36,21 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         private void InitializeComponent()
         {
             lbl_BestellungÜberschrift = new Label();
-            lbl_PLZ = new Label();
-            tbx_PLZ = new TextBox();
-            lbl_Stadt = new Label();
-            tbx_Stadt = new TextBox();
-            tbx_StraßeHausnummer = new TextBox();
-            lbl_StraßeHausnummer = new Label();
             btn_KaufAbschließen = new Button();
             button1 = new Button();
+            tbxApartment = new TextBox();
+            lblApartmentNummer = new Label();
+            tbxHausnummer = new TextBox();
+            lblHausnummer = new Label();
+            tbxOrt = new TextBox();
+            lblOrt = new Label();
+            tbxLand = new TextBox();
+            lblLand = new Label();
+            tbxPLZ = new TextBox();
+            lblPLZ = new Label();
+            tbxStraße = new TextBox();
+            lblStraße = new Label();
+            lb_error = new Label();
             SuspendLayout();
             // 
             // lbl_BestellungÜberschrift
@@ -56,64 +63,6 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             lbl_BestellungÜberschrift.Size = new Size(155, 40);
             lbl_BestellungÜberschrift.TabIndex = 0;
             lbl_BestellungÜberschrift.Text = "Bestellung";
-            // 
-            // lbl_PLZ
-            // 
-            lbl_PLZ.AutoSize = true;
-            lbl_PLZ.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbl_PLZ.Location = new Point(774, 248);
-            lbl_PLZ.Margin = new Padding(4, 0, 4, 0);
-            lbl_PLZ.Name = "lbl_PLZ";
-            lbl_PLZ.Size = new Size(48, 28);
-            lbl_PLZ.TabIndex = 1;
-            lbl_PLZ.Text = "PLZ:";
-            // 
-            // tbx_PLZ
-            // 
-            tbx_PLZ.Location = new Point(776, 278);
-            tbx_PLZ.Margin = new Padding(4, 5, 4, 5);
-            tbx_PLZ.Name = "tbx_PLZ";
-            tbx_PLZ.Size = new Size(235, 31);
-            tbx_PLZ.TabIndex = 2;
-            tbx_PLZ.TextChanged += tbx_PLZ_TextChanged;
-            // 
-            // lbl_Stadt
-            // 
-            lbl_Stadt.AutoSize = true;
-            lbl_Stadt.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbl_Stadt.Location = new Point(773, 337);
-            lbl_Stadt.Margin = new Padding(4, 0, 4, 0);
-            lbl_Stadt.Name = "lbl_Stadt";
-            lbl_Stadt.Size = new Size(62, 28);
-            lbl_Stadt.TabIndex = 3;
-            lbl_Stadt.Text = "Stadt:";
-            // 
-            // tbx_Stadt
-            // 
-            tbx_Stadt.Location = new Point(776, 367);
-            tbx_Stadt.Margin = new Padding(4, 5, 4, 5);
-            tbx_Stadt.Name = "tbx_Stadt";
-            tbx_Stadt.Size = new Size(234, 31);
-            tbx_Stadt.TabIndex = 4;
-            // 
-            // tbx_StraßeHausnummer
-            // 
-            tbx_StraßeHausnummer.Location = new Point(774, 465);
-            tbx_StraßeHausnummer.Margin = new Padding(4, 5, 4, 5);
-            tbx_StraßeHausnummer.Name = "tbx_StraßeHausnummer";
-            tbx_StraßeHausnummer.Size = new Size(234, 31);
-            tbx_StraßeHausnummer.TabIndex = 6;
-            // 
-            // lbl_StraßeHausnummer
-            // 
-            lbl_StraßeHausnummer.AutoSize = true;
-            lbl_StraßeHausnummer.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbl_StraßeHausnummer.Location = new Point(771, 435);
-            lbl_StraßeHausnummer.Margin = new Padding(4, 0, 4, 0);
-            lbl_StraßeHausnummer.Name = "lbl_StraßeHausnummer";
-            lbl_StraßeHausnummer.Size = new Size(238, 28);
-            lbl_StraßeHausnummer.TabIndex = 5;
-            lbl_StraßeHausnummer.Text = "Straße und Hausnummert:";
             // 
             // btn_KaufAbschließen
             // 
@@ -137,16 +86,140 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // tbxApartment
+            // 
+            tbxApartment.Location = new Point(946, 403);
+            tbxApartment.Margin = new Padding(4, 5, 4, 5);
+            tbxApartment.Name = "tbxApartment";
+            tbxApartment.Size = new Size(301, 31);
+            tbxApartment.TabIndex = 28;
+            // 
+            // lblApartmentNummer
+            // 
+            lblApartmentNummer.AutoSize = true;
+            lblApartmentNummer.Location = new Point(946, 373);
+            lblApartmentNummer.Margin = new Padding(4, 0, 4, 0);
+            lblApartmentNummer.Name = "lblApartmentNummer";
+            lblApartmentNummer.Size = new Size(164, 25);
+            lblApartmentNummer.TabIndex = 27;
+            lblApartmentNummer.Text = "Apartmentnummer";
+            // 
+            // tbxHausnummer
+            // 
+            tbxHausnummer.Location = new Point(946, 310);
+            tbxHausnummer.Margin = new Padding(4, 5, 4, 5);
+            tbxHausnummer.Name = "tbxHausnummer";
+            tbxHausnummer.Size = new Size(301, 31);
+            tbxHausnummer.TabIndex = 26;
+            // 
+            // lblHausnummer
+            // 
+            lblHausnummer.AutoSize = true;
+            lblHausnummer.Location = new Point(946, 280);
+            lblHausnummer.Margin = new Padding(4, 0, 4, 0);
+            lblHausnummer.Name = "lblHausnummer";
+            lblHausnummer.Size = new Size(119, 25);
+            lblHausnummer.TabIndex = 25;
+            lblHausnummer.Text = "Hausnummer";
+            // 
+            // tbxOrt
+            // 
+            tbxOrt.Location = new Point(946, 611);
+            tbxOrt.Margin = new Padding(4, 5, 4, 5);
+            tbxOrt.Name = "tbxOrt";
+            tbxOrt.Size = new Size(301, 31);
+            tbxOrt.TabIndex = 24;
+            // 
+            // lblOrt
+            // 
+            lblOrt.AutoSize = true;
+            lblOrt.Location = new Point(946, 581);
+            lblOrt.Margin = new Padding(4, 0, 4, 0);
+            lblOrt.Name = "lblOrt";
+            lblOrt.Size = new Size(38, 25);
+            lblOrt.TabIndex = 23;
+            lblOrt.Text = "Ort";
+            // 
+            // tbxLand
+            // 
+            tbxLand.Location = new Point(946, 713);
+            tbxLand.Margin = new Padding(4, 5, 4, 5);
+            tbxLand.Name = "tbxLand";
+            tbxLand.Size = new Size(301, 31);
+            tbxLand.TabIndex = 22;
+            // 
+            // lblLand
+            // 
+            lblLand.AutoSize = true;
+            lblLand.Location = new Point(946, 683);
+            lblLand.Margin = new Padding(4, 0, 4, 0);
+            lblLand.Name = "lblLand";
+            lblLand.Size = new Size(50, 25);
+            lblLand.TabIndex = 21;
+            lblLand.Text = "Land";
+            // 
+            // tbxPLZ
+            // 
+            tbxPLZ.Location = new Point(946, 503);
+            tbxPLZ.Margin = new Padding(4, 5, 4, 5);
+            tbxPLZ.Name = "tbxPLZ";
+            tbxPLZ.Size = new Size(301, 31);
+            tbxPLZ.TabIndex = 20;
+            // 
+            // lblPLZ
+            // 
+            lblPLZ.AutoSize = true;
+            lblPLZ.Location = new Point(946, 473);
+            lblPLZ.Margin = new Padding(4, 0, 4, 0);
+            lblPLZ.Name = "lblPLZ";
+            lblPLZ.Size = new Size(41, 25);
+            lblPLZ.TabIndex = 19;
+            lblPLZ.Text = "PLZ";
+            // 
+            // tbxStraße
+            // 
+            tbxStraße.Location = new Point(946, 218);
+            tbxStraße.Margin = new Padding(4, 5, 4, 5);
+            tbxStraße.Name = "tbxStraße";
+            tbxStraße.Size = new Size(301, 31);
+            tbxStraße.TabIndex = 18;
+            // 
+            // lblStraße
+            // 
+            lblStraße.AutoSize = true;
+            lblStraße.Location = new Point(946, 188);
+            lblStraße.Margin = new Padding(4, 0, 4, 0);
+            lblStraße.Name = "lblStraße";
+            lblStraße.Size = new Size(61, 25);
+            lblStraße.TabIndex = 17;
+            lblStraße.Text = "Straße";
+            // 
+            // lb_error
+            // 
+            lb_error.AutoSize = true;
+            lb_error.Location = new Point(727, 799);
+            lb_error.Name = "lb_error";
+            lb_error.Size = new Size(59, 25);
+            lb_error.TabIndex = 29;
+            lb_error.Text = "label1";
+            // 
             // CheckoutForm
             // 
+            Controls.Add(lb_error);
+            Controls.Add(tbxApartment);
+            Controls.Add(lblApartmentNummer);
+            Controls.Add(tbxHausnummer);
+            Controls.Add(lblHausnummer);
+            Controls.Add(tbxOrt);
+            Controls.Add(lblOrt);
+            Controls.Add(tbxLand);
+            Controls.Add(lblLand);
+            Controls.Add(tbxPLZ);
+            Controls.Add(lblPLZ);
+            Controls.Add(tbxStraße);
+            Controls.Add(lblStraße);
             Controls.Add(button1);
             Controls.Add(btn_KaufAbschließen);
-            Controls.Add(tbx_StraßeHausnummer);
-            Controls.Add(lbl_StraßeHausnummer);
-            Controls.Add(tbx_Stadt);
-            Controls.Add(lbl_Stadt);
-            Controls.Add(tbx_PLZ);
-            Controls.Add(lbl_PLZ);
             Controls.Add(lbl_BestellungÜberschrift);
             Margin = new Padding(4, 5, 4, 5);
             Name = "CheckoutForm";
@@ -158,14 +231,21 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         #endregion
 
         private Label lbl_BestellungÜberschrift;
-        private Label lbl_PLZ;
-        private TextBox tbx_PLZ;
-        private Label lbl_Stadt;
-        private TextBox tbx_Stadt;
-        private TextBox tbx_StraßeHausnummer;
-        private Label lbl_StraßeHausnummer;
         private Button btn_KaufAbschließen;
         private ShoppingCartView shoppingCart = new();
         private Button button1;
+        private TextBox tbxApartment;
+        private Label lblApartmentNummer;
+        private TextBox tbxHausnummer;
+        private Label lblHausnummer;
+        private TextBox tbxOrt;
+        private Label lblOrt;
+        private TextBox tbxLand;
+        private Label lblLand;
+        private TextBox tbxPLZ;
+        private Label lblPLZ;
+        private TextBox tbxStraße;
+        private Label lblStraße;
+        private Label lb_error;
     }
 }

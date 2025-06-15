@@ -26,23 +26,32 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             };
             Controls.Add(shoppingCart);
 
-            if (Client.client.User.Address is { } e)
+            if (Client.client.User?.Address is { } e)
             {
-                tbx_PLZ.Text = e.ZippCode.ToString();
-                tbx_Stadt.Text = e.City;
-                tbx_StraßeHausnummer.Text = e.HouseNumber.ToString();
+                tbxPLZ.Text = e.ZipCode.ToString();
+                tbxOrt.Text = e.City;
+                tbxStraße.Text = e.Street;
+                tbxApartment.Text = e.ApartmentNumber.ToString();
+                tbxHausnummer.Text = e.HouseNumber.ToString();
+                tbxLand.Text = e.Country;
             }
-        }
-
-
-        private void tbx_PLZ_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btn_KaufAbschließen_Click(object sender, EventArgs e)
         {
-            ServerData.SetOrder();
+            Order order;
+            try
+            {
+                order = Order.CreateOrder(Address.CreateAddress(tbxLand.Text, tbxPLZ.Text, tbxOrt.Text, tbxStraße.Text,
+                        tbxHausnummer.Text, tbxApartment.Text), CartManager.CartItems.ToArray<OrderItem>(), Client.client.User);
+            }
+            catch (Exception ex)
+            {
+                lb_error.Text = ex.Message;
+                return;
+            }
+
+            ServerData.SetOrder(order);
         }
 
         private void button1_Click(object sender, EventArgs e)
