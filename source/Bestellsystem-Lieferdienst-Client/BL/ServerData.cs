@@ -21,7 +21,7 @@ namespace Bestellsystem_Lieferdienst_Client.BL
         //SET
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         public static Task<bool> SetUser(User user) => Client.client.SendAndReturnAsync<bool>("SET USER " + user);
-        public static Task<bool> SetOrder(Order items) => Client.client.SendAndReturnAsync<bool>("SET ORDER " + items);
+        public static Task<bool> SetOrder(Order order) => Client.client.SendAndReturnAsync<bool>("SET ORDER " + order);
 
 
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

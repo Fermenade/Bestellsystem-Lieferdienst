@@ -217,6 +217,18 @@ public class Commands
                     return 1;
                 }
             }
+            public class SetOrder : ICommand
+            {
+                public string Name => "ORDER";
+                public bool? TakesParameter => true;
+                public Usertype MinPrivilegeRequired => Usertype.User;
+                public object Execute(string? command)
+                {
+                    Order order = JsonSerialize.Deserialize<Order>(command);
+                    SqlCommand sqlCommand = new SqlCommand().Insert(tableOrder, order.Address);
+                    ta
+                }
+            }
         }
 
         public class UpdatePredefined : BaseCommand
