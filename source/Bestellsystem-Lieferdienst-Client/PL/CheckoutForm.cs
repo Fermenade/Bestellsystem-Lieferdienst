@@ -42,7 +42,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
 
         private void btn_KaufAbschließen_Click(object sender, EventArgs e)
         {
-            ServerData.SetOrder()
+            ServerData.SetOrder();
         }
 
         private void button1_Click(object sender, EventArgs e)
