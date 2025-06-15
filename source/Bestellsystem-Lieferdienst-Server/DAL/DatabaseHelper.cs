@@ -85,7 +85,6 @@ public class DatabaseHelper(string connectionString)
 
         ConstructorInfo? matchedConstructor = typeof(T).GetConstructors().First(p => !Attribute.IsDefined(p, typeof(DatabaseConstructorAttribute)));
 
-
         if (matchedConstructor == null)
         {
             throw new Exception("Did not find matching constructor.");
