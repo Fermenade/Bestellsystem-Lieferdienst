@@ -70,7 +70,7 @@ namespace Bestellsystem_Lieferdienst.PL
 
                 return;
             }
-            GetData.UpdateUser(user);
+            ServerData.UpdateUser(user);
         }
     }
 }

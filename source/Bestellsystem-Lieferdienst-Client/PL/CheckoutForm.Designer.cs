@@ -139,7 +139,6 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             // 
             // CheckoutForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
             Controls.Add(button1);
             Controls.Add(btn_KaufAbschließen);
             Controls.Add(tbx_StraßeHausnummer);
@@ -151,6 +150,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             Controls.Add(lbl_BestellungÜberschrift);
             Margin = new Padding(4, 5, 4, 5);
             Name = "CheckoutForm";
+            Size = new Size(1525, 1019);
             ResumeLayout(false);
             PerformLayout();
         }

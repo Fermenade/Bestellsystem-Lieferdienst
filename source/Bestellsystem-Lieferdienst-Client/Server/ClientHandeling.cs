@@ -115,9 +115,9 @@ public class Client : ClientStream
             {
                 //UserCommand command = new UserCommand(user, data);
 
-                //request.Data = JsonSerialize.Serialize(CommandManager.ExecuteCommand(command));
+                //request.ServerData = JsonSerialize.Serialize(CommandManager.ExecuteCommand(command));
 
-                //if (request.Data == "UserHappened")
+                //if (request.ServerData == "UserHappened")
                 //{
                 //    string[] i = data.Split(" ");
                 //    if (i[1] == "USER")

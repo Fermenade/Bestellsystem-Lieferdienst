@@ -19,7 +19,7 @@ public partial class SignupUserControl : UserControl
     {
         if (TryCreateUser(tbx_Email.Text,tbx_Password.Text,tbx_Country.Text,tbx_ZippCode.Text,tbx_City.Text,tbx_Street.Text,tbx_HouseNr.Text,tbx_ApartmentNr.Text,out User user))
         {
-            GetData.SetUser(user);
+            ServerData.SetUser(user);
         }
     }
 
