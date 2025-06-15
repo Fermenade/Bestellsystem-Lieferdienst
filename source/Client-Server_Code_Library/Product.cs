@@ -12,7 +12,8 @@ public class Product
     public string? Imagepath;
     public byte[]? Picture;//cuz it's easier.
 
-    public Product(string name, string description, decimal price, string[] categories, string imagepath)
+    [DatabaseConstructor]
+    public Product(string name, string description, decimal price, string[] categories, string? imagepath)
     {
         this.Name = name;
         this.Description = description;

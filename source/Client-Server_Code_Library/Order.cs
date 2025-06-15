@@ -8,7 +8,7 @@ public class Order
 
     Address Übergabeort;
 
-
+    [DatabaseConstructor]
     public Order(int orderID, int userId, OrderItem[] items, DateTime dateTime)
     {
         OrderID = orderID;

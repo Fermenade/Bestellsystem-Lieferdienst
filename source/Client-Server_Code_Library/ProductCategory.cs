@@ -4,6 +4,8 @@
     {
         public int id;
         public string name;
+
+        [DatabaseConstructor]
         public ProductCategory(int id, string name)
         {
             this.id = id;

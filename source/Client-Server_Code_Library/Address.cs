@@ -10,6 +10,7 @@ public class Address
     public int HouseNumber;
     public int ApartmentNumber;
 
+    [DatabaseConstructor]
     Address(int addressId, string country, int zippCode, string city, string street, int houseNumber, int apartmentNumber)
         : this(country, zippCode, city, street, houseNumber, apartmentNumber)
     {

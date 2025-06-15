@@ -1,5 +1,7 @@
 using MySql.Data.MySqlClient;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using Client_Server_Code_Library;
 
 
 namespace Bestellsystem_Lieferdienst_Server.DAL;
@@ -83,33 +85,14 @@ public class DatabaseHelper(string connectionString)
 
         ConstructorInfo? matchedConstructor = null;
 
-        //Check if the class has a matching constructor
-        foreach (var VARIABLE in typeof(T).GetConstructors())
+        var i = typeof(T).GetConstructors().Where(p => !Attribute.IsDefined(p, typeof(DatabaseConstructorAttribute)));
+        if (i.Count() != 1)
         {
-            var x = VARIABLE.GetParameters();
-            if (o[0].Length == x.Length)
-            {
-                bool validConsturctorExists = true;
-                for (int i = 0; i < x.Length; ++i)
-                {
-                    if (o[0][i].GetType() != x[i].ParameterType)
-                    {
-                        if (o[0][i] is DBNull && IsNullable(x[i].ParameterType))
-                        {
-                            o[0][i] = null;
-                            continue;
-                        }
-                        validConsturctorExists = false;
-                        break;
-                    }
-                }
-
-                if (validConsturctorExists)
-                {
-                    matchedConstructor = VARIABLE;
-                    break;
-                }
-            }
+            throw new Exception("Found more or less than one matching constructor.");
+        }
+        else
+        {
+            matchedConstructor = i.First();
         }
         if (matchedConstructor == null)
         {
