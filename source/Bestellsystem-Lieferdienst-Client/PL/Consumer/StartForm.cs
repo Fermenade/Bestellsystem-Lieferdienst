@@ -1,5 +1,6 @@
 using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.PL.Employe;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.PL
@@ -62,6 +63,11 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         private void button1_Click(object sender, EventArgs e)
         {
             this.LoadView(new UserDetailView());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.LoadView(new ProductsEditOverviewView());
         }
     }
 }

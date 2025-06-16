@@ -28,7 +28,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             // Convert properties to parameters
             Parameters = ConvertToParameters(properties, data);
 
-            
+
 
             return this;
         }

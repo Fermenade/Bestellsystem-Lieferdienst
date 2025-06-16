@@ -1,7 +1,9 @@
 ﻿using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+using Bestellsystem_Lieferdienst_Client.PL;
+using Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls;
 
-namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
+namespace Bestellsystem_Lieferdienst.PL.Konsument.ShopingCart_Controls
 {
     internal class ShoppingCartView : Panel
     {
@@ -45,14 +47,14 @@ namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
 
 
             Label lblTotalTotal = new Label { Text = $"{0:C}", Left = 140, Width = 100, Top = 15, ForeColor = Color.Black };
-            Button btn_button = new Button { Text = "Kaufen", Left = 260, Width = 60, Top = 20, ForeColor = Color.Black, Enabled = (shoppingCart.itemControlMap.Count != 0) };
+            Button btn_button = new Button { Text = "Kaufen", Left = 260, Width = 60, Top = 20, ForeColor = Color.Black, Enabled = shoppingCart.itemControlMap.Count != 0 };
             btn_button.Click += (s, e) =>
             {
                 Parent.LoadView(new CheckoutForm());
             };
             CartManager.CartItems.ListChanged += (s, e) =>
             {
-                if (this.shoppingCart.itemControlMap.Count == 0)
+                if (shoppingCart.itemControlMap.Count == 0)
                 {
                     btn_button.Enabled = false;
                 }

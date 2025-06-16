@@ -157,7 +157,7 @@ public class Commands
                     if (address != null)
                     {
                         command = new SqlCommand().Insert(tableAddress, address);
-                        i.address_addressID = _dbHelper.InsertAndReturnID(command,tableAddress);
+                        i.address_addressID = _dbHelper.InsertAndReturnID(command, tableAddress);
                     }
 
                     i.usertypeID = (int)Usertype.Customer;

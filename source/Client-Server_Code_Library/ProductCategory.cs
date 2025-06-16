@@ -11,5 +11,9 @@
             this.id = id;
             this.name = name;
         }
+        public ProductCategory(string name)
+        {
+            this.name = name;
+        }
     }
 }

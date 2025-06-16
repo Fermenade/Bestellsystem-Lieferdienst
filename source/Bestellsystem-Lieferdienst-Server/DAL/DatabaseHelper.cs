@@ -57,7 +57,7 @@ public class DatabaseHelper(string connectionString)
         int? lastId;
         using (MySqlConnection _connection = new(connectionString))
         {
-            InsertItemIntoTableSession(query,_connection);
+            InsertItemIntoTableSession(query, _connection);
             using (MySqlCommand command = new MySqlCommand("SELECT LAST_INSERT_ID();", _connection))
             {
                 try
