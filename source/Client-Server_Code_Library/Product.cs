@@ -4,7 +4,7 @@ namespace Client_Server_Code_Library;
 
 public class Product
 {
-    public int ID;
+    public int? ID;
     public string Name;
     public string Description;
     public decimal Price;
@@ -59,5 +59,14 @@ public class Product
         }
 
         return new(id,name, description, Price, categories, picture);
+    }
+    public static Product CreateProduct(string name, string description, string price, byte[] picture, string[] categories)
+    {
+        if (!decimal.TryParse(price, out decimal Price))
+        {
+            throw new Exception("Price is not of type decimal");
+        }
+
+        return new(name, description, Price, categories, picture);
     }
 }
