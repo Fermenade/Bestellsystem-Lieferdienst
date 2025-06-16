@@ -37,6 +37,11 @@ public class DatabaseHelper(string connectionString)
         }
     }
 
+    public int InsertAndReturnID(SqlCommand query, string table)
+    {
+        return (int?)InsertAndReturnSpecifiedColumns(query, table)?[0] ?? throw new InvalidOperationException("Expected an integer to be returned from InsertAndReturnSpecifiedColumns, but the result was null or not an integer.");
+    }
+
     // Generated
     /// <summary>
     /// Inserts a new item into the specified database table and returns specified columns from the inserted item.

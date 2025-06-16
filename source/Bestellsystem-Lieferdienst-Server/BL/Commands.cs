@@ -153,11 +153,11 @@ public class Commands
 
                     Address address = i.Address;
                     SqlCommand command;
-                    int x;
+
                     if (address != null)
                     {
-                        command = new SqlCommand().Insert(tableAddress, address, ["addressID"]);
-                        i.address_addressID = _dbHelper.InsertItemIntoTable(command);
+                        command = new SqlCommand().Insert(tableAddress, address);
+                        i.address_addressID = _dbHelper.InsertAndReturnID(command,tableAddress);
                     }
 
                     i.usertypeID = (int)Usertype.Customer;
@@ -227,8 +227,14 @@ public class Commands
                 {
                     Order order = JsonSerialize.Deserialize<Order>(command);
                     SqlCommand sqlCommand = new SqlCommand().Insert(tableOrder, order.UserID);
-                    _dbHelper.InsertAndReturnSpecifiedColumns(sqlCommand, tableOrder);
+                    int orderID = _dbHelper.InsertAndReturnID(sqlCommand, tableOrder);
 
+                    foreach (var VARIABLE in order.Items)
+                    {
+                        VARIABLE.OrderId = orderID;
+                        sqlCommand = new SqlCommand().Insert(tableOrder_Product, VARIABLE);
+                        _dbHelper.InsertItemIntoTable(sqlCommand);
+                    }
                     return 1;
                 }
             }
