@@ -43,10 +43,10 @@ namespace Bestellsystem_Lieferdienst.PL
 
         private void btnChangePassword_Click(object sender, EventArgs e)
         {
-            if (TryCreateUser(tbxEMail.Text,tbxPassword.Text,tbxLand.Text,tbxPLZ.Text,tbxOrt.Text,tbxStraße.Text,tbxHausnummer.Text,tbxApartment.Text, out User user))
-            {
-                GetData.SetUser(user);
-            }
+            //if (TryCreateUser(tbxEMail.Text,tbxPassword.Text,tbxLand.Text,tbxPLZ.Text,tbxOrt.Text,tbxStraße.Text,tbxHausnummer.Text,tbxApartment.Text, out User user))
+            //{
+            //    GetData.SetUser(user);
+            //}
 
 
         }
