@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net;
-
-namespace Client_Server_Code_Library;
+﻿namespace Client_Server_Code_Library;
 public class Order
 {
     public int? OrderID;
@@ -12,7 +9,7 @@ public class Order
     public Address? Address;
 
     [DatabaseConstructor]
-    public Order(int orderID, int? userId, OrderItem[] items, DateTime dateTime, Address address) :this(userId,items,dateTime, address)
+    public Order(int orderID, int? userId, OrderItem[] items, DateTime dateTime, Address address) : this(userId, items, dateTime, address)
     {
         OrderID = orderID;
     }

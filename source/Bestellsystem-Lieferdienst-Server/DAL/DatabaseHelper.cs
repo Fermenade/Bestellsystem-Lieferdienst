@@ -1,56 +1,85 @@
+using Client_Server_Code_Library;
 using MySql.Data.MySqlClient;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using Client_Server_Code_Library;
 
 
 namespace Bestellsystem_Lieferdienst_Server.DAL;
 
 public class DatabaseHelper(string connectionString)
 {
-    private MySqlConnection _connection = new(connectionString); //if this fails database couldn't be reached.
 
-    public int InsertItemIntoTable(SqlCommand query)
+    private int InsertItemIntoTableSession(SqlCommand query, MySqlConnection _connection)
     {
-        using (MySqlConnection _connection = new(connectionString))
-        {
-            _connection.Open();
-
-            using (var command = new MySqlCommand(query.SqlStatement, _connection))
-            {
-                foreach (var VARIABLE in query.Parameters)
-                {
-                    command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
-                }
-
-                try
-                {
-                    return command.ExecuteNonQuery();
-                }
-                catch (MySqlException ex) // Catching specific exception related to MySQL
-                {
-                    throw new Exception("Failed to insert item: " + query.SqlStatement);
-                }
-            }
-        }
-    }
-    /// <summary>
-    /// Execute a non Value returning sql command.
-    /// eg. INSERT, UPDATE
-    /// </summary>
-    /// <param name="query">The sql query</param>
-    /// <returns>The amount of rows affected.</returns>
-    public int ExecuteNonQuery(SqlCommand query)
-    {
-        using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
+        using (var command = new MySqlCommand(query.SqlStatement, _connection))
         {
             foreach (var VARIABLE in query.Parameters)
             {
                 command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
             }
 
-            return command.ExecuteNonQuery(); //TODO: Make it run async
+            try
+            {
+                return command.ExecuteNonQuery();
+            }
+            catch (MySqlException ex) // Catching specific exception related to MySQL
+            {
+                throw new Exception("Failed to insert item: " + query.SqlStatement);
+            }
         }
+
+    }
+    public int InsertItemIntoTable(SqlCommand query)
+    {
+        using (MySqlConnection _connection = new(connectionString))
+        {
+            _connection.Open();
+            return InsertItemIntoTableSession(query, _connection);
+        }
+    }
+
+    // Generated
+    /// <summary>
+    /// Inserts a new item into the specified database table and returns specified columns from the inserted item.
+    /// </summary>
+    /// <param name="query">The SQL command containing the insert statement and parameters.</param>
+    /// <param name="returnColumns">An array of column names to return from the inserted item.</param>
+    /// <returns>An object containing the specified columns from the newly inserted item.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the query or returnColumns are null.</exception>
+    /// <exception cref="SqlException">Thrown when there is an error executing the SQL command.</exception> Generated end
+    public object[]? InsertAndReturnSpecifiedColumns(SqlCommand query, string table, string[] returnColumns)
+    {
+        if (returnColumns == null || returnColumns.Length == 0)
+        {
+            throw new ArgumentNullException(nameof(returnColumns), "Return columns cannot be null or empty.");
+        }
+        int? lastId;
+        using (MySqlConnection _connection = new(connectionString))
+        {
+            InsertItemIntoTableSession(query,_connection);
+            using (MySqlCommand command = new MySqlCommand("SELECT LAST_INSERT_ID();", _connection))
+            {
+                try
+                {
+                    lastId = (int)command.ExecuteScalar();
+                }
+                catch (MySqlException ex) // Catching specific exception related to MySQL
+                {
+                    throw new Exception("Failed to select item: Last-ID");
+                }
+            }
+        }
+        //this is a small buggy optimisation
+        if (returnColumns.Length == 1)
+        {
+            if (returnColumns[0] == $"{table}ID")
+            {
+                return [lastId];
+            }
+        }
+
+        SqlCommand sql = new SqlCommand().SelectColumnsById(table, returnColumns, lastId.Value);
+
+        return GetDataFromDatabase(sql)?[0];
     }
 
     /// <summary>
@@ -90,11 +119,11 @@ public class DatabaseHelper(string connectionString)
 
         if (constructorInfos.Count() == 1)
         {
-             matchedConstructor = constructorInfos.First();
+            matchedConstructor = constructorInfos.First();
         }
         else
         {
-            throw new InvalidOperationException($"Expected exactly one constructor not marked with DatabaseConstructorAttribute. Found { constructorInfos.Count() }.");
+            throw new InvalidOperationException($"Expected exactly one constructor not marked with DatabaseConstructorAttribute. Found {constructorInfos.Count()}.");
         }
 
         foreach (object[] VARIABLE in o)

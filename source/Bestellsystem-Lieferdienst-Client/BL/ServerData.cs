@@ -1,5 +1,4 @@
-﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
-using Bestellsystem_Lieferdienst_Client.Server;
+﻿using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.BL

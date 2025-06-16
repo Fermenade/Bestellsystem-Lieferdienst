@@ -7,16 +7,17 @@ namespace Bestellsystem_Lieferdienst_Server.BL;
 
 public class Commands
 {
-    static string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
+    const string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
     static DatabaseHelper _dbHelper = new(_connectionString);
 
-    public static string tableProduct = "product";
-    public static string tableProductGroup = "productgroup";
-    public static string cTableProduct_ProductGroup = "product_has_productgroup";
-    public static string tableOrder = "order";
-    public static string tableAddress = "address";
-    public static string tableUsertype = "usertype";
-    public static string tableUser = "user";
+    public const string tableProduct = "product";
+    public const string tableProductGroup = "productgroup";
+    public const string cTableProduct_ProductGroup = "product_has_productgroup";
+    public const string tableOrder = "order";
+    public const string tableOrder_Product = "order_has_product";
+    public const string tableAddress = "address";
+    public const string tableUsertype = "usertype";
+    public const string tableUser = "user";
 
     public class sql : BaseCommand
     {
@@ -225,8 +226,10 @@ public class Commands
                 public object Execute(string? command)
                 {
                     Order order = JsonSerialize.Deserialize<Order>(command);
-                    SqlCommand sqlCommand = new SqlCommand().Insert(tableOrder, order.Address);
-                    ta
+                    SqlCommand sqlCommand = new SqlCommand().Insert(tableOrder, order.UserID, ["orderID"]);
+                    _dbHelper.InsertAndReturnSpecifiedColumns();
+
+                    return 1;
                 }
             }
         }
