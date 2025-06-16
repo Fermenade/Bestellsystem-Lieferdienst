@@ -73,7 +73,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
             //}
             void AddRenderedItem(Product product)
             {
-                var control = new ProductsEditOverviewEntryControl();
+                var control = new ProductsEditOverviewEntryControl(product);
                 control.btn_Delete.Click += (s, e) =>
                 {
 
