@@ -8,12 +8,14 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
     public partial class ProductsEditOverviewContainer : FlowLayoutPanel
     {
         public readonly Dictionary<Product, ProductsEditOverviewEntryControl> itemControlMap = new();
+
         public ProductsEditOverviewContainer()
         {
             InitializeComponent();
             InitializeManualComponent();
             RenderCartItems();
         }
+
         void InitializeManualComponent()
         {
             //TODO: ADD header
@@ -72,4 +74,5 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
             //    }
             //}
         }
+    }
 }

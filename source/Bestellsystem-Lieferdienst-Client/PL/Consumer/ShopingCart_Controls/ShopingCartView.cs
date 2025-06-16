@@ -83,10 +83,5 @@ namespace Bestellsystem_Lieferdienst.PL.Konsument.ShopingCart_Controls
             Controls.Add(panelTop);
             Controls.Add(panelBottom);
         }
-
-        private void Btn_button_Click(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
