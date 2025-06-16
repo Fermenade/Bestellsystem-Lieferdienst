@@ -32,7 +32,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             lb_error.Text = "Am einloggen...";
             try
             {
-                Client.client.User = GetData.GetUser(user).Result;
+                Client.client.User = ServerData.GetUser(user).Result;
 
             }
             catch (System.AggregateException exception)

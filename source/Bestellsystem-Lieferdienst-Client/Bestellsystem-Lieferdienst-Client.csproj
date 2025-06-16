@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="PL\SignupUserControl.cs">
+        <Compile Update="PL\Consumer\SignupUserControl.cs">
             <SubType>UserControl</SubType>
         </Compile>
     </ItemGroup>
@@ -27,6 +27,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="PL\Admin\" />
     </ItemGroup>
 
 </Project>

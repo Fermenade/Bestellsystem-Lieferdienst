@@ -1,5 +1,6 @@
 using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.PL.Employe;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.PL
@@ -18,12 +19,12 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         {
             //TODO:should the data filtered on the client or directly at the server?
             cbxCategory.Items.Add("Alle");
-            foreach (var VARIABLE in await GetData.GetAllProductCategories())
+            foreach (var VARIABLE in await ServerData.GetAllProductCategories())
             {
                 cbxCategory.Items.Add(VARIABLE.name);
             }
 
-            Product[] x = await GetData.GetAllProducts();
+            Product[] x = await ServerData.GetAllProducts();
             productsView.SetItems(x);
             cbxCategory.SelectedIndex = 0;
         }
@@ -62,6 +63,11 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         private void button1_Click(object sender, EventArgs e)
         {
             this.LoadView(new UserDetailView());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.LoadView(new ProductsEditOverviewView());
         }
     }
 }

@@ -7,16 +7,17 @@ namespace Bestellsystem_Lieferdienst_Server.BL;
 
 public class Commands
 {
-    static string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
+    const string _connectionString = "Server=localhost;Database=deliveryservice;Uid=root";
     static DatabaseHelper _dbHelper = new(_connectionString);
 
-    public static string tableProduct = "product";
-    public static string tableProductGroup = "productgroup";
-    public static string cTableProduct_ProductGroup = "product_has_productgroup";
-    public static string tableOrder = "order";
-    public static string tableAddress = "address";
-    public static string tableUsertype = "usertype";
-    public static string tableUser = "user";
+    public const string tableProduct = "product";
+    public const string tableProductGroup = "productgroup";
+    public const string cTableProduct_ProductGroup = "product_has_productgroup";
+    public const string tableOrder = "order";
+    public const string tableOrder_Product = "order_has_product";
+    public const string tableAddress = "address";
+    public const string tableUsertype = "usertype";
+    public const string tableUser = "user";
 
     public class sql : BaseCommand
     {
@@ -152,11 +153,11 @@ public class Commands
 
                     Address address = i.Address;
                     SqlCommand command;
-                    int x;
+
                     if (address != null)
                     {
-                        command = new SqlCommand().Insert(tableAddress, address, ["addressID"]);
-                        i.address_addressID = _dbHelper.InsertItemIntoTable(command);
+                        command = new SqlCommand().Insert(tableAddress, address);
+                        i.address_addressID = _dbHelper.InsertAndReturnID(command, tableAddress);
                     }
 
                     i.usertypeID = (int)Usertype.Customer;
@@ -214,6 +215,26 @@ public class Commands
                     SqlCommand command = new SqlCommand().Insert(tableProductGroup, i);
                     _dbHelper.InsertItemIntoTable(command);
 
+                    return 1;
+                }
+            }
+            public class SetOrder : ICommand
+            {
+                public string Name => "ORDER";
+                public bool? TakesParameter => true;
+                public Usertype MinPrivilegeRequired => Usertype.User;
+                public object Execute(string? command)
+                {
+                    Order order = JsonSerialize.Deserialize<Order>(command);
+                    SqlCommand sqlCommand = new SqlCommand().Insert(tableOrder, order.UserID);
+                    int orderID = _dbHelper.InsertAndReturnID(sqlCommand, tableOrder);
+
+                    foreach (var VARIABLE in order.Items)
+                    {
+                        VARIABLE.OrderId = orderID;
+                        sqlCommand = new SqlCommand().Insert(tableOrder_Product, VARIABLE);
+                        _dbHelper.InsertItemIntoTable(sqlCommand);
+                    }
                     return 1;
                 }
             }

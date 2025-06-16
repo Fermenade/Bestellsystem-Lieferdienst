@@ -10,17 +10,20 @@ public class Product
     public decimal Price;
     public string[] Categories;
     public string? Imagepath;
+
+    [IgnoreInsert]
     public byte[]? Picture;//cuz it's easier.
 
-    public Product(string name, string description, decimal price, string[] categories, string imagepath)
+    public Product(string name, string description, decimal price, string[] categories, byte[] picture)
     {
         this.Name = name;
         this.Description = description;
         this.Price = price;
         this.Categories = categories;
-        this.Imagepath = imagepath;
+        this.Picture = picture;
     }
-    public Product(int id, string name, string description, decimal price)
+    [DatabaseConstructor]
+    public Product(int id, string name, string description, decimal price, string imagepath)
     {
         ID = id;
         Name = name;
@@ -42,5 +45,15 @@ public class Product
         Description = description;
         Price = price;
         Categories = categories;
+    }
+
+    public static Product CreateProduct(string name, string description, string price, byte[] picture, string[] categories)
+    {
+        if (!decimal.TryParse(price, out decimal Price))
+        {
+            throw new Exception("Price is not of type decimal");
+        }
+
+        return new(name, description, Price, categories, picture);
     }
 }

@@ -21,6 +21,8 @@ public class User
         usertypeID = usertypeId;
         Address = address;
     }
+
+    [DatabaseConstructor]
     public User(int userId, int usertypeId, string email, string password, object? addressID)//This constructor is just for the database
         : this(email, password)
     {

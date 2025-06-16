@@ -9,8 +9,10 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         public string SqlStatement { get; private set; } = string.Empty;
         public List<(string, object)> Parameters { get; private set; }
 
+
+
         //Generated 1/2
-        public SqlCommand Insert<T>(string table, T data, string[] returnColumns = null)
+        public SqlCommand Insert<T>(string table, T data)
         {
             // Get properties of the type T that are not marked with IgnoreInsertAttribute
             var properties = typeof(T).GetFields()
@@ -21,10 +23,12 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             var columnNames = properties.Select(p => p.Name).ToList();
 
             // Build the insert statement with OUTPUT clause
-            SqlStatement = BuildInsertStatement(table, columnNames, returnColumns);
+            SqlStatement = BuildInsertStatement(table, columnNames);
 
             // Convert properties to parameters
             Parameters = ConvertToParameters(properties, data);
+
+
 
             return this;
         }
@@ -36,6 +40,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
             SqlStatement = BuildUpdateStatement(table, columnNames);
             Parameters = ConvertToParameters(properties, data);
+
 
             return this;
         }
@@ -155,8 +160,8 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         private static List<(string, object)> ConvertToParameters(IEnumerable<FieldInfo> properties, object data) =>
             properties.Select(p => ($"@{p.Name}", p.GetValue(data) ?? DBNull.Value)).ToList();
 
-        //Generated
-        public static string BuildInsertStatement(string table, IEnumerable<string> columns, string[] returnColumns = null)
+        //Generated 1/2
+        private static string BuildInsertStatement(string table, IEnumerable<string> columns)
         {
             // Format the list of columns for the SQL statement
             var colList = string.Join(", ", columns.Select(FormatIdentifier));
@@ -164,13 +169,6 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
             // Build the base insert statement
             var insertStatement = $"INSERT INTO {FormatIdentifier(table)} ({colList}) VALUES ({valList})";
-
-            // If returnColumns is provided, add the OUTPUT clause
-            if (returnColumns != null && returnColumns.Any())
-            {
-                var outputList = string.Join(", ", returnColumns.Select(c => $"INSERTED.{FormatIdentifier(c)}"));
-                insertStatement = $"{insertStatement} OUTPUT {outputList}";
-            }
 
             return insertStatement;
         }

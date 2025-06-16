@@ -4,15 +4,13 @@ namespace Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 
 using System.ComponentModel;
 
-public class CartItem : INotifyPropertyChanged
+public class CartItem : OrderItem, INotifyPropertyChanged
 {
-    private int quantity = 1;
 
     public CartItem(Product product)
     {
-        Product = product;
+        this.Product = product;
     }
-    public Product Product { get; set; }
 
     public int Quantity
     {
@@ -31,7 +29,7 @@ public class CartItem : INotifyPropertyChanged
         }
     }
 
-    public decimal TotalPrice => Product.Price * Quantity;
+    public decimal TotalPrice => this.Product.Price * Quantity;
 
     public event PropertyChangedEventHandler PropertyChanged;
 

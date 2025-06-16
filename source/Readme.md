@@ -5,9 +5,6 @@
 
 # Known Issiues:
 	Server looses track of clients when running pc goes into sleep/hibernation mode. - Will not be fixed.
-	Pictures aren't stored or sent from the server to the client. - Maybe idk.
-	UI gets stuck while getting data from server - this should have been fixed idk. why it does that.
-
 # Anteil der Umsetzung:
 	#### Melik:
 		Basic implementations from various views (around 75% of total maybe).
