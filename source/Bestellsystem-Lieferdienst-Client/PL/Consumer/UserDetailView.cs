@@ -53,7 +53,7 @@ namespace Bestellsystem_Lieferdienst.PL
                 // dieser block soll nur ausgeführt werden, wenn der user etwas angegeben hat. Ansonsten soll er die Benutzer Adresse auf null setzten.
 
                 // TODO: Der Konstruktor muss noch gefüllt werden.
-                user.Address = new Address();
+                //user.Address = new Address();
             }
             catch (Exception exception)
             {
