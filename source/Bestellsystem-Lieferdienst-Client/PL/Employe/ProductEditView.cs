@@ -78,13 +78,13 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
         private void button3_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex == -1) return;
-            listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+            listBox1.Items.Remove(listBox1.SelectedItems);
             listBox1.SelectedIndex = -1;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Add(listBox2.SelectedItem);
+            listBox1.Items.Add(listBox2.SelectedItems);
         }
     }
 }
