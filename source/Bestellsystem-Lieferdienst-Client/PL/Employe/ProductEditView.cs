@@ -41,9 +41,16 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            // now this is a bit dirty to use the tbx and then the Product again, but this is ez., it's 4 am and I dont have any more time left to waste.
-            ServerData.UpdateProduct(Product.CreateProduct(textBox1.Text, textBox2.Text, textBox3.Text,
-                Product.Picture, listBox1.Items.Cast<string>().ToArray()));
+            if (Product.ID != null)
+            {
+                // now this is a bit dirty to use the tbx and then the Product again, but this is ez., it's 4 am and I dont have any more time left to waste.
+                ServerData.UpdateProduct(Product.CreateProduct(Product.ID, textBox1.Text, textBox2.Text, textBox3.Text,
+                    Product.Picture, listBox1.Items.Cast<string>().ToArray()));
+            }
+            else
+            {
+                ServerData.
+            }
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

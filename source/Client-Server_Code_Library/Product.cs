@@ -31,7 +31,7 @@ public class Product
         Price = price;
     }
     [JsonConstructor]
-    public Product(int id, string name, string description, decimal price, string[] categories)
+    public Product(int id, string name, string description, decimal price, string[] categories, byte[] picture)
     {
         if (id == -1)
         {
@@ -39,21 +39,25 @@ public class Product
             this.Description = description;
             this.Price = price;
             this.Categories = categories;
+            this.Picture = picture;
         }
-        ID = id;
-        Name = name;
-        Description = description;
-        Price = price;
-        Categories = categories;
+        else
+        {
+            ID = id;
+            Name = name;
+            Description = description;
+            Price = price;
+            Categories = categories;
+        }
     }
 
-    public static Product CreateProduct(string name, string description, string price, byte[] picture, string[] categories)
+    public static Product CreateProduct(int id, string name, string description, string price, byte[] picture, string[] categories)
     {
         if (!decimal.TryParse(price, out decimal Price))
         {
             throw new Exception("Price is not of type decimal");
         }
 
-        return new(name, description, Price, categories, picture);
+        return new(id,name, description, Price, categories, picture);
     }
 }
