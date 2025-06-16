@@ -5,11 +5,12 @@ public class Order
     public int? UserID;
     public OrderItem[] Items;
     public DateTime DateTime;
+    public State state;
 
     public Address? Address;
 
     [DatabaseConstructor]
-    public Order(int orderID, int? userId, OrderItem[] items, DateTime dateTime, Address address) : this(userId, items, dateTime, address)
+    public Order(int orderID, int? userId, OrderItem[] items, DateTime dateTime, ) : this(userId, items, dateTime, address)
     {
         OrderID = orderID;
     }
@@ -25,5 +26,12 @@ public class Order
     public static Order CreateOrder(Address address, OrderItem[] items, User? user = null)
     {
         return new Order(user?.userID, items, DateTime.Now, address);
+    }
+    public enum State
+    {
+        NotStarted,
+        InProgress,
+        Finished,
+        Delivered
     }
 }
