@@ -62,14 +62,6 @@ public class Address
 
     public override string ToString()
     {
-        List<string> str = new List<string>();
-        str.Add($"'{Country}'");
-        str.Add($"'{ZipCode}'");
-        str.Add($"'{City}'");
-        str.Add($"'{Street}'");
-        str.Add($"'{HouseNumber}'");
-        if (ApartmentNumber != null)
-            str.Add($"'{ApartmentNumber}'");
-        return string.Join(",", str);
+        return JsonSerialize.Serialize(this);
     }
 }
