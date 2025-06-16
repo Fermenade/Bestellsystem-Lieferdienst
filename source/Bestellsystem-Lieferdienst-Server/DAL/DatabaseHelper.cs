@@ -41,17 +41,14 @@ public class DatabaseHelper(string connectionString)
     /// <summary>
     /// Inserts a new item into the specified database table and returns specified columns from the inserted item.
     /// </summary>
+    /// <remarks> It is best practice to define a primary key with AUTO_INCREMENT for tables that require unique identifiers.</remarks>
     /// <param name="query">The SQL command containing the insert statement and parameters.</param>
     /// <param name="returnColumns">An array of column names to return from the inserted item.</param>
-    /// <returns>An object containing the specified columns from the newly inserted item.</returns>
+    /// <returns>An object containing the specified columns from the newly inserted item.  If no return columns are specified it will return the elements id.</returns>
     /// <exception cref="ArgumentNullException">Thrown when the query or returnColumns are null.</exception>
     /// <exception cref="SqlException">Thrown when there is an error executing the SQL command.</exception> Generated end
-    public object[]? InsertAndReturnSpecifiedColumns(SqlCommand query, string table, string[] returnColumns)
+    public object[]? InsertAndReturnSpecifiedColumns(SqlCommand query, string table, string[]? returnColumns = null)
     {
-        if (returnColumns == null || returnColumns.Length == 0)
-        {
-            throw new ArgumentNullException(nameof(returnColumns), "Return columns cannot be null or empty.");
-        }
         int? lastId;
         using (MySqlConnection _connection = new(connectionString))
         {
@@ -69,12 +66,9 @@ public class DatabaseHelper(string connectionString)
             }
         }
         //this is a small buggy optimisation
-        if (returnColumns.Length == 1)
+        if (returnColumns == null)
         {
-            if (returnColumns[0] == $"{table}ID")
-            {
-                return [lastId];
-            }
+            return [lastId];
         }
 
         SqlCommand sql = new SqlCommand().SelectColumnsById(table, returnColumns, lastId.Value);
