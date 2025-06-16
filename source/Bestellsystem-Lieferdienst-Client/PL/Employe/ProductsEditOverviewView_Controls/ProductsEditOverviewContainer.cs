@@ -1,4 +1,5 @@
-﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+﻿using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 using Bestellsystem_Lieferdienst_Client.BL.StartForm;
 using Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls;
 using Client_Server_Code_Library;
@@ -18,10 +19,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
 
         void InitializeManualComponent()
         {
-            //TODO: ADD header
-            //Controls.Add(headerPanel);
-            CartManager.CartItems.ListChanged += (s, e) => RenderCartItems();
-
+            ProductManager.ProductItemsCache.ListChanged += (s, e) => RenderCartItems();
         }
 
         private void RenderCartItems()
@@ -73,6 +71,30 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
             //        itemControlMap[item].SetCartItem(item);
             //    }
             //}
+            void AddRenderedItem(Product product)
+            {
+                var control = new ProductsEditOverviewEntryControl();
+                control.btn_Delete.Click += (s, e) =>
+                {
+
+                };
+                control.btn_Edit.Click += (s, e) =>
+                {
+
+                };
+
+                control.btn_Show.Click += (s, e) =>
+                {
+                    this.LoadView(new ProductDetailView(product));
+                };
+
+                control.RemoveClicked += (s, e) => { CartManager.RemoveProduct(item.Product); };
+
+                control.Margin = new Padding(5);
+                Controls.Add(control);
+
+                itemControlMap[product] = control; // Keep track of this control.
+            }
         }
     }
 }

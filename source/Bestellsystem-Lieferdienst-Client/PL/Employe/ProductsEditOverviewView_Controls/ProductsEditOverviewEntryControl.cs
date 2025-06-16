@@ -1,10 +1,15 @@
-﻿namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_Controls
+﻿using Client_Server_Code_Library;
+
+namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_Controls
 {
     public partial class ProductsEditOverviewEntryControl : UserControl
     {
-        public ProductsEditOverviewEntryControl()
+        public ProductsEditOverviewEntryControl(Product product)
         {
             InitializeComponent();
+            lb_Name.Text = product.Name;
+            lb_description.Text = product.Description;
+            lb_price.Text = $"{product.Price:C}";
         }
     }
 }
