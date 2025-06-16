@@ -226,8 +226,8 @@ public class Commands
                 public object Execute(string? command)
                 {
                     Order order = JsonSerialize.Deserialize<Order>(command);
-                    SqlCommand sqlCommand = new SqlCommand().Insert(tableOrder, order.UserID, ["orderID"]);
-                    _dbHelper.InsertAndReturnSpecifiedColumns(sqlCommand, tableOrder, ["orderID"]);
+                    SqlCommand sqlCommand = new SqlCommand().Insert(tableOrder, order.UserID);
+                    _dbHelper.InsertAndReturnSpecifiedColumns(sqlCommand, tableOrder);
 
                     return 1;
                 }

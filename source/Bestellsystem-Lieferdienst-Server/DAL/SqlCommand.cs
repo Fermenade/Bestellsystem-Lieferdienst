@@ -12,7 +12,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
 
         //Generated 1/2
-        public SqlCommand Insert<T>(string table, T data, string[] returnColumns = null)
+        public SqlCommand Insert<T>(string table, T data)
         {
             // Get properties of the type T that are not marked with IgnoreInsertAttribute
             var properties = typeof(T).GetFields()
@@ -23,7 +23,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             var columnNames = properties.Select(p => p.Name).ToList();
 
             // Build the insert statement with OUTPUT clause
-            SqlStatement = BuildInsertStatement(table, columnNames, returnColumns);
+            SqlStatement = BuildInsertStatement(table, columnNames);
 
             // Convert properties to parameters
             Parameters = ConvertToParameters(properties, data);
@@ -161,7 +161,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             properties.Select(p => ($"@{p.Name}", p.GetValue(data) ?? DBNull.Value)).ToList();
 
         //Generated 1/2
-        private static string BuildInsertStatement(string table, IEnumerable<string> columns, string[] returnColumns = null)
+        private static string BuildInsertStatement(string table, IEnumerable<string> columns)
         {
             // Format the list of columns for the SQL statement
             var colList = string.Join(", ", columns.Select(FormatIdentifier));
@@ -169,13 +169,6 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
             // Build the base insert statement
             var insertStatement = $"INSERT INTO {FormatIdentifier(table)} ({colList}) VALUES ({valList})";
-
-            // If returnColumns is provided, add a SELECT statement to retrieve the inserted values
-            if (returnColumns != null && returnColumns.Any())
-            {
-                var returnList = string.Join(", ", returnColumns.Select(c => FormatIdentifier(c)));
-                insertStatement += $" SELECT {returnList} FROM {FormatIdentifier(table)} WHERE Id = LAST_INSERT_ID();";
-            }
 
             return insertStatement;
         }
