@@ -58,7 +58,7 @@
             lbxProduct2Price.AutoSize = true;
             lbxProduct2Price.Location = new Point(3, 229);
             lbxProduct2Price.Name = "lbxProduct2Price";
-            lbxProduct2Price.Size = new Size(63, 25);
+            lbxProduct2Price.Size = new Size(66, 25);
             lbxProduct2Price.TabIndex = 10;
             lbxProduct2Price.Text = "99,99€";
             // 
