@@ -1,4 +1,5 @@
 using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.PL;
@@ -15,11 +16,20 @@ public partial class SignupUserControl : UserControl
     {
         checkBox1_CheckedChanged(checkBox1, EventArgs.Empty);
     }
-    private void BtnSignupClick(object sender, EventArgs e)
+    private async void BtnSignupClick(object sender, EventArgs e)
     {
-        if (TryCreateUser(tbx_Email.Text, tbx_Password.Text, tbx_Country.Text, tbx_ZippCode.Text, tbx_City.Text, tbx_Street.Text, tbx_HouseNr.Text, tbx_ApartmentNr.Text, out User user))
+        try
         {
-            ServerData.SetUser(user);
+            if (TryCreateUser(tbx_Email.Text, tbx_Password.Text, tbx_Country.Text, tbx_ZippCode.Text, tbx_City.Text, tbx_Street.Text, tbx_HouseNr.Text, tbx_ApartmentNr.Text, out User user))
+            {
+                lb_Error.Text = "Am einloggen...";
+                Client.client.User = await ServerData.SetUser(user);
+                this.LoadView(new StartForm());
+            }
+        }
+        catch (Exception ex)
+        {
+            throw; 
         }
     }
 

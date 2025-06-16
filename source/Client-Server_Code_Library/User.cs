@@ -23,12 +23,16 @@ public class User
     }
 
     [DatabaseConstructor]
-    public User(int userId, int usertypeId, string email, string password, object? addressID)//This constructor is just for the database
+    public User(int userId, int usertypeId, string email, string password, int? addressID)//This constructor is just for the database
         : this(email, password)
     {
         userID = userId;
         usertypeID = usertypeId;
         //address_addressID = addressID.GetType();
+    }
+    public User(int userId,string email, string password):this(email, password)
+    {
+        userID = userId;
     }
     public User(string email, string password)
     {

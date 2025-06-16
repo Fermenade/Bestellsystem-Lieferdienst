@@ -13,13 +13,13 @@ namespace Bestellsystem_Lieferdienst_Client.BL
         public static Task<User> GetUser(User user) =>
             Client.client.SendAndReturnAsync<User>($"GET USER {user}");
         public static Task<ProductCategory[]> GetAllProductCategories() => Client.client.SendAndReturnAsync<ProductCategory[]>("GET ALLCATEGORIES");
-        public static Task<bool> GetAllOrders() => Client.client.SendAndReturnAsync<bool>("GET ALLORDERS");
+        public static Task<Order[]> GetAllOrders() => Client.client.SendAndReturnAsync<Order[]>("GET ALLORDERS");
 
 
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         //SET
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-        public static Task<bool> SetUser(User user) => Client.client.SendAndReturnAsync<bool>("SET USER " + user);
+        public static Task<User> SetUser(User user) => Client.client.SendAndReturnAsync<User>("SET USER " + user);
         public static Task<bool> SetOrder(Order order) => Client.client.SendAndReturnAsync<bool>("SET ORDER " + order);
 
 

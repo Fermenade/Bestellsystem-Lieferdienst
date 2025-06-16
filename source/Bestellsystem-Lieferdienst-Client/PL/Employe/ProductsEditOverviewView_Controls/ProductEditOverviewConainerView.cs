@@ -7,15 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_Controls;
 
 namespace Bestellsystem_Lieferdienst.PL.Employe.ProductsEditOverviewView_Controls
 {
     internal class ProductEditOverviewConainerView : Panel
     {
-        private const int width = 460;
-        private ShoppingCart shoppingCart = new();
+        private const int width = 1000;
+        private ProductsEditOverviewContainer productsEditOverviewContainer;
         private Panel panelTop;
-        public Panel panelBottom;
 
         public ProductEditOverviewConainerView()
         {
@@ -27,12 +27,11 @@ namespace Bestellsystem_Lieferdienst.PL.Employe.ProductsEditOverviewView_Control
             Dock = DockStyle.Left;
             Width = width;
             // Create FlowLayoutPanel
-            shoppingCart = new ShoppingCart()
+            productsEditOverviewContainer = new ProductsEditOverviewContainer()
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
                 BackColor = Color.White
-
             };
             // Header Labels
             Label lblTitle = new Label { Text = "Name", Left = 10, Width = 120, Top = 10, ForeColor = Color.Black };
@@ -53,9 +52,8 @@ namespace Bestellsystem_Lieferdienst.PL.Employe.ProductsEditOverviewView_Control
 
 
             // Add to form
-            Controls.Add(shoppingCart);
+            Controls.Add(productsEditOverviewContainer);
             Controls.Add(panelTop);
-            Controls.Add(panelBottom);
         }
     }
 }
