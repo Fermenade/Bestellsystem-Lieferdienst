@@ -76,11 +76,11 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
                 var control = new ProductsEditOverviewEntryControl(product);
                 control.btn_Delete.Click += (s, e) =>
                 {
-
+                    ServerData.DeleteProduct(product);
                 };
                 control.btn_Edit.Click += (s, e) =>
                 {
-
+                    this.LoadView(new ProductEditView(product));
                 };
 
                 control.btn_Show.Click += (s, e) =>
