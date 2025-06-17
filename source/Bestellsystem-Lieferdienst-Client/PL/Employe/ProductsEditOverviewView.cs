@@ -23,7 +23,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
 
         private void btn_newProduct_Click(object sender, EventArgs e)
         {
-            this.LoadView(new ProductEditView(new(null,null, 0,null,null)));
+            this.LoadView(new ProductEditView(new(null, null, 0, null, null)));
         }
     }
 }

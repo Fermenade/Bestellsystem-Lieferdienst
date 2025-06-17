@@ -1,4 +1,6 @@
-﻿namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
+﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+
+namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
 {
     partial class ShoppingCart
     {
@@ -16,6 +18,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                CartManager.CartItems.ListChanged -= RenderCartItems;
             }
             base.Dispose(disposing);
         }

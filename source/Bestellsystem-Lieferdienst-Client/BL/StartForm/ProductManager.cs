@@ -11,7 +11,13 @@ namespace Bestellsystem_Lieferdienst_Client.BL.StartForm
         {
             ProductItemsCache.Add(product);
         }
-
+        public static void AddProducts(IEnumerable<Product> products)
+        {
+            foreach (Product productItem in products)
+            {
+                ProductItemsCache.Add(productItem);
+            }
+        }
         public static void RemoveProduct(Product product)
         {
             var item = ProductItemsCache.FirstOrDefault(ci => ci.Name == product.Name);
@@ -19,6 +25,10 @@ namespace Bestellsystem_Lieferdienst_Client.BL.StartForm
             {
                 ProductItemsCache.Remove(item);
             }
+        }
+        public static void Clear()
+        {
+            ProductItemsCache.Clear();
         }
     }
 }

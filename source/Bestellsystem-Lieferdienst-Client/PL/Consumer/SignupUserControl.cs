@@ -29,7 +29,7 @@ public partial class SignupUserControl : UserControl
         }
         catch (Exception ex)
         {
-            throw; 
+            throw;
         }
     }
 

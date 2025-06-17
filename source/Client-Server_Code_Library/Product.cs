@@ -58,7 +58,7 @@ public class Product
             throw new Exception("Price is not of type decimal");
         }
 
-        return new(id,name, description, Price, categories, picture);
+        return new(id, name, description, Price, categories, picture);
     }
     public static Product CreateProduct(string name, string description, string price, byte[] picture, string[] categories)
     {

@@ -19,21 +19,22 @@ namespace Bestellsystem_Lieferdienst_Client.BL
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         //SET
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-        public static Task<User> SetUser(User user) => Client.client.SendAndReturnAsync<User>("SET USER " + user);
+        public static Task<User> SetUser(User user) =>Client.client.SendAndReturnAsync<User>("SET USER " + user);
+
         public static Task<bool> SetOrder(Order order) => Client.client.SendAndReturnAsync<bool>("SET ORDER " + order);
-        public static Task<Product> SetProduct(Product product) => Client.client.SendAndReturnAsync<Product>("SET PRODUCT "+ product);
+        public static Task<bool> SetProduct(Product product) => Client.client.SendAndReturnAsync<bool>("SET PRODUCT " + product);
 
 
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         //UPDATE
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-        public static Task<bool> UpdateUser(User user) => Client.client.SendAndReturnAsync<bool>("UPDATE USER " + user);
-        public static Task<bool> UpdateProduct(Product product) =>
-            Client.client.SendAndReturnAsync<bool>("UPDATE PRODUCT " + product);
+        public static Task<User> UpdateUser(User user) => Client.client.SendAndReturnAsync<User>("UPDATE USER " + user);
+        public static Task<Product> UpdateProduct(Product product) =>
+            Client.client.SendAndReturnAsync<Product>("UPDATE PRODUCT " + product);
 
 
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-        //UPDATE
+        //DÉLETE
         //———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
         public static Task<bool> DeleteOrder(Order order) =>
             Client.client.SendAndReturnAsync<bool>("DELETE ORDER " + order);

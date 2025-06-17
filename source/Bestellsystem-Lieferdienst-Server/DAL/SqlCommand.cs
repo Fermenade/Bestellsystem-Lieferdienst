@@ -129,7 +129,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             return this;
         }
 
-        public SqlCommand SelectColumnsById(string table, IReadOnlyList<string> columns, int id)
+        public SqlCommand SelectColumnsById(string table, IReadOnlyList<string> columns, long id)
         {
             var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
             SqlStatement = $"SELECT {selectedColumns} FROM {FormatIdentifier(table)} WHERE {FormatIdentifier(table)}Id = @{table}Id";
@@ -154,7 +154,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             return this;
         }
 
-        private static List<(string, object)> CreateIdParameter(string table, int id) =>
+        private static List<(string, object)> CreateIdParameter(string table, long id) =>
             [($"@{table}Id", id)];
 
         private static List<(string, object)> ConvertToParameters(IEnumerable<FieldInfo> properties, object data) =>

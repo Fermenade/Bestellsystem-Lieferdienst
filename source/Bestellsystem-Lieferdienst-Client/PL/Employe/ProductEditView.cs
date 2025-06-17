@@ -1,5 +1,4 @@
 ﻿using Bestellsystem_Lieferdienst_Client.BL;
-using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.Employe
@@ -45,19 +44,19 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
             {
                 // now this is a bit dirty to use the tbx and then the Product again, but this is ez., it's 4 am and I dont have any more time left to waste.
                 ServerData.UpdateProduct(Product.CreateProduct((int)Product.ID, textBox1.Text, textBox2.Text, textBox3.Text,
-                    Product.Picture, listBox1.Items.Cast<string>().ToArray()));
+                    Product.Picture ?? throw new Exception("Picture was null"), listBox1.Items.Cast<string>().ToArray()));
             }
             else
             {
                 ServerData.SetProduct(Product.CreateProduct(textBox1.Text, textBox2.Text, textBox3.Text,
-                    Product.Picture, listBox1.Items.Cast<string>().ToArray()));
+                    Product.Picture ?? throw new Exception("Picture was null"), listBox1.Items.Cast<string>().ToArray()));
             }
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image Files (*.BMP;*.JPG;*.JPEG;*.PNG;*.GIF)|*.BMP;*.JPG;*.JPEG;*.PNG;*.GIF|All files (*.*) | *.* ";
+            openFileDialog.Filter = @"Image Files (*.BMP;*.JPG;*.JPEG;*.PNG;*.GIF)|*.BMP;*.JPG;*.JPEG;*.PNG;*.GIF|All files (*.*) | *.* ";
             openFileDialog.Title = "Wähle ein neues bild aus:";
             openFileDialog.Multiselect = false;
             openFileDialog.InitialDirectory = "../../../";

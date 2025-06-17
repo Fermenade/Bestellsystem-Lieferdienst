@@ -60,8 +60,6 @@ public class ClientStream : TcpClient
         if (!Client.Connected) return;
         while (!InitializeFinished)
         {
-            //TODO:fixme
-            //Gud fix :thumbsup:
         }
 
 
@@ -109,6 +107,8 @@ public class ClientStream : TcpClient
         MessageSend(JsonSerialize.Serialize(newPackage));
 
         string x = await newPackage.WaitForAnswerAsync().ConfigureAwait(false);
+        if (newPackage.ErrorMessage != null)
+            throw new Exception(newPackage.ErrorMessage);
         return JsonSerialize.Deserialize<T>(x);
     }
 

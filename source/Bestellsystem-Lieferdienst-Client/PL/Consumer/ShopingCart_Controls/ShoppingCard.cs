@@ -1,4 +1,5 @@
 ﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+using System.ComponentModel;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
 {
@@ -15,7 +16,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
             RenderCartItems();
 
             // Update on item add/remove
-            CartManager.CartItems.ListChanged += (s, e) => RenderCartItems();
+            CartManager.CartItems.ListChanged += RenderCartItems;
         }
 
         void LoadManualControls()
@@ -23,7 +24,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
             Controls.Add(headerPanel);
         }
 
-        private void RenderCartItems()
+        private void RenderCartItems(object? o = null, ListChangedEventArgs? e = null)
         {
             // We track changes efficiently without clearing everything.
 

@@ -97,15 +97,7 @@ public class Client : ClientStream
         }
 
         bool isPendingPackage;
-        try
-        {
-            isPendingPackage = PendingPackage.isPendingPackage(request);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
+        isPendingPackage = PendingPackage.isPendingPackage(request);
 
         if (!isPendingPackage)
         {

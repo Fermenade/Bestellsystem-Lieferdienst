@@ -8,7 +8,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL;
 public class DatabaseHelper(string connectionString)
 {
 
-    private int InsertItemIntoTableSession(SqlCommand query, MySqlConnection _connection)
+    private long InsertItemIntoTableSession(SqlCommand query, MySqlConnection _connection)
     {
         using (var command = new MySqlCommand(query.SqlStatement, _connection))
         {
@@ -19,27 +19,23 @@ public class DatabaseHelper(string connectionString)
 
             try
             {
-                return command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
             catch (MySqlException ex) // Catching specific exception related to MySQL
             {
                 throw new Exception("Failed to insert item: " + query.SqlStatement);
             }
-        }
 
+            return command.LastInsertedId;
+        }
     }
-    public int InsertItemIntoTable(SqlCommand query)
+    public long InsertItemIntoTable(SqlCommand query)
     {
         using (MySqlConnection _connection = new(connectionString))
         {
             _connection.Open();
             return InsertItemIntoTableSession(query, _connection);
         }
-    }
-
-    public int InsertAndReturnID(SqlCommand query, string table)
-    {
-        return (int?)InsertAndReturnSpecifiedColumns(query, table)?[0] ?? throw new InvalidOperationException("Expected an integer to be returned from InsertAndReturnSpecifiedColumns, but the result was null or not an integer.");
     }
 
     // Generated
@@ -49,31 +45,20 @@ public class DatabaseHelper(string connectionString)
     /// <remarks> It is best practice to define a primary key with AUTO_INCREMENT for tables that require unique identifiers.</remarks>
     /// <param name="query">The SQL command containing the insert statement and parameters.</param>
     /// <param name="returnColumns">An array of column names to return from the inserted item.</param>
-    /// <returns>An object containing the specified columns from the newly inserted item.  If no return columns are specified it will return the elements id.</returns>
+    /// <returns>An object containing the specified columns from the newly inserted item.</returns>
     /// <exception cref="ArgumentNullException">Thrown when the query or returnColumns are null.</exception>
     /// <exception cref="SqlException">Thrown when there is an error executing the SQL command.</exception> Generated end
     public object[]? InsertAndReturnSpecifiedColumns(SqlCommand query, string table, string[]? returnColumns = null)
     {
-        int? lastId;
+        long? lastId;
         using (MySqlConnection _connection = new(connectionString))
         {
-            InsertItemIntoTableSession(query, _connection);
-            using (MySqlCommand command = new MySqlCommand("SELECT LAST_INSERT_ID();", _connection))
-            {
-                try
-                {
-                    lastId = (int)command.ExecuteScalar();
-                }
-                catch (MySqlException ex) // Catching specific exception related to MySQL
-                {
-                    throw new Exception("Failed to select item: Last-ID");
-                }
-            }
+            lastId = InsertItemIntoTableSession(query, _connection);
         }
         //this is a small buggy optimisation
         if (returnColumns == null)
         {
-            return [lastId];
+            throw new Exception("Return columns where null");
         }
 
         SqlCommand sql = new SqlCommand().SelectColumnsById(table, returnColumns, lastId.Value);

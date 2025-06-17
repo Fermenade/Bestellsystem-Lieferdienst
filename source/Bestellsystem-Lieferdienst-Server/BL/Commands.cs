@@ -148,7 +148,6 @@ public class Commands
 
                 public object Execute(string? args)
                 {
-
                     User i = JsonSerialize.Deserialize<User>(args);
 
                     Address address = i.Address;
@@ -157,15 +156,12 @@ public class Commands
                     if (address != null)
                     {
                         command = new SqlCommand().Insert(tableAddress, address);
-                        i.address_addressID = _dbHelper.InsertAndReturnID(command, tableAddress);
+                        i.address_addressID = _dbHelper.InsertItemIntoTable(command);
                     }
 
                     i.usertypeID = (int)Usertype.Customer;
-                    command = new SqlCommand().Insert(tableUser, i);
-                    _dbHelper.InsertItemIntoTable(command);
 
-
-                    return null;
+                    return new SqlCommand().Insert(tableUser, i);
                 }
             }
 
@@ -227,7 +223,7 @@ public class Commands
                 {
                     Order order = JsonSerialize.Deserialize<Order>(command);
                     SqlCommand sqlCommand = new SqlCommand().Insert(tableOrder, order.UserID);
-                    int orderID = _dbHelper.InsertAndReturnID(sqlCommand, tableOrder);
+                    long orderID = _dbHelper.InsertItemIntoTable(sqlCommand);
 
                     foreach (var VARIABLE in order.Items)
                     {
@@ -235,7 +231,7 @@ public class Commands
                         sqlCommand = new SqlCommand().Insert(tableOrder_Product, VARIABLE);
                         _dbHelper.InsertItemIntoTable(sqlCommand);
                     }
-                    return 1;
+                    return true;
                 }
             }
         }

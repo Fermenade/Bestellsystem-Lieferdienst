@@ -14,10 +14,6 @@ public class PendingPackage : Package
     {
         if (pendingPackages.TryGetValue(data.UID, out TaskCompletionSource<string> value))
         {
-            if (data.ErrorMessage != null)
-            {
-                throw new($"Server command has thrown exception: {data.ErrorMessage}");
-            }
             value.SetResult(data.Data);
             //Result is set
             pendingPackages.Remove(data.UID);

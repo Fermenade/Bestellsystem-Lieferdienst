@@ -1,4 +1,5 @@
 ﻿using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.BL.StartForm;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.StartForm_Controls;
@@ -10,18 +11,16 @@ public partial class ProductsView : FlowLayoutPanel
         InitializeComponent();
     }
 
-    private List<Product> allItems = new();
-
     public void SetItems(IEnumerable<Product> items)
     {
-        allItems = items.ToList();
+        ProductManager.AddProducts(items);
     }
 
     public void ApplyFilter(string nameFilter, string categoryFilter)
     {
         Controls.Clear();
 
-        var filtered = allItems
+        var filtered = ProductManager.ProductItemsCache
             .Where(name =>
                 (
                     name.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase) ||
