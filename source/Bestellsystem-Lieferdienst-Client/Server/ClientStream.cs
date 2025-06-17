@@ -2,7 +2,6 @@ using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL;
 using Client_Server_Code_Library;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Net.Sockets;
 using System.Text;
 
