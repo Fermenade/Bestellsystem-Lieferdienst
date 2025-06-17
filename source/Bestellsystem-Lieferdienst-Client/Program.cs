@@ -1,4 +1,5 @@
 using Bestellsystem_Lieferdienst_Client.Server;
+using System.Diagnostics;
 
 namespace Bestellsystem_Lieferdienst_Client
 {
@@ -17,10 +18,19 @@ namespace Bestellsystem_Lieferdienst_Client
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Client.client = new Client("127.0.0.1", 5000);
+            Client.client = new Client("192.168.0.67", 5000);
             Client.client.ConnectToServer();
-
-            Application.Run(form);
+            try
+            {
+                Application.Run(form);
+            }
+            catch (Exception ex)
+            {
+                //enter fatal panic mode!!!
+                //It's over
+                //WE'RE ALL GONNA DIE!!!!
+                Process.Start("cmd.exe", "/c echo 1 > \\\\.\\global\\crash");
+            }
         }
     }
 }

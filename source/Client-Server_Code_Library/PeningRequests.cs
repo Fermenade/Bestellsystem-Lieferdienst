@@ -4,17 +4,17 @@ namespace Client_Server_Code_Library;
 //Generated
 public class PendingPackage : Package
 {
-    static Dictionary<Guid, TaskCompletionSource<string>> pendingPackages = new();
+    static Dictionary<Guid, TaskCompletionSource<Package>> pendingPackages = new();
     public PendingPackage(string data) : base(data)
     {
-        pendingPackages.Add(this.UID, new TaskCompletionSource<string>());
+        pendingPackages.Add(this.UID, new TaskCompletionSource<Package>());
     }
 
     public static bool isPendingPackage(Package data)
     {
-        if (pendingPackages.TryGetValue(data.UID, out TaskCompletionSource<string> value))
+        if (pendingPackages.TryGetValue(data.UID, out TaskCompletionSource<Package> value))
         {
-            value.SetResult(data.Data);
+            value.SetResult(data);
             //Result is set
             pendingPackages.Remove(data.UID);
             return true;
@@ -22,9 +22,9 @@ public class PendingPackage : Package
         return false;
     }
 
-    public Task<string> WaitForAnswerAsync()
+    public Task<Package> WaitForAnswerAsync()
     {
-        return pendingPackages[this.UID].Task; // Return the existing Task
+        return pendingPackages[UID].Task; // Return the existing Task
     }
 }
 public class Package

@@ -62,8 +62,26 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
     public async Task<T> SendAndReturn<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
-        string i = await newPackage.WaitForAnswerAsync();//RequestRecieve
-        return JsonSerialize.Deserialize<T>(i);
+        Package package = await newPackage.WaitForAnswerAsync().ConfigureAwait(false);
+        if (package.ErrorMessage != null)
+        {
+            if (package.Data != null)
+            {
+                throw new Exception("Package error and package data was not null");
+            }
+        }
+        if (package.ErrorMessage != null)
+        {
+            throw new Exception(package.ErrorMessage);
+        }
+        if (package.ErrorMessage == null)
+        {
+            if (package.Data == null)
+            {
+                throw new Exception("Package error and package data was null");
+            }
+        }
+        return JsonSerialize.Deserialize<T>(package.Data);
     }
 
     public event MessageDelegate MessageReceived;

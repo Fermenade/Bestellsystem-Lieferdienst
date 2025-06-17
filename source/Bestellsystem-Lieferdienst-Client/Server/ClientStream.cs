@@ -2,6 +2,7 @@ using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL;
 using Client_Server_Code_Library;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Net.Sockets;
 using System.Text;
 
@@ -106,10 +107,26 @@ public class ClientStream : TcpClient
         PendingPackage newPackage = new PendingPackage(command);
         MessageSend(JsonSerialize.Serialize(newPackage));
 
-        string x = await newPackage.WaitForAnswerAsync().ConfigureAwait(false);
-        if (newPackage.ErrorMessage != null)
-            throw new Exception(newPackage.ErrorMessage);
-        return JsonSerialize.Deserialize<T>(x);
+        Package package = await newPackage.WaitForAnswerAsync().ConfigureAwait(false);
+        if (package.ErrorMessage != null)
+        {
+            if (package.Data != null)
+            {
+                throw new Exception("Package error and package data was not null");
+            }
+        }
+        if (package.ErrorMessage != null)
+        {
+            throw new Exception(package.ErrorMessage);
+        }
+        if (package.ErrorMessage == null)
+        {
+            if (package.Data == null)
+            {
+                throw new Exception("Package error and package data was null");
+            }
+        }
+        return JsonSerialize.Deserialize<T>(package.Data);
     }
 
     public event MessageDelegate MessageReceived;
