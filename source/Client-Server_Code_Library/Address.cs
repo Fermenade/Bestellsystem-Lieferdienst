@@ -7,49 +7,49 @@ public class Address
     [DatabaseAutoIncrementID]
     public int? AddressID;
     public string Country;
-    public int ZipCode;
+    public int PostZip;
     public string City;
     public string Street;
-    public int HouseNumber;
-    public int? ApartmentNumber;
+    public int HouseNr;
+    public int? ApartmentNr;
 
     [DatabaseConstructor]
-    Address(int addressId, string country, int zippCode, string city, string street, int houseNumber, int apartmentNumber)
-        : this(country, zippCode, city, street, houseNumber, apartmentNumber)
+    Address(int addressId, string country, int zipp, string city, string street, int houseNr, int apartmentNr)
+        : this(country, zipp, city, street, houseNr, apartmentNr)
     {
         AddressID = addressId;
     }
     [JsonConstructor]
-    Address(int? addressId, string country, int zippCode, string city, string street, int houseNumber, int? apartmentNumber)
+    Address(int? addressId, string country, int zipp, string city, string street, int houseNr, int? apartmentNr)
     {
         AddressID = addressId;
         Country = country;
-        ZipCode = zippCode;
+        PostZip = zipp;
         City = city;
         Street = street;
-        HouseNumber = houseNumber;
-        if (ApartmentNumber == -1)
-            ApartmentNumber = apartmentNumber;
+        HouseNr = houseNr;
+        if (ApartmentNr == -1)
+            ApartmentNr = apartmentNr;
     }
 
-    public Address(string country, int zipCode, string city, string street, int houseNumber, int apartmentNumber)
-        : this(country, zipCode, city, street, houseNumber)
+    public Address(string country, int postZip, string city, string street, int houseNr, int apartmentNr)
+        : this(country, postZip, city, street, houseNr)
     {
-        if (apartmentNumber == 0) throw new("Invalid apartment number");
-        ApartmentNumber = apartmentNumber;
+        if (apartmentNr == 0) throw new("Invalid apartment number");
+        ApartmentNr = apartmentNr;
     }
-    public Address(string country, int zipCode, string city, string street, int houseNumber)
+    public Address(string country, int postZip, string city, string street, int houseNr)
     {
         if (country == "") throw new("Invalid country");
         Country = country;
-        if (zipCode == 0) throw new("Invalid zipp number");
-        ZipCode = zipCode;
+        if (postZip == 0) throw new("Invalid zipp number");
+        PostZip = postZip;
         if (city == "") throw new("Invalid city");
         City = city;
         if (street == "") throw new("Invalid street");
         Street = street;
-        if (houseNumber == 0) throw new("Invalid house number");
-        HouseNumber = houseNumber;
+        if (houseNr == 0) throw new("Invalid house number");
+        HouseNr = houseNr;
     }
 
     public static Address CreateAddress(string country, string zipCode, string city, string street, string houseNumber, string? apartmentNumber)

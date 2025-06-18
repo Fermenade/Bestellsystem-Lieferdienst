@@ -28,11 +28,11 @@ namespace Bestellsystem_Lieferdienst_Client.PL
 
             if (Client.client.User?.Address is { } e)
             {
-                tbxPLZ.Text = e.ZipCode.ToString();
+                tbxPLZ.Text = e.PostZip.ToString();
                 tbxOrt.Text = e.City;
                 tbxStraße.Text = e.Street;
-                tbxApartment.Text = e.ApartmentNumber.ToString();
-                tbxHausnummer.Text = e.HouseNumber.ToString();
+                tbxApartment.Text = e.ApartmentNr.ToString();
+                tbxHausnummer.Text = e.HouseNr.ToString();
                 tbxLand.Text = e.Country;
             }
         }

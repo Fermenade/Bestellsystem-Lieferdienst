@@ -29,9 +29,9 @@ namespace Bestellsystem_Lieferdienst.PL
             if (Client.client.User.Address != null)
             {
                 tbxStraße.Text = Client.client.User.Address.Street.ToString();
-                tbxHausnummer.Text = Client.client.User.Address.HouseNumber.ToString();
-                tbxApartment.Text = Client.client.User.Address.ApartmentNumber.ToString();
-                tbxPLZ.Text = Client.client.User.Address.ZipCode.ToString();
+                tbxHausnummer.Text = Client.client.User.Address.HouseNr.ToString();
+                tbxApartment.Text = Client.client.User.Address.ApartmentNr.ToString();
+                tbxPLZ.Text = Client.client.User.Address.PostZip.ToString();
                 tbxOrt.Text = Client.client.User.Address.City.ToString();
                 tbxLand.Text = Client.client.User.Address.Country.ToString();
             }
