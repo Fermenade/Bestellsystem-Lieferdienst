@@ -14,7 +14,7 @@ public class Address
     public int? ApartmentNr;
 
     [DatabaseConstructor]
-    Address(int addressId, string country, int zipp, string city, string street, int houseNr, int apartmentNr)
+    public Address(int addressId, string country, int zipp, string city, string street, int houseNr, int apartmentNr)
         : this(country, zipp, city, street, houseNr, apartmentNr)
     {
         AddressID = addressId;

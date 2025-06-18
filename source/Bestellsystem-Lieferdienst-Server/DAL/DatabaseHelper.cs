@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Client_Server_Code_Library;
 using MySql.Data.MySqlClient;
 using System.Reflection;
@@ -101,7 +102,7 @@ public class DatabaseHelper(string connectionString)
         if (o.Length == 0) return [];
 
         ConstructorInfo? matchedConstructor = null;
-
+        var x = typeof(T).GetConstructors();
         IEnumerable<ConstructorInfo> constructors = typeof(T).GetConstructors().Where(p => Attribute.IsDefined(p, typeof(DatabaseConstructorAttribute)));
         ConstructorInfo[] constructorInfos = constructors as ConstructorInfo[] ?? constructors.ToArray();
 
@@ -114,12 +115,29 @@ public class DatabaseHelper(string connectionString)
             throw new InvalidOperationException($"Expected exactly one constructor marked with DatabaseConstructorAttribute. Found {constructorInfos.Count()}.");
         }
 
+        var matchedParams = matchedConstructor.GetParameters();
         foreach (object[] VARIABLE in o)
         {
             object[] replacedNull = new object[VARIABLE.Length];
             for (int i = 0; i < VARIABLE.Length; i++)
             {
-                replacedNull[i] = VARIABLE[i] == DBNull.Value ? null : VARIABLE[i];
+                if (VARIABLE[i] == DBNull.Value)
+                {
+                    replacedNull[i] = null;
+                }
+                else
+                {
+                    // Convert the value to the expected type
+                    Type targetType = matchedParams[i].ParameterType;
+
+                    //Generated
+                    if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        targetType = Nullable.GetUnderlyingType(targetType);
+                    }
+
+                    replacedNull[i] = Convert.ChangeType(VARIABLE[i], targetType);
+                }
             }
             // Create an instance of T using the constructor and the arguments
             T instance = (T)matchedConstructor.Invoke(replacedNull);
