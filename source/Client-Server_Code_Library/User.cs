@@ -4,6 +4,7 @@ namespace Client_Server_Code_Library;
 
 public class User
 {
+    [DatabaseID]
     public long? UserId;
     public int UsertypeID = 0;//Default Value
     public string Email;

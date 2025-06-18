@@ -2,3 +2,6 @@
 
 [AttributeUsage(AttributeTargets.Field)]
 public class IgnoreInsertAttribute : Attribute;
+
+[AttributeUsage(AttributeTargets.Field)]
+public class DatabaseIDAttribute : Attribute;

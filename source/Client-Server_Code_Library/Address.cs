@@ -4,6 +4,7 @@ namespace Client_Server_Code_Library;
 
 public class Address
 {
+    [DatabaseID]
     public int? AddressID;
     public string Country;
     public int ZipCode;

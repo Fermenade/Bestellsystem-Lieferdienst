@@ -2,6 +2,7 @@
 
 public struct Usertype
 {
+    [DatabaseID]
     int UsertypeID;
     string Name;
 }

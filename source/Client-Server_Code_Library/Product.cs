@@ -4,6 +4,7 @@ namespace Client_Server_Code_Library;
 
 public class Product
 {
+    [DatabaseID]
     public int? ID;
     public string Name;
     public string Description;
