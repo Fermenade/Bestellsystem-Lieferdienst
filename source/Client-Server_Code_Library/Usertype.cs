@@ -2,7 +2,7 @@
 
 public struct Usertype
 {
-    [DatabaseID]
+    [DatabaseAutoIncrementID]
     int UsertypeID;
     string Name;
 }

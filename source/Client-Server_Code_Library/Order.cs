@@ -1,7 +1,7 @@
 ﻿namespace Client_Server_Code_Library;
 public class Order
 {
-    [DatabaseID]
+    [DatabaseAutoIncrementID]
     public long? OrderID;
     public long? UserID;
     [IgnoreInsert]

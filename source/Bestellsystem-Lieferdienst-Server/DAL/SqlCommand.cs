@@ -15,7 +15,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         public SqlCommand Insert<T>(string table, T data)
         {
             var properties = typeof(T).GetFields()
-                .Where(p => !Attribute.IsDefined(p, typeof(DatabaseIDAttribute)));
+                .Where(p => !Attribute.IsDefined(p, typeof(DatabaseAutoIncrementIDAttribute)));
 
             // Get properties of the type T that are not marked with IgnoreInsertAttribute
              properties = properties

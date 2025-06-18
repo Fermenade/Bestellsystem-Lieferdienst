@@ -4,7 +4,7 @@ namespace Client_Server_Code_Library;
 
 public class Product
 {
-    [DatabaseID]
+    [DatabaseAutoIncrementID]
     public int? ID;
     public string Name;
     public string Description;

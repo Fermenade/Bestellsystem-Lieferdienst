@@ -4,4 +4,4 @@
 public class IgnoreInsertAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Field)]
-public class DatabaseIDAttribute : Attribute;
+public class DatabaseAutoIncrementIDAttribute : Attribute;

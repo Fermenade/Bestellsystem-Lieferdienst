@@ -4,7 +4,7 @@ namespace Client_Server_Code_Library;
 
 public class Address
 {
-    [DatabaseID]
+    [DatabaseAutoIncrementID]
     public int? AddressID;
     public string Country;
     public int ZipCode;

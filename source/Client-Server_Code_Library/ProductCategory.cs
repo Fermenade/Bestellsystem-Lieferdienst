@@ -2,7 +2,7 @@
 {
     public class ProductCategory
     {
-        [DatabaseID]
+        [DatabaseAutoIncrementID]
         public int id;
         public string name;
 
