@@ -23,6 +23,10 @@ public class DatabaseHelper(string connectionString)
             }
             catch (MySqlException ex) // Catching specific exception related to MySQL
             {
+                if (ex.Message.Contains("UNIQUE"))
+                {
+                    throw new Exception(ex.Message);
+                }
                 throw new Exception("Failed to insert item: " + query.SqlStatement);
             }
 

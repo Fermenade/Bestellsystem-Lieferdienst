@@ -5,7 +5,7 @@ namespace Client_Server_Code_Library;
 public class Address
 {
     [DatabaseAutoIncrementID]
-    public int? AddressID;
+    public long? AddressID;
     public string Country;
     public int PostZip;
     public string City;
@@ -28,8 +28,7 @@ public class Address
         City = city;
         Street = street;
         HouseNr = houseNr;
-        if (ApartmentNr == -1)
-            ApartmentNr = apartmentNr;
+        ApartmentNr = apartmentNr;
     }
 
     public Address(string country, int postZip, string city, string street, int houseNr, int apartmentNr)
