@@ -14,7 +14,7 @@ public class User
     public Address? Address;
 
     [JsonConstructor]
-    public User(long userId, int usertypeId, string email, string password, Address? address)
+    public User(long? userId, int usertypeId, string email, string password, Address? address)
     {
         UserId = userId;
         UsertypeID = usertypeId;
