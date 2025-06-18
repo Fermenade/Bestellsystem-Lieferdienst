@@ -158,10 +158,24 @@ public class Commands
                         command = new SqlCommand().Insert(tableAddress, address);
                         i.address_addressID = _dbHelper.InsertItemIntoTable(command);
                     }
-
                     i.usertypeID = (int)Usertype.Customer;
+                    command = new SqlCommand().Insert(tableUser, i);
+                    long id = _dbHelper.InsertItemIntoTable(command);
 
-                    return new SqlCommand().Insert(tableUser, i);
+
+                    command = new SqlCommand().SelectById(tableUser, id);
+                    User? user = _dbHelper.GetDataFromID<User>(command);
+                    if (user == null)
+                    {
+                        throw new Exception("Tried to access user that should exist but didn't");
+                    }
+                    if (user.address_addressID != null)
+                    {
+                        command = new SqlCommand().SelectById(tableAddress, (int)user.address_addressID);
+                        user.Address = _dbHelper.GetDataFromID<Address>(command);
+                    }
+
+                    return user;
                 }
             }
 

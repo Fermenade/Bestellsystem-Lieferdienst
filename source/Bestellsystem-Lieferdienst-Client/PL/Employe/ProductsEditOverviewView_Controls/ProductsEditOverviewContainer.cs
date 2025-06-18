@@ -24,7 +24,8 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
             {
                 ServerData.DeleteProduct(product);
                 ProductManager.Clear();
-                ProductManager.AddProducts(await ServerData.GetAllProducts());
+                Product[] products = await ServerData.GetAllProducts() ?? [];
+                ProductManager.AddProducts(products);
             }
             else
             {

@@ -107,13 +107,18 @@ public class DatabaseHelper(string connectionString)
         }
         else
         {
-            throw new InvalidOperationException($"Expected exactly one constructor not marked with DatabaseConstructorAttribute. Found {constructorInfos.Count()}.");
+            throw new InvalidOperationException($"Expected exactly one constructor marked with DatabaseConstructorAttribute. Found {constructorInfos.Count()}.");
         }
 
         foreach (object[] VARIABLE in o)
         {
+            object[] replacedNull = new object[VARIABLE.Length];
+            for (int i = 0; i < VARIABLE.Length; i++)
+            {
+                replacedNull[i] = VARIABLE[i] == DBNull.Value ? null : VARIABLE[i];
+            }
             // Create an instance of T using the constructor and the arguments
-            var instance = (T)matchedConstructor.Invoke(VARIABLE);
+            T instance = (T)matchedConstructor.Invoke(replacedNull);
             results.Add(instance);
         }
 

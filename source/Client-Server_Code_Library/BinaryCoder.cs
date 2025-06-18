@@ -29,24 +29,4 @@ public static class JsonSerialize
     {
         return JsonConvert.DeserializeObject<T>(json) ?? throw new Exception("Deserialization failed, wrong format");
     }
-
-    static string SerializeException(Exception ex)
-    {
-        using (MemoryStream memoryStream = new MemoryStream())
-        {
-            IFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(memoryStream, ex);
-            return Convert.ToBase64String(memoryStream.ToArray());
-        }
-    }
-
-    static Exception DeserializeException(string exceptionString)
-    {
-        byte[] bytes = Convert.FromBase64String(exceptionString);
-        using (MemoryStream memoryStream = new MemoryStream(bytes))
-        {
-            IFormatter formatter = new BinaryFormatter();
-            return (Exception)formatter.Deserialize(memoryStream);
-        }
-    }
 }

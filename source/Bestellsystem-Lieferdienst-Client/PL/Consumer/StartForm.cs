@@ -19,12 +19,14 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         {
             //TODO:should the data filtered on the client or directly at the server?
             cbxCategory.Items.Add("Alle");
-            foreach (var VARIABLE in await ServerData.GetAllProductCategories())
+            ProductCategory[]? array = await ServerData.GetAllProductCategories();
+            for (int i = 0; i < array?.Length; i++)
             {
+                ProductCategory? VARIABLE = array[i];
                 cbxCategory.Items.Add(VARIABLE.name);
             }
 
-            Product[] x = await ServerData.GetAllProducts();
+            Product[] x = await ServerData.GetAllProducts()?? [];
             productsView.SetItems(x);
             cbxCategory.SelectedIndex = 0;
         }

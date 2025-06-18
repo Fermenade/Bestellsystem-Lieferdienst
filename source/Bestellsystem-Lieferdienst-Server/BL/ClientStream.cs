@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Client_Server_Code_Library;
 using System.Net.Sockets;
 using System.Text;
@@ -47,6 +48,7 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
         });
     }
 
+
     async void SendBinaryAsync(byte[] bytes)
     {
         await WriteAsync(bytes);
@@ -82,6 +84,11 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
             }
         }
         return JsonSerialize.Deserialize<T>(package.Data);
+    }
+
+    protected void OnClientDisconnected()
+    {
+        ClientDisconnected.Invoke();
     }
 
     public event MessageDelegate MessageReceived;

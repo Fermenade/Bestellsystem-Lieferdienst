@@ -1,4 +1,5 @@
 using Client_Server_Code_Library;
+using System.Diagnostics;
 using System.Net.Sockets;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
@@ -19,7 +20,7 @@ public class Client(Socket client) : ClientStream(client)
         catch (Exception ex)
         {
             Console.WriteLine("Error: " + ex.Message + "\n Exiting...");
-            ProcessClientDisconnected();
+            OnClientDisconnected();
         }
     }
     void ProcessClientDisconnected()
@@ -36,7 +37,6 @@ public class Client(Socket client) : ClientStream(client)
     void ProcessReceiveMessages(string message)
     {
         Console.WriteLine($"Received message '{message}' from '{client.RemoteEndPoint}'");
-
         Package request = JsonSerialize.Deserialize<Package>(message);
 
         if (!PendingPackage.isPendingPackage(request))
@@ -64,6 +64,7 @@ public class Client(Socket client) : ClientStream(client)
                         user = JsonSerialize.Deserialize<User>(e[2]);
                     }
                 }
+
             }
             catch (Exception ex)
             {
@@ -74,12 +75,19 @@ public class Client(Socket client) : ClientStream(client)
                         request.ErrorMessage = "Unknown Command";
                         break;
                     default:
-                        request.ErrorMessage = $"{ex}\n{ex.Message}";
+                        request.ErrorMessage = $"{ex}";
                         break;
                 }
             }
-
-            MessageSendAsync(request.ToString());
+            try
+            {
+                MessageSendAsync(request.ToString());
+            }
+            catch (IOException exception)
+            {
+                Debug.WriteLine("Connection to client was closed while processing a responce.");
+                OnClientDisconnected();
+            }
         }
     }
 }

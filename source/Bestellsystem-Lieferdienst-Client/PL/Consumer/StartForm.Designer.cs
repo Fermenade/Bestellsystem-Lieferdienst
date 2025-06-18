@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using Bestellsystem_Lieferdienst_Client.PL;
 using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL.StartForm_Controls;
@@ -187,14 +188,19 @@ namespace Bestellsystem_Lieferdienst_Client.PL
                 btn_Login.Dispose();
                 btn_Register.Dispose();
                 button1.Visible = true;
+                if (Client.client.User.usertypeID !>= 1)
+                {
+                    button2.Dispose();
+                }
             }
             else
             {
                 button1.Dispose();
+                button2.Dispose();
             }
 
             productsView.BackColor = Color.Aquamarine;
-            productsView.Dock = DockStyle.Bottom;//TODO: fixme
+            productsView.Dock = DockStyle.Bottom;
             Controls.Add(productsView);
             Controls.Add(shoppingcart);
         }
