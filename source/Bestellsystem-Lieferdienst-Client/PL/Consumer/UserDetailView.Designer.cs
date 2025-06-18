@@ -46,6 +46,8 @@
             tbxApartment = new TextBox();
             lblApartmentNummer = new Label();
             btn_ChangeAddress = new Button();
+            btn_Start = new Button();
+            lb_error = new Label();
             SuspendLayout();
             // 
             // btnChangePassword
@@ -214,10 +216,31 @@
             btn_ChangeAddress.UseVisualStyleBackColor = true;
             btn_ChangeAddress.Click += btn_ChangeAddress_Click;
             // 
+            // btn_Start
+            // 
+            btn_Start.Location = new Point(191, 60);
+            btn_Start.Name = "btn_Start";
+            btn_Start.Size = new Size(263, 58);
+            btn_Start.TabIndex = 18;
+            btn_Start.Text = "Zurckuck zu strart";
+            btn_Start.UseVisualStyleBackColor = true;
+            btn_Start.Click += btn_Start_Click;
+            // 
+            // lb_error
+            // 
+            lb_error.AutoSize = true;
+            lb_error.Location = new Point(82, 924);
+            lb_error.Name = "lb_error";
+            lb_error.Size = new Size(82, 41);
+            lb_error.TabIndex = 19;
+            lb_error.Text = "error";
+            // 
             // UserDetailView
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lb_error);
+            Controls.Add(btn_Start);
             Controls.Add(btn_ChangeAddress);
             Controls.Add(tbxApartment);
             Controls.Add(lblApartmentNummer);
@@ -263,5 +286,9 @@
         private TextBox tbxApartment;
         private Label lblApartmentNummer;
         private Button btn_ChangeAddress;
+        private Button button1;
+        private Label label1;
+        private Label lb_error;
+        private Button btn_Start;
     }
 }

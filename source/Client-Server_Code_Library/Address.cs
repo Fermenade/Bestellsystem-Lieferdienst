@@ -1,14 +1,16 @@
+using Newtonsoft.Json;
+
 namespace Client_Server_Code_Library;
 
 public class Address
 {
-    int AddressID;
+    public int? AddressID;
     public string Country;
     public int ZipCode;
     public string City;
     public string Street;
     public int HouseNumber;
-    public int ApartmentNumber;
+    public int? ApartmentNumber;
 
     [DatabaseConstructor]
     Address(int addressId, string country, int zippCode, string city, string street, int houseNumber, int apartmentNumber)
@@ -16,6 +18,19 @@ public class Address
     {
         AddressID = addressId;
     }
+    [JsonConstructor]
+    Address(int? addressId, string country, int zippCode, string city, string street, int houseNumber, int? apartmentNumber)
+    {
+        AddressID = addressId;
+        Country = country;
+        ZipCode = zippCode;
+        City = city;
+        Street = street;
+        HouseNumber = houseNumber;
+        if (ApartmentNumber == -1)
+        ApartmentNumber = apartmentNumber;
+    }
+
     public Address(string country, int zipCode, string city, string street, int houseNumber, int apartmentNumber)
         : this(country, zipCode, city, street, houseNumber)
     {

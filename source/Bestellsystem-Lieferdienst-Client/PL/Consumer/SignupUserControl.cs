@@ -18,78 +18,35 @@ public partial class SignupUserControl : UserControl
     }
     private async void BtnSignupClick(object sender, EventArgs e)
     {
-        try
-        {
-            if (TryCreateUser(tbx_Email.Text, tbx_Password.Text, tbx_Country.Text, tbx_ZippCode.Text, tbx_City.Text, tbx_Street.Text, tbx_HouseNr.Text, tbx_ApartmentNr.Text, out User user))
-            {
-                lb_Error.Text = "Am einloggen...";
-                Client.client.User = await ServerData.SetUser(user);
-                this.LoadView(new StartForm());
-            }
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
-    }
-
-    bool TryCreateUser(string email, string password, string country, string zippcode, string city, string street, string housenumber, string apartmentnumber, out User user)
-    {
-        user = null;
-        try
-        {
-
-            user = new User(email, password.ToSHA256());
-        }
-        catch (Exception ex)
-        {
-            lb_Error.Text = $"{ex.Message}";
-            return false;
-        }
-
+        User user = CreateUser(tbx_Email.Text, tbx_Password.Text);
         if (checkBox1.Checked)
         {
-
-            //Cuz every number normally starts at 1
-            int zippCode = 0,
-                houseNumber = 0,
-                apartmentNumber = 0;
-            try
-            {
-                zippCode = int.Parse(tbx_ZippCode.Text);
-                houseNumber = int.Parse(tbx_HouseNr.Text);
-                if (tbx_ApartmentNr.Text != "")
-                    apartmentNumber = int.Parse(tbx_ApartmentNr.Text);
-            }
-            catch (Exception ex)
-            {
-                lb_Error.Text = $"{ex.Message}";
-                return false;
-            }
-
-            Address address;
-            if (tbx_ApartmentNr.Text == "")
-            {
-
-                address = new Address(country, zippCode, city, street, houseNumber);
-            }
-            else
-            {
-                address = new Address(country, zippCode, city, street, houseNumber, apartmentNumber);
-            }
-            user.Address = address;
+            user.Address = Address.CreateAddress(tbx_Country.Text, tbx_ZippCode.Text, tbx_City.Text,
+                tbx_Street.Text, tbx_HouseNr.Text, tbx_ApartmentNr.Text);
         }
         else
         {
             lb_Error.Text =
                 @"Bestätigen sie, dass sie keine Adresse Ihrem Account hinterlegen wollen. (Sie können dies in ihrem Account Details jederzeit nachholen)";
-            if (btn_Signup.Text == @"Erstellen ohne Adresse.")
-                return true;
-
             btn_Signup.Text = @"Erstellen ohne Adresse.";
-            return false;
+
+            if(btn_Signup.Text != @"Erstellen ohne Adresse.")
+                return;
         }
-        return true;
+        try
+        {
+            lb_Error.Text = "Am einloggen...";
+            Client.client.User = await ServerData.SetUser(user);
+            this.LoadView(new StartForm());
+        }
+        catch (Exception ex)
+        {
+            lb_Error.Text += ex.Message;
+        }
+    }
+    public static User CreateUser(string email, string password)
+    {
+        return new User(email, password.ToSHA256());
     }
 
     private void btn_BackToMain_Click(object sender, EventArgs e)
