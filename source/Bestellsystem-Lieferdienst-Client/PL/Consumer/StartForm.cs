@@ -26,7 +26,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
                 cbxCategory.Items.Add(VARIABLE.name);
             }
 
-            Product[] x = await ServerData.GetAllProducts()?? [];
+            Product[] x = await ServerData.GetAllProducts() ?? [];
             productsView.SetItems(x);
             cbxCategory.SelectedIndex = 0;
         }

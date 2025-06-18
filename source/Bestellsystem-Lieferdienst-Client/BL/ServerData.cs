@@ -42,6 +42,6 @@ namespace Bestellsystem_Lieferdienst_Client.BL
         public static Task<bool> DeleteProduct(Product product) =>
             Client.client.SendAndReturnAsync<bool>("DELETE PRODUCT " + product);
 
-        //public static User GetUser(string email, string password) => Client.client.SendAndReturn<User>("GET USER ");
+        //public static User GetUser(string Email, string Password) => Client.client.SendAndReturn<User>("GET USER ");
     }
 }

@@ -1,4 +1,5 @@
-﻿using Bestellsystem_Lieferdienst_Client.BL;
+﻿using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
 
@@ -21,7 +22,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             User user;
             try
             {
-                user = new User(tbx_Mail.Text, tbx_Pass.Text.ToSHA256());
+                user = ExtendedUser.CreateUser(tbx_Mail.Text, tbx_Pass.Text);
             }
             catch (Exception exception)
             {

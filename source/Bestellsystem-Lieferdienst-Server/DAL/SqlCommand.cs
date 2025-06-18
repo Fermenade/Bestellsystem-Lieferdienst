@@ -123,7 +123,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         public SqlCommand SelectById(string table, long id)
         {
             var idParam = CreateIdParameter(table, id);
-            SqlStatement = $"SELECT * FROM {FormatIdentifier(table)} WHERE {FormatIdentifier(table+"Id")} = @{table}Id";
+            SqlStatement = $"SELECT * FROM {FormatIdentifier(table)} WHERE {FormatIdentifier(table + "Id")} = @{table}Id";
             Parameters = idParam;
 
             return this;

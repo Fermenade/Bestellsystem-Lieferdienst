@@ -1,3 +1,4 @@
+using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
@@ -18,11 +19,28 @@ public partial class SignupUserControl : UserControl
     }
     private async void BtnSignupClick(object sender, EventArgs e)
     {
-        User user = CreateUser(tbx_Email.Text, tbx_Password.Text);
+        User user;
+        try
+        {
+            user = ExtendedUser.CreateUser(tbx_Email.Text, tbx_Password.Text);
+        }
+        catch (Exception ex)
+        {
+            lb_Error.Text = ex.Message;
+            return;
+        }
         if (checkBox1.Checked)
         {
-            user.Address = Address.CreateAddress(tbx_Country.Text, tbx_ZippCode.Text, tbx_City.Text,
+            try
+            {
+                user.Address = Address.CreateAddress(tbx_Country.Text, tbx_ZippCode.Text, tbx_City.Text,
                 tbx_Street.Text, tbx_HouseNr.Text, tbx_ApartmentNr.Text);
+            }
+            catch (Exception ex)
+            {
+                lb_Error.Text = ex.Message;
+                return;
+            }
         }
         else
         {
@@ -30,7 +48,7 @@ public partial class SignupUserControl : UserControl
                 @"Bestätigen sie, dass sie keine Adresse Ihrem Account hinterlegen wollen. (Sie können dies in ihrem Account Details jederzeit nachholen)";
             btn_Signup.Text = @"Erstellen ohne Adresse.";
 
-            if(btn_Signup.Text != @"Erstellen ohne Adresse.")
+            if (btn_Signup.Text != @"Erstellen ohne Adresse.")
                 return;
         }
         try
@@ -43,10 +61,6 @@ public partial class SignupUserControl : UserControl
         {
             lb_Error.Text += ex.Message;
         }
-    }
-    public static User CreateUser(string email, string password)
-    {
-        return new User(email, password.ToSHA256());
     }
 
     private void btn_BackToMain_Click(object sender, EventArgs e)

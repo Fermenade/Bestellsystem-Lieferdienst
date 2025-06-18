@@ -28,7 +28,7 @@ public class Address
         Street = street;
         HouseNumber = houseNumber;
         if (ApartmentNumber == -1)
-        ApartmentNumber = apartmentNumber;
+            ApartmentNumber = apartmentNumber;
     }
 
     public Address(string country, int zipCode, string city, string street, int houseNumber, int apartmentNumber)

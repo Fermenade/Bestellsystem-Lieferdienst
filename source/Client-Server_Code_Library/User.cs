@@ -4,37 +4,38 @@ namespace Client_Server_Code_Library;
 
 public class User
 {
-    public long userID;
-    public int usertypeID = 0;//Default Value
-    public string email;
-    public string password;
-    public long? address_addressID;
+    public long? UserId;
+    public int UsertypeID = 0;//Default Value
+    public string Email;
+    public string Password;
+    public long? Address_addressID;
 
     [IgnoreInsert]
     public Address? Address;
 
     [JsonConstructor]
     public User(long userId, int usertypeId, string email, string password, Address? address)
-        : this(email, password)
     {
-        userID = userId;
-        usertypeID = usertypeId;
+        UserId = userId;
+        UsertypeID = usertypeId;
         Address = address;
+        Email = email;
+        Password = password;
     }
 
     [DatabaseConstructor]
     public User(long userId, int usertypeId, string email, string password, long? addressID)//This constructor is just for the database
-        : this(email, password)
     {
-        userID = userId;
-        usertypeID = usertypeId;
-        //address_addressID = addressID.GetType();
+        UserId = userId;
+        UsertypeID = usertypeId;
+        Email = email;
+        Password = password;
+        Address_addressID = addressID;
     }
-    public User(string email, string password)
+
+    protected User()
     {
-        if (email == "") throw new("Email is empty");
-        this.email = email;
-        this.password = password;//Yes, user can have empty password.
+        //This constructor has to be empty
     }
 
     public override string ToString()

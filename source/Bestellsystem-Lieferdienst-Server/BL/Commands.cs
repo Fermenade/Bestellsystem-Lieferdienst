@@ -118,7 +118,7 @@ public class Commands
                 User gottenUser = JsonSerialize.Deserialize<User>(args);
 
                 SqlCommand command =
-                    new SqlCommand().SelectByNonPredefined(tableUser, [("email", gottenUser.email), ("password", gottenUser.password)]);
+                    new SqlCommand().SelectByNonPredefined(tableUser, [("Email", gottenUser.Email), ("Password", gottenUser.Password)]);
 
                 User? user = _dbHelper.GetDataFromID<User>(command);
 
@@ -126,9 +126,9 @@ public class Commands
                 {
                     return null;
                 }
-                if (user.address_addressID != null)
+                if (user.Address_addressID != null)
                 {
-                    command = new SqlCommand().SelectById(tableAddress, (int)user.address_addressID);
+                    command = new SqlCommand().SelectById(tableAddress, (int)user.Address_addressID);
                     user.Address = _dbHelper.GetDataFromID<Address>(command);
                 }
 
@@ -156,9 +156,9 @@ public class Commands
                     if (address != null)
                     {
                         command = new SqlCommand().Insert(tableAddress, address);
-                        i.address_addressID = _dbHelper.InsertItemIntoTable(command);
+                        i.Address_addressID = _dbHelper.InsertItemIntoTable(command);
                     }
-                    i.usertypeID = (int)Usertype.Customer;
+                    i.UsertypeID = (int)Usertype.Customer;
                     command = new SqlCommand().Insert(tableUser, i);
                     long id = _dbHelper.InsertItemIntoTable(command);
 
@@ -169,9 +169,9 @@ public class Commands
                     {
                         throw new Exception("Tried to access user that should exist but didn't");
                     }
-                    if (user.address_addressID != null)
+                    if (user.Address_addressID != null)
                     {
-                        command = new SqlCommand().SelectById(tableAddress, (int)user.address_addressID);
+                        command = new SqlCommand().SelectById(tableAddress, (int)user.Address_addressID);
                         user.Address = _dbHelper.GetDataFromID<Address>(command);
                     }
 

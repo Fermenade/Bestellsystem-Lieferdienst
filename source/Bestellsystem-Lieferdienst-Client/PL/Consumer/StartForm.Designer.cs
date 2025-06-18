@@ -188,7 +188,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
                 btn_Login.Dispose();
                 btn_Register.Dispose();
                 button1.Visible = true;
-                if (Client.client.User.usertypeID !>= 1)
+                if (Client.client.User.UsertypeID !>= 1)
                 {
                     button2.Dispose();
                 }

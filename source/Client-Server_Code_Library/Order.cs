@@ -33,7 +33,7 @@ public class Order
 
     public static Order CreateOrder(Address address, OrderItem[] items, User? user = null)
     {
-        return new Order(user?.userID, items, DateTime.Now, address.ToString());
+        return new Order(user?.UserId, items, DateTime.Now, address.ToString());
     }
     public enum State
     {

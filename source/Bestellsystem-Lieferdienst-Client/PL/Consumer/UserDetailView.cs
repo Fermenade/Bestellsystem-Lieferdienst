@@ -1,4 +1,5 @@
-﻿using Bestellsystem_Lieferdienst_Client.BL;
+﻿using Bestellsystem_Lieferdienst.BL;
+using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL;
 using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
@@ -24,7 +25,7 @@ namespace Bestellsystem_Lieferdienst.PL
 
         void InitializeManuqlComponent()
         {
-            tbxEMail.Text = Client.client.User.email;
+            tbxEMail.Text = Client.client.User.Email;
             if (Client.client.User.Address != null)
             {
                 tbxStraße.Text = Client.client.User.Address.Street.ToString();
@@ -44,7 +45,7 @@ namespace Bestellsystem_Lieferdienst.PL
             User user;
             try
             {
-                user = new User(tbxEMail.Text, tbxPassword.Text.ToSHA256());
+                user = ExtendedUser.CreateUser(tbxEMail.Text, tbxPassword.Text);
             }
             catch (Exception exception)
             {

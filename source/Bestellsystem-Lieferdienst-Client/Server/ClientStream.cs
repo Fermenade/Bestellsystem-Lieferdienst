@@ -117,9 +117,8 @@ public class ClientStream : TcpClient
         if (package.ErrorMessage != null)
         {
             if (package.ErrorMessage.Substring(0,
-                    "MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts\r\n ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it."
-                        .Length) ==
-                "MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts\r\n ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.")
+                    "MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts".Length) ==
+                "MySql.Data.MySqlClient.MySqlException (0x80004005): Unable to connect to any of the specified MySQL hosts")
             {
                 MessageBox.Show("Database connection connte nicht hergestellt werden.");
                 return default;
