@@ -39,7 +39,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
                 listBox2.Items.Add(VARIABLE);
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+        private async void  button1_Click(object sender, EventArgs e)
         {
             if (Product.ProductId != null)
             {
@@ -62,7 +62,9 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
                     label5.Text = exception.Message;
                     return;
                 }
-                ServerData.SetProduct(product);
+
+                await ServerData.SetProduct(product);
+                this.LoadView(new ProductsEditOverviewView());
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.BL.StartForm;
+using Bestellsystem_Lieferdienst_Client.PL.StartForm_Controls;
 using Client_Server_Code_Library;
 using System.ComponentModel;
 
@@ -16,42 +17,46 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
         void InitializeManualComponent()
         {
             ProductManager.ProductItemsCache.ListChanged += RenderCartItems();
+            this.Dock = DockStyle.Fill;
+            BackColor = Color.AliceBlue;
         }
         public readonly Dictionary<Product, ProductsEditOverviewEntryControl> itemControlMap = new();
         async void Delete(object? sender, EventArgs e)
         {
-            if (sender is Product product)
-            {
-                ServerData.DeleteProduct(product);
-                ProductManager.Clear();
-                Product[] products = await ServerData.GetAllProducts() ?? [];
-                ProductManager.AddProducts(products);
-            }
-            else
-            {
-                throw new Exception("sender was not of type product");
-            }
-
+            //if (sender is Product product)
+            //{
+            //    ServerData.DeleteProduct(product);
+            //    ProductManager.Clear();
+            //    Product[] products = await ServerData.GetAllProducts() ?? [];
+            //    ProductManager.AddProducts(products);
+            //}
+            //else
+            //{
+            //    throw new Exception("sender was not of type product");
+            //}
+            throw new NotImplementedException();
         }
 
         void Edit(object? sender, EventArgs e)
         {
-            if (sender is Product product)
-            {
-                this.LoadView(new ProductEditView(product));
-            }
-            else
-            {
-                throw new Exception("sender was not of type product");
-            }
+            //if (sender is Product product)
+            //{
+            //    this.LoadView(new ProductEditView(product));
+            //}
+            //else
+            //{
+            //    throw new Exception("sender was not of type product");
+            //}
+            throw new NotImplementedException();
         }
 
         void Show(object? sender, EventArgs e)
         {
-            if (sender is Product product)
-            {
-                this.LoadView(new ProductDetailView(product));
-            }
+            //if (sender is Product product)
+            //{
+            //    this.LoadView(new ProductDetailView(product));
+            //}
+            throw new NotImplementedException();
         }
 
         private ListChangedEventHandler RenderCartItems(object? sender = null, EventArgs? e = null)

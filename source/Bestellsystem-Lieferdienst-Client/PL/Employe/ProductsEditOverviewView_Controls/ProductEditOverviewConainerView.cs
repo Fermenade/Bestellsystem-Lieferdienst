@@ -24,7 +24,7 @@ namespace Bestellsystem_Lieferdienst.PL.Employe.ProductsEditOverviewView_Control
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
-                BackColor = Color.White,
+                BackColor = Color.Gray,
             };
             // Header Labels
             Label lblTitle = new Label { Text = "Name", Left = 10, Width = 120, Top = 10, ForeColor = Color.Black };
@@ -38,7 +38,7 @@ namespace Bestellsystem_Lieferdienst.PL.Employe.ProductsEditOverviewView_Control
                 Height = 50,
                 Dock = DockStyle.Top,
                 BorderStyle = BorderStyle.FixedSingle,
-                BackColor = Color.AliceBlue,
+                BackColor = Color.Red,
             };
             panelTop.Controls.AddRange(new[] { lblTitle, lblAmount, lblTotal });
 

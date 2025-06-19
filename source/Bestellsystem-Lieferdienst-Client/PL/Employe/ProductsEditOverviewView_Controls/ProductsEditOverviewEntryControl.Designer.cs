@@ -94,6 +94,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(btn_Show);
             Controls.Add(btn_Edit);
             Controls.Add(btn_Delete);
@@ -101,7 +102,6 @@
             Controls.Add(lb_description);
             Controls.Add(lb_Name);
             Name = "ProductsEditOverviewEntryControl";
-            BorderStyle = BorderStyle.FixedSingle;
             Size = new Size(1527, 150);
             ResumeLayout(false);
             PerformLayout();

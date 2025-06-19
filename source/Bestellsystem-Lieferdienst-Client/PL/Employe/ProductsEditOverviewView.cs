@@ -1,6 +1,7 @@
 ﻿using Bestellsystem_Lieferdienst.BL;
 using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_Controls;
+using Bestellsystem_Lieferdienst.PL.Employe.ProductsEditOverviewView_Controls;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.Employe
 {
@@ -14,7 +15,8 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
 
         void InitializeManualComponent()
         {
-            Controls.Add(new ProductsEditOverviewContainer());
+            Controls.Add(new ProductEditOverviewConainerView());
+            
         }
 
         private void btn_ReturnToStart_Click(object sender, EventArgs e)
