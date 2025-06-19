@@ -15,9 +15,9 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
 
         async void InitializeManualComponent()
         {
-            textBox1.Text = Product.Name;
-            textBox2.Text = Product.Description;
-            textBox3.Text = Product.Price.ToString();
+            tbx_Name.Text = Product.Name;
+            tbx_Description.Text = Product.Description;
+            tbx_Price.Text = Product.Price.ToString();
             if (Product.Picture != null)
             {
                 using MemoryStream ms = new MemoryStream(Product.Picture);
@@ -29,27 +29,39 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
                 pictureBox1.Image = Image.FromFile("../../../Resources/fallbackIMG.png");
             }
 
-            foreach (string VARIABLE in Product.Categories)
+            foreach (string VARIABLE in Product.Categories ?? [])
             {
                 listBox1.Items.Add(VARIABLE);
             }
-            foreach (ProductCategory VARIABLE in await ServerData.GetAllProductCategories())
+            foreach (ProductCategory VARIABLE in await ServerData.GetAllProductCategories() ?? [])
             {
                 listBox2.Items.Add(VARIABLE.name);
             }
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Product.ID != null)
+            if (Product.ProductId != null)
             {
                 // now this is a bit dirty to use the tbx and then the Product again, but this is ez., it's 4 am and I dont have any more time left to waste.
-                ServerData.UpdateProduct(Product.CreateProduct((int)Product.ID, textBox1.Text, textBox2.Text, textBox3.Text,
+                ServerData.UpdateProduct(Product.CreateProduct((int)Product.ProductId, tbx_Name.Text, tbx_Description.Text, tbx_Price.Text,
                     Product.Picture ?? throw new Exception("Picture was null"), listBox1.Items.Cast<string>().ToArray()));
             }
             else
             {
-                ServerData.SetProduct(Product.CreateProduct(textBox1.Text, textBox2.Text, textBox3.Text,
-                    Product.Picture ?? throw new Exception("Picture was null"), listBox1.Items.Cast<string>().ToArray()));
+                Product product;
+                try
+                {
+                    product =
+                        Product.CreateProduct(tbx_Name.Text, tbx_Description.Text, tbx_Price.Text,
+                            Product.Picture,
+                            listBox1.Items.Cast<string>().ToArray());
+                }
+                catch (Exception exception)
+                {
+                    label5.Text = exception.Message;
+                    return;
+                }
+                ServerData.SetProduct(product);
             }
         }
 
@@ -85,13 +97,22 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
         private void button3_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex == -1) return;
-            listBox1.Items.Remove(listBox1.SelectedItems);
+            // Iterate through the selected items in reverse order
+            for (int i = listBox1.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                listBox1.Items.Remove(listBox1.SelectedItems[i]);
+            }
             listBox1.SelectedIndex = -1;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             listBox1.Items.Add(listBox2.SelectedItems);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Add(tbx_NewCategorie.Text);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Bestellsystem_Lieferdienst_Server
 {
-    public enum Usertype
+    public enum PredefinedUserAccessLvl
     {
         User,//User is not logged in.
         Customer, //Logged in user

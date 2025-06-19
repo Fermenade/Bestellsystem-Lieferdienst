@@ -1,5 +1,6 @@
 ﻿using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_Controls;
+using Bestellsystem_Lieferdienst.BL;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.Employe
 {
@@ -23,7 +24,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
 
         private void btn_newProduct_Click(object sender, EventArgs e)
         {
-            this.LoadView(new ProductEditView(new(null, null, 0, null, null)));
+            this.LoadView(new ProductEditView(ExtendedProduct.CreateNewProduct()));
         }
     }
 }

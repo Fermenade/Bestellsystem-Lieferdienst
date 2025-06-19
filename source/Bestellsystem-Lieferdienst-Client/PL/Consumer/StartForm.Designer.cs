@@ -4,6 +4,7 @@ using Bestellsystem_Lieferdienst_Client.PL;
 using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL.StartForm_Controls;
 using Bestellsystem_Lieferdienst_Client.Server;
+using Bestellsystem_Lieferdienst_Server;
 using Client_Server_Code_Library;
 using Bestellsystem_Lieferdienst.PL.Konsument.ShopingCart_Controls;
 
@@ -188,7 +189,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
                 btn_Login.Dispose();
                 btn_Register.Dispose();
                 button1.Visible = true;
-                if (Client.client.User.UsertypeID !>= 1)
+                if (Client.client.User.UsertypeID < (int)PredefinedUserAccessLvl.Employee)
                 {
                     button2.Dispose();
                 }

@@ -72,9 +72,9 @@ public class DatabaseHelper(string connectionString)
     }
 
     /// <summary>
-    /// Get a single row in a table selected from the ID.
+    /// Get a single row in a table selected from the ProductId.
     /// </summary>
-    /// <param name="id">ID of the row</param>
+    /// <param name="id">ProductId of the row</param>
     /// <param name="tableName">Name of the table</param>
     /// <typeparam name="T">T must be type class. The type the data should be converted into.</typeparam>
     /// <remarks>This method truncates any other returned data except the first row</remarks>

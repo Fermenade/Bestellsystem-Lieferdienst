@@ -71,14 +71,14 @@ public interface ICommand
 {
     string Name { get; }
     bool? TakesParameter { get; }
-    Usertype MinPrivilegeRequired { get; }
+    PredefinedUserAccessLvl MinPrivilegeRequired { get; }
     object Execute(string? command);
 }
 
 public abstract class BaseCommand : ICommand
 {
     public abstract string Name { get; }
-    public Usertype MinPrivilegeRequired => Usertype.User;
+    public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
     public bool? TakesParameter => null;//TODO: es kann sein dass wenn diese wert nicht false ist, dann macht es etwas falsches um Usage anzeige.
 
     //public abstract void Execute(string[] args);

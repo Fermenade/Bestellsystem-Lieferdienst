@@ -2,6 +2,8 @@
 using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.Server;
 using Client_Server_Code_Library;
+using System;
+using System.Diagnostics;
 
 namespace Bestellsystem_Lieferdienst_Client.PL
 {
@@ -10,6 +12,11 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         public LoginUserControl()
         {
             InitializeComponent();
+            InitializeManualComponent();
+        }
+
+        void InitializeManualComponent()
+        {
         }
 
         private void btn_GoToMain_Click(object sender, EventArgs e)

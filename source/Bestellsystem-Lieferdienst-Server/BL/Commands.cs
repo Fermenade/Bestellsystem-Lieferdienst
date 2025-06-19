@@ -31,7 +31,7 @@ public class Commands
         {
             public string Name => "exec";
             public bool? TakesParameter => true;
-            public Usertype MinPrivilegeRequired => Usertype.Admin;
+            public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
 
             public object Execute(string? args)
             {
@@ -48,7 +48,7 @@ public class Commands
         {
             public string Name => "ALLPRODUCTS";
             public bool? TakesParameter => false;
-            public Usertype MinPrivilegeRequired => Usertype.User;
+            public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
 
             public object Execute(string? args)
             {
@@ -59,7 +59,7 @@ public class Commands
                 foreach (var VARIABLE in products)
                 {
                     command = new SqlCommand().SelectColumnsByJoin(tableProductGroup, cTableProduct_ProductGroup,
-                        ["name"], [("productID", "productgroup.productgroupID")], [("productID", VARIABLE.ID)]);
+                        ["name"], [("productID", "productgroup.productgroupID")], [("productID", VARIABLE.ProductId)]);
                     List<string> categories = new();
                     foreach (var VARIABLE1 in _dbHelper.GetDataFromDatabase(command))
                     {
@@ -82,7 +82,7 @@ public class Commands
         {
             public string Name => "ALLCATEGORIES";
             public bool? TakesParameter => false;
-            public Usertype MinPrivilegeRequired => Usertype.User;
+            public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
 
             public object Execute(string? args)
             {
@@ -96,7 +96,7 @@ public class Commands
         {
             public string Name => "PRODUCT";
             public bool? TakesParameter => true;
-            public Usertype MinPrivilegeRequired => Usertype.User;
+            public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
 
             public object Execute(string? args)
             {
@@ -109,7 +109,7 @@ public class Commands
         {
             public string Name => "USER";
             public bool? TakesParameter => true;
-            public Usertype MinPrivilegeRequired => Usertype.User;
+            public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
 
             public object Execute(string? args)
             {
@@ -144,7 +144,7 @@ public class Commands
             {
                 public string Name => "USER";
                 public bool? TakesParameter => true;
-                public Usertype MinPrivilegeRequired => Usertype.User;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
 
                 public object Execute(string? args)
                 {
@@ -158,7 +158,7 @@ public class Commands
                         command = new SqlCommand().Insert(tableAddress, address);
                         i.Address_addressID = _dbHelper.InsertItemIntoTable(command);
                     }
-                    i.UsertypeID = (int)Usertype.Customer;
+                    i.UsertypeID = (int)PredefinedUserAccessLvl.Customer;
                     command = new SqlCommand().Insert(tableUser, i);
                     long id = _dbHelper.InsertItemIntoTable(command);
 
@@ -184,7 +184,7 @@ public class Commands
                 public string Name => "PRODUCT";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Employee;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Employee;
 
                 public object Execute(string? args)
                 {
@@ -200,7 +200,7 @@ public class Commands
             {
                 public string Name => "ADDRESS";
                 public bool? TakesParameter => true;
-                public Usertype MinPrivilegeRequired => Usertype.Customer;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Customer;
 
                 public object Execute(string? args)
                 {
@@ -217,7 +217,7 @@ public class Commands
                 public string Name => "PRODUCTGROUP";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Employee;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Employee;
 
                 public object Execute(string? args)
                 {
@@ -232,7 +232,7 @@ public class Commands
             {
                 public string Name => "ORDER";
                 public bool? TakesParameter => true;
-                public Usertype MinPrivilegeRequired => Usertype.User;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
                 public object Execute(string? command)
                 {
                     Order order = JsonSerialize.Deserialize<Order>(command);
@@ -258,7 +258,7 @@ public class Commands
             {
                 public string Name => "USER";
                 public bool? TakesParameter => true;
-                public Usertype MinPrivilegeRequired => Usertype.Customer;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Customer;
 
                 public object Execute(string? args)
                 {
@@ -271,7 +271,7 @@ public class Commands
                 public string Name => "PRODUCT";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Employee;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Employee;
 
                 public object Execute(string? args)
                 {
@@ -284,7 +284,7 @@ public class Commands
                 public string Name => "ADDRESS";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Customer;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Customer;
 
                 public object Execute(string? args)
                 {
@@ -297,7 +297,7 @@ public class Commands
                 public string Name => "PRODUCTGROUP";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Employee;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Employee;
 
                 public object Execute(string? args)
                 {
@@ -315,7 +315,7 @@ public class Commands
                 public string Name => "USER";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Admin;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
 
                 public object Execute(string? args)
                 {
@@ -329,7 +329,7 @@ public class Commands
                 public string Name => "PRODUCT";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Employee;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Employee;
 
                 public object Execute(string? args)
                 {
@@ -342,7 +342,7 @@ public class Commands
                 public string Name => "ADDRESS";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Customer;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Customer;
 
                 public object Execute(string? args)
                 {
@@ -355,7 +355,7 @@ public class Commands
                 public string Name => "PRODUCTGROUP";
                 public bool? TakesParameter => true;
 
-                public Usertype MinPrivilegeRequired => Usertype.Employee;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Employee;
 
                 public object Execute(string? args)
                 {
@@ -376,7 +376,7 @@ public class Commands
             {
                 public string Name => "ping";
                 public bool? TakesParameter => false;
-                public Usertype MinPrivilegeRequired => Usertype.User;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
 
                 public object Execute(string? args)
                 {
@@ -396,7 +396,7 @@ public class Commands
             {
                 public string Name => "example subcommand name";
                 public bool? TakesParameter => false;
-                public Usertype MinPrivilegeRequired => Usertype.User;
+                public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
 
                 public object Execute(string? args)
                 {
