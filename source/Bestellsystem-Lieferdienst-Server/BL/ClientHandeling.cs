@@ -37,7 +37,17 @@ public class Client(Socket client) : ClientStream(client)
     void ProcessReceiveMessages(string message)
     {
         Console.WriteLine($"Received message '{message}' from '{client.RemoteEndPoint}'");
-        Package request = JsonSerialize.Deserialize<Package>(message);
+        Package request;
+        try
+        {
+            request = JsonSerialize.Deserialize<Package>(message);
+        }
+        catch (Newtonsoft.Json.JsonReaderException  e)
+        {
+            Console.WriteLine("Recieved too big Datapackage wich should normally not occour - this is sussy.");
+            OnClientDisconnected();
+            return;
+        }
 
         if (!PendingPackage.isPendingPackage(request))
         {
