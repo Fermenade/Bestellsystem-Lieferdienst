@@ -1,4 +1,5 @@
-﻿using Client_Server_Code_Library;
+﻿using System.Diagnostics;
+using Client_Server_Code_Library;
 using System.Drawing;
 using System.Drawing.Imaging;
 using static System.Windows.Forms.DataFormats;
@@ -17,8 +18,34 @@ public class ExtendedProduct : Product
     }
     public static Product CreateNewProduct() => new ExtendedProduct();
 
+    public static Product CreateProduct(int id, string name, string description, string price, byte[] picture, object[] categories)
+    {
+        if (!decimal.TryParse(price, out decimal Price))
+        {
+            throw new Exception("Price is not of type decimal");
+        }
+
+
+        return new(id, name, description, Price, categories.Cast<ProductCategory>().ToArray(), picture);
+    }
+
+    public static Product CreateProduct(string name, string description, string price, byte[] picture, object[] categories)
+    {
+        if (!decimal.TryParse(price, out decimal Price))
+        {
+            throw new Exception("Price is not of type decimal");
+        }
+        if (picture.Length > ServerClientConfig.streamsize)
+        {
+            Debug.WriteLine("Picture to big, trying to downscale image");
+            picture = DownscaleImage(picture);
+        }
+
+        return new(name, description, Price, categories.Cast<ProductCategory>().ToArray(), picture);
+    }
+
     //Generated
-    byte[] DownscaleImage(byte[] image)
+    static byte[] DownscaleImage(byte[] image)
     {
         using (MemoryStream ms = new(image))
         {
