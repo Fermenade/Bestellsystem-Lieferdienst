@@ -28,7 +28,7 @@ public class Commands
     {
         public override string Name => "help";
 
-        class Search : ICommand
+        public class Search : ICommand
         {
             public string Name => "search";
             public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
@@ -67,7 +67,7 @@ public class Commands
         }
 
         [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
-        class All : ICommand
+        public class All : ICommand
         {
             public string Name => "all";
             public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
