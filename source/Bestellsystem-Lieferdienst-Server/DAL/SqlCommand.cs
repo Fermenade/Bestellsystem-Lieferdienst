@@ -99,7 +99,16 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             (string, object)[]? identifier,
             IReadOnlyList<string>? groupBy = null)
         {
-            var selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
+            string selectedColumns;
+
+            if (columns.Count == 1 && columns[0] == "*")
+            {
+                selectedColumns = "*";
+            }
+            else
+            {
+                selectedColumns = string.Join(", ", columns.Select(FormatIdentifier));
+            }
 
             Parameters = new List<(string, object)>(joinIdentifier.Length + identifier.Length);
 
