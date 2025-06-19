@@ -26,7 +26,7 @@ public class DatabaseHelper(string connectionString)
             {
                 if (ex.Message.Contains("UNIQUE"))
                 {
-                    throw new Exception(ex.Message);
+                    throw new Exception("DATABASE KEY EXISTS");
                 }
                 throw new Exception("Failed to insert item: " + query.SqlStatement);
             }

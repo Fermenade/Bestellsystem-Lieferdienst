@@ -26,6 +26,10 @@ public partial class SignupUserControl : UserControl
         }
         catch (Exception ex)
         {
+            if (ex.Message == "DATABASE KEY EXISTS")
+            {
+                lb_Error.Text = "Der User exestiert bereits, verwende eine andere Email.";
+            }
             lb_Error.Text = ex.Message;
             return;
         }
