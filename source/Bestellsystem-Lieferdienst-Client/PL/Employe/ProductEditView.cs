@@ -97,7 +97,8 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
         private void button3_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex == -1) return;
-            // Iterate through the selected items in reverse order
+            // Generated
+            // Iterate through the selected items in reverse order 
             for (int i = listBox1.SelectedItems.Count - 1; i >= 0; i--)
             {
                 listBox1.Items.Remove(listBox1.SelectedItems[i]);
@@ -112,7 +113,9 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
 
         private void button5_Click(object sender, EventArgs e)
         {
+            if(listBox1.Items.Contains(tbx_NewCategorie.Text))return;
             listBox1.Items.Add(tbx_NewCategorie.Text);
+            tbx_NewCategorie.Text = "";
         }
     }
 }
