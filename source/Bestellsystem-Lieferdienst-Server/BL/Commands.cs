@@ -63,7 +63,7 @@ public class Commands
                 foreach (var VARIABLE in products)
                 {
                     command = new SqlCommand().SelectColumnsByJoin(tableProductGroup, cTableProduct_ProductGroup,
-                        ["name", "productgroupID"], [("productID", "productgroup.productgroupID")], [("productID", VARIABLE.ProductId)]);
+                        ["*"], [("productID", "productgroup.productgroupID")], [("productID", VARIABLE.ProductId)]);
                     List<ProductCategory> categories = new();
                     foreach (var VARIABLE1 in _dbHelper.GetDataFromDatabase<ProductCategory>(command))
                     {

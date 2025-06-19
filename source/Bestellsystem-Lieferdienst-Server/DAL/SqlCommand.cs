@@ -71,7 +71,26 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             return uniqueName;
         }
 
-        //1/2 Generated
+        //1/2 Generated (Generated description)
+        /// <summary>
+        /// Builds a SQL SELECT statement that performs a JOIN between two tables and optionally filters results with WHERE and GROUP BY clauses.
+        /// The SELECT statement returns all columns from the resulting joined tables (i.e., <c>SELECT *</c>).
+        /// </summary>
+        /// <param name="returnTable">The primary table to select data from.</param>
+        /// <param name="joinTable">The table to join with the primary table.</param>
+        /// <param name="joinIdentifier">
+        /// An array of tuples defining the JOIN condition. Each tuple contains the column name from each table to be matched (e.g., (returnTableCol, joinTableCol)).
+        /// </param>
+        /// <param name="identifier">
+        /// An optional array of tuples specifying filter conditions for the WHERE clause.
+        /// Each tuple includes a column name and a corresponding value to filter by.
+        /// </param>
+        /// <param name="groupBy">
+        /// An optional list of column names to group the results by (used in the GROUP BY clause).
+        /// </param>
+        /// <returns>
+        /// A <see cref="SqlCommand"/> object representing the built SQL query with populated parameters.
+        /// </returns>
         public SqlCommand SelectColumnsByJoin(
             string returnTable,
             string joinTable,
