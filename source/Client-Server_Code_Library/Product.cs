@@ -37,7 +37,7 @@ public class Product
         Price = price;
     }
     [JsonConstructor]
-    public Product(int productId, string name, string description, decimal price, string[] categories, byte[] picture)
+    public Product(long? productId, string name, string description, decimal price, string[] categories, byte[] picture)
     {
         if (productId == -1)
         {
