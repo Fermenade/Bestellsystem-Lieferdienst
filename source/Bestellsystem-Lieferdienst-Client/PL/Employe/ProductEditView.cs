@@ -1,4 +1,5 @@
 ﻿using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst.BL;
 using Client_Server_Code_Library;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.Employe
@@ -43,7 +44,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
             if (Product.ProductId != null)
             {
                 // now this is a bit dirty to use the tbx and then the Product again, but this is ez., it's 4 am and I dont have any more time left to waste.
-                ServerData.UpdateProduct(Product.CreateProduct((int)Product.ProductId, tbx_Name.Text, tbx_Description.Text, tbx_Price.Text,
+                ServerData.UpdateProduct(ExtendedProduct.CreateProduct((int)Product.ProductId, tbx_Name.Text, tbx_Description.Text, tbx_Price.Text,
                     Product.Picture ?? throw new Exception("Picture was null"), listBox1.Items.Cast<string>().ToArray()));
             }
             else
@@ -52,7 +53,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
                 try
                 {
                     product =
-                        Product.CreateProduct(tbx_Name.Text, tbx_Description.Text, tbx_Price.Text,
+                        ExtendedProduct.CreateProduct(tbx_Name.Text, tbx_Description.Text, tbx_Price.Text,
                             Product.Picture,
                             listBox1.Items.Cast<ProductCategory>().ToArray());
                 }

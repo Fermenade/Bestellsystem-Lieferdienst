@@ -54,32 +54,6 @@ public class Product
         //This has to be empty
     }
 
-    public static Product CreateProduct(int id, string name, string description, string price, byte[] picture, object[] categories)
-    {
-        if (!decimal.TryParse(price, out decimal Price))
-        {
-            throw new Exception("Price is not of type decimal");
-        }
-
-
-        return new(id, name, description, Price, categories.Cast<ProductCategory>().ToArray(), picture);
-    }
-    public static Product CreateProduct(string name, string description, string price, byte[] picture, object[] categories)
-    {
-        if (!decimal.TryParse(price, out decimal Price))
-        {
-            throw new Exception("Price is not of type decimal");
-        }
-
-        if (picture.Length >= 10_000_000)
-        {
-            Debug.WriteLine("Picture to big, trying to downscale image");
-
-        }
-
-        return new(name, description, Price, categories.Cast<ProductCategory>().ToArray(), picture);
-    }
-
     public override string ToString()
     {
         return JsonSerialize.Serialize(this);
