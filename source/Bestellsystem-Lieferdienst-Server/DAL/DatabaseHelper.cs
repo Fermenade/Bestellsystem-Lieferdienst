@@ -1,6 +1,5 @@
 using Client_Server_Code_Library;
 using MySql.Data.MySqlClient;
-using System.Data.Common;
 using System.Reflection;
 
 
@@ -10,20 +9,24 @@ public class DatabaseHelper(string connectionString)
 {
     public void ExecutePlainNonQuery(string query)
     {
-        using (var command = new MySqlCommand(query))
+        using (MySqlConnection con = new MySqlConnection(connectionString))
         {
+            con.Open();
+            using (var command = new MySqlCommand(query, con))
+            {
 
-            try
-            {
-                command.ExecuteNonQuery();
-            }
-            catch (MySqlException ex) // Catching specific exception related to MySQL
-            {
-                if (ex.Message.Contains("UNIQUE"))
+                try
                 {
-                    throw new Exception("DATABASE KEY EXISTS");
+                    command.ExecuteNonQuery();
                 }
-                throw new Exception("Failed to insert item: " + query);
+                catch (MySqlException ex) // Catching specific exception related to MySQL
+                {
+                    if (ex.Message.Contains("UNIQUE"))
+                    {
+                        throw new Exception("DATABASE KEY EXISTS");
+                    }
+                    throw new Exception("Failed to insert item: " + query);
+                }
             }
         }
     }

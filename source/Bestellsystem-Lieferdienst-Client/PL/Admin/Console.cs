@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Bestellsystem_Lieferdienst_Client.BL;
+﻿using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.Server;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.Admin
@@ -54,11 +45,11 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Admin
             string i;
             try
             {
-               i = await Client.client.SendAndReturnAsync<string>(command);
+                i = await Client.client.SendAndReturnAsync<string>(command);
             }
             catch (Exception e)
             {
-                i = "Error: " +e.Message;
+                i = "Error: " + e.Message;
             }
 
             AppendToConsole(i);

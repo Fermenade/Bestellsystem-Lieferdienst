@@ -28,7 +28,7 @@ public class Commands
     {
         public override string Name => "help";
 
-        class Search : ICommand
+        public class Search : ICommand
         {
             public string Name => "search";
             public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
@@ -38,7 +38,7 @@ public class Commands
             {
 
                 var s = StringFormating.Explode(args);
-                string endresult ="";
+                string endresult = "";
                 foreach (string command in s)
                 {
                     BaseCommand? baseCommand = (BaseCommand?)CommandManager.GetBaseCommand(command);
@@ -67,7 +67,7 @@ public class Commands
         }
 
         [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
-        class All : ICommand
+        public class All : ICommand
         {
             public string Name => "all";
             public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
@@ -172,8 +172,9 @@ public class Commands
                 {
                     File.Delete(VARIABLE);
                 }
-                SqlCommand command = new SqlCommand().DeleteAllFromTable(tableOrder).
-                _dbHelper.InsertItemIntoTable()
+
+                SqlCommand command = new SqlCommand().DeleteAllFromTable(tableOrder);
+                _dbHelper.InsertItemIntoTable(command);
                 return "Cleared Assets Folder ad";
             }
         }
