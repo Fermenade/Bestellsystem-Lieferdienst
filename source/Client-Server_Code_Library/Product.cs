@@ -38,10 +38,10 @@ public class Product
         Price = price;
     }
     [JsonConstructor]
-    public Product(long? productId, string name, string description, decimal price, string[] categories, byte[] picture)
+    public Product(long? productId, string name, string productDescription, decimal price, string[] categories, byte[] picture)
     {
         this.Name = name;
-        this.Description = description;
+        this.ProductDescription = productDescription;
         this.Price = price;
         this.Categories = categories;
         this.Picture = picture;
