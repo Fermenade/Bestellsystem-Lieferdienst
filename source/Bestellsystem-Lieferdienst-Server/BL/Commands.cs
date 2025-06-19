@@ -19,6 +19,8 @@ public class Commands
     public const string tableUsertype = "usertype";
     public const string tableUser = "user";
 
+    public const string AssetsFolderPath = "Assets";
+
     public class sql : BaseCommand
     {
         public override string Name => "sql";
@@ -164,11 +166,8 @@ public class Commands
 
 
                     command = new SqlCommand().SelectById(tableUser, id);
-                    User? user = _dbHelper.GetDataFromID<User>(command);
-                    if (user == null)
-                    {
-                        throw new Exception("Tried to access user that should exist but didn't");
-                    }
+                    User user = _dbHelper.GetDataFromID<User>(command)!;
+                    
                     if (user.Address_addressID != null)
                     {
                         command = new SqlCommand().SelectById(tableAddress, (int)user.Address_addressID);
@@ -189,9 +188,27 @@ public class Commands
                 public object Execute(string? args)
                 {
                     Product i = JsonSerialize.Deserialize<Product>(args);
+
+                    if (i.Picture == null)
+                    {
+                        //This should never happen, but idk.
+                        throw new Exception("Picture was null of Product");
+                    }
+
+                    if (!Directory.Exists(AssetsFolderPath))
+                    {
+                        Directory.CreateDirectory(AssetsFolderPath);
+                    }
+
+                    string filename = Guid.CreateVersion7().ToString();
+                    string filesFilepath = $"{AssetsFolderPath}\\{filename}";
+
+                    i.Imagepath = filesFilepath;
+
                     SqlCommand command = new SqlCommand().Insert(tableProduct, i);
                     _dbHelper.InsertItemIntoTable(command);
 
+                    File.WriteAllBytes(filesFilepath,i.Picture);
                     return 1;
                 }
             }
