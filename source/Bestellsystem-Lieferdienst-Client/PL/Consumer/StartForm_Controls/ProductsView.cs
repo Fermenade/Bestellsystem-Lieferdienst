@@ -13,7 +13,14 @@ public partial class ProductsView : FlowLayoutPanel
 
     public void SetItems(IEnumerable<Product> items)
     {
-        ProductManager.AddProducts(items);
+        try
+        {
+            ProductManager.AddProducts(items);
+        }
+        catch (ArgumentException)
+        {
+            //This is handeled here cuz I think it's not the job of the Manager to handle it.
+        }
     }
 
     public void ApplyFilter(string nameFilter, string categoryFilter)

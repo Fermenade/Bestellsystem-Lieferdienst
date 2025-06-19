@@ -9,13 +9,14 @@ namespace Bestellsystem_Lieferdienst_Client.BL.StartForm
 
         public static void AddProduct(Product product)
         {
+            if (ProductItemsCache.Any(i => i.ProductId == product.ProductId)) throw new ArgumentException("Product already enlisted");
             ProductItemsCache.Add(product);
         }
         public static void AddProducts(IEnumerable<Product> products)
         {
             foreach (Product productItem in products)
             {
-                ProductItemsCache.Add(productItem);
+                AddProduct(productItem);
             }
         }
         public static void RemoveProduct(Product product)

@@ -41,6 +41,7 @@ public class Product
     [JsonConstructor]
     public Product(long? productId, string name, string description, decimal price, string[] categories, byte[] picture)
     {
+        ProductId = productId;
         this.Name = name;
         this.Description = description;
         this.Price = price;
