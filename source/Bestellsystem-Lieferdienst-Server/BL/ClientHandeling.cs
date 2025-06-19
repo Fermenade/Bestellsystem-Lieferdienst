@@ -43,7 +43,7 @@ public class Client(Socket client) : ClientStream(client)
         {
             request = JsonSerialize.Deserialize<Package>(message);
         }
-        catch (Newtonsoft.Json.JsonReaderException  e)
+        catch (Newtonsoft.Json.JsonReaderException e)
         {
             Console.WriteLine("Recieved too big Datapackage wich should normally not occour - this is sussy.");
             OnClientDisconnected();

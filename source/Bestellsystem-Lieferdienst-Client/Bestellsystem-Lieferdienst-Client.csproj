@@ -30,8 +30,4 @@
       <ProjectReference Include="..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="PL\Admin\" />
-    </ItemGroup>
-
 </Project>

@@ -48,6 +48,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             lbl_OurProducts = new Label();
             button1 = new Button();
             button2 = new Button();
+            button3 = new Button();
             SuspendLayout();
             // 
             // btn_Login
@@ -147,8 +148,19 @@ namespace Bestellsystem_Lieferdienst_Client.PL
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // button3
+            // 
+            button3.Location = new Point(950, 36);
+            button3.Name = "button3";
+            button3.Size = new Size(112, 34);
+            button3.TabIndex = 20;
+            button3.Text = "Admin";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // StartForm
             // 
+            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(lbl_OurProducts);
@@ -193,11 +205,16 @@ namespace Bestellsystem_Lieferdienst_Client.PL
                 {
                     button2.Dispose();
                 }
+                else if (Client.client.User.UsertypeID < (int)PredefinedUserAccessLvl.Admin)
+                {
+                    button3.Dispose();
+                }
             }
             else
             {
                 button1.Dispose();
                 button2.Dispose();
+                button3.Dispose();
             }
 
             productsView.BackColor = Color.Aquamarine;
@@ -207,5 +224,6 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         }
         private Button button1;
         private Button button2;
+        private Button button3;
     }
 }

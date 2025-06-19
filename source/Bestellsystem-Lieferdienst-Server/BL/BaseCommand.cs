@@ -4,7 +4,7 @@ namespace Bestellsystem_Lieferdienst_Server.BL;
 
 public static class CommandManager
 {
-    private static readonly List<ICommand> Commands = new();
+    public static readonly List<ICommand> Commands = new();
     static CommandManager()
     {
         RegisterAllCommandsAndSubcommands();

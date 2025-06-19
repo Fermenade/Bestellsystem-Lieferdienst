@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Bestellsystem_Lieferdienst_Client.Server;
+
+namespace Bestellsystem_Lieferdienst_Client.PL.Admin
+{
+    public partial class Console : UserControl
+    {
+        public Console()
+        {
+            InitializeComponent();
+        }
+        private void SetupConsole()
+        {
+            // Setup the RichTextBox like a console
+            richTextBoxConsole.ReadOnly = true;
+            richTextBoxConsole.BackColor = System.Drawing.Color.Black;
+            richTextBoxConsole.ForeColor = System.Drawing.Color.White;
+            richTextBoxConsole.Font = new System.Drawing.Font("Courier New", 10);
+        }
+
+        private void txtInput_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                e.Handled = true;
+                string command = textBox1.Text.Trim();
+                ProcessCommand(command);
+                textBox1.Clear();
+            }
+        }
+
+        private async void ProcessCommand(string command)
+        {
+            //show own command
+            AppendToConsole(">>> " + command);
+            if (command.Equals("exit", StringComparison.OrdinalIgnoreCase))
+            {
+                AppendToConsole("Exiting program...");
+                Application.Exit();  // Close the application
+            }
+
+            AppendToConsole(await Client.client.SendAndReturnAsync<string>(command));
+        }
+
+        private void AppendToConsole(string text)
+        {
+            // Append text to the RichTextBox (console output)
+            richTextBoxConsole.AppendText(text + Environment.NewLine);
+            richTextBoxConsole.ScrollToCaret(); // Scroll to the bottom
+        }
+    }
+}

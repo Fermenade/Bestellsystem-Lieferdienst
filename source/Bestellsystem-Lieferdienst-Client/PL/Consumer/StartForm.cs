@@ -2,6 +2,7 @@ using Bestellsystem_Lieferdienst.PL;
 using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.PL.Employe;
 using Client_Server_Code_Library;
+using Console = Bestellsystem_Lieferdienst_Client.PL.Admin.Console;
 
 namespace Bestellsystem_Lieferdienst_Client.PL
 {
@@ -70,6 +71,11 @@ namespace Bestellsystem_Lieferdienst_Client.PL
         private void button2_Click(object sender, EventArgs e)
         {
             this.LoadView(new ProductsEditOverviewView());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.LoadView(new Console());
         }
     }
 }

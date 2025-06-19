@@ -1,6 +1,8 @@
 using Bestellsystem_Lieferdienst_Server.BL.Datatypes;
 using Bestellsystem_Lieferdienst_Server.DAL;
 using Client_Server_Code_Library;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 // ReSharper disable UnusedType.Global
 
@@ -22,6 +24,110 @@ public class Commands
 
     public const string AssetsFolderPath = "Assets";
 
+    public class Help : BaseCommand
+    {
+        public override string Name => "help";
+
+        class Search : ICommand
+        {
+            public string Name => "search";
+            public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
+            public bool? TakesParameter => true;
+
+            public object Execute(string? args)
+            {
+
+                var s = StringFormating.Explode(args);
+                string endresult ="";
+                foreach (string command in s)
+                {
+                    BaseCommand? baseCommand = (BaseCommand?)CommandManager.GetBaseCommand(command);
+
+                    endresult += ShowHelp(baseCommand);
+                }
+                return endresult;
+            }
+
+            /// <summary>
+            /// Get entire subcommand list of command
+            /// </summary>
+            /// <param name="command"></param>
+            /// <returns>Returns entire subcommand list of command</returns>
+            string ShowHelp(BaseCommand command)
+            {
+                StringBuilder help = new StringBuilder();
+                help.AppendLine("Available arguments:");
+                foreach (ICommand subCommand in command.SubCommands)
+                {
+                    help.AppendLine($"{subCommand.Name}");
+                }
+
+                return help.ToString();
+            }
+        }
+
+        [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+        class All : ICommand
+        {
+            public string Name => "all";
+            public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
+            public bool? TakesParameter => null;
+
+            public object Execute(string? args)
+            {
+                StringBuilder help = new StringBuilder();
+                help.AppendLine("'!command' -argument [parameter]");
+                help.AppendLine("Available commands:");
+                if (args != null)
+                {
+                    var s = StringFormating.Explode(args); //This is because when "command" does contain "command "command command""
+                    ShowHelp(help, s);
+                }
+                else
+                {
+                    //help = ShowAllHelp(help); 
+                    ShowAllHelp(help);
+                }
+
+                return help.ToString();
+            }
+            static StringBuilder ShowHelp(StringBuilder help, string[] command)
+            {
+                foreach (var VARIABLE in command)
+                {
+                    var i = (BaseCommand)CommandManager.GetBaseCommand(VARIABLE);
+                    if (i == null)
+                    {
+                        help.AppendLine($"{VARIABLE} unknown command");
+                        continue;
+                    }
+                    ShowAllHelp(help, i);
+                }
+                return help;
+            }
+
+            /// <summary>
+            /// Shows entire command list
+            /// </summary>
+            /// <returns>Returns list of all available commands</returns>
+            static void ShowAllHelp(StringBuilder help)
+            {
+                foreach (BaseCommand command in CommandManager.Commands)
+                {
+                    ShowAllHelp(help, command);
+                }
+            }
+
+            static void ShowAllHelp(StringBuilder help, BaseCommand command)
+            {
+                help.AppendLine($"{command.Name}");
+                foreach (ICommand VARIABLE in command.SubCommands)
+                {
+                    help.AppendLine($"\t{VARIABLE.Name} : {VARIABLE.MinPrivilegeRequired}, takes Params: {VARIABLE.TakesParameter}");
+                }
+            }
+        }
+    }
     public class sql : BaseCommand
     {
         public override string Name => "sql";
@@ -39,6 +145,29 @@ public class Commands
             public object Execute(string? args)
             {
                 throw new NotImplementedException();
+            }
+        }
+    }
+    public class predefinedAdminCommands : BaseCommand
+    {
+        public override string Name => "!";
+
+
+        public class ExecSqlCommand : ICommand
+        {
+            public string Name => "clear assets";
+            public bool? TakesParameter => false;
+            public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
+
+            public object Execute(string? args)
+            {
+                var i = Directory.GetFiles(AssetsFolderPath);
+                foreach (var VARIABLE in i)
+                {
+                    File.Delete(VARIABLE);
+                }
+
+                return "Cleared Assets Folder";
             }
         }
     }

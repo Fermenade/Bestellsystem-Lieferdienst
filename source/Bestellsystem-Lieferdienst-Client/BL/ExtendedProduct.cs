@@ -1,8 +1,6 @@
-﻿using System.Diagnostics;
-using Client_Server_Code_Library;
-using System.Drawing;
+﻿using Client_Server_Code_Library;
+using System.Diagnostics;
 using System.Drawing.Imaging;
-using static System.Windows.Forms.DataFormats;
 
 namespace Bestellsystem_Lieferdienst.BL;
 
@@ -35,30 +33,35 @@ public class ExtendedProduct : Product
         {
             throw new Exception("Price is not of type decimal");
         }
-        if (picture.Length > ServerClientConfig.streamsize/4*3)
+        if (picture.Length > ServerClientConfig.streamsize / 10)
         {
+            int maxwidth = 500;
+            int maxheight = 500;
             Debug.WriteLine("Picture to big, trying to downscale image");
-            picture = DownscaleImage(picture);
-            if (picture.Length > ServerClientConfig.streamsize / 4 * 3)
+            do
             {
-                throw new Exception("Picture is waaay to big.");
-            }
+                picture = ReduceImage(picture, maxwidth, maxheight);
+                maxwidth /= 2;
+                maxheight /= 2;
+            } while (picture.Length > ServerClientConfig.streamsize / 100);
+
+
         }
 
         return new(name, description, Price, categories.Cast<ProductCategory>().ToArray(), picture);
     }
 
+    //All following code is just because I get all products from the database and filter local (maybe filtering in the database would be a good idea next time)
+
     //Generated
-    static byte[] DownscaleImage(byte[] image)
+    static byte[] ReduceImage(byte[] image, int maxWidth, int maxHeight)
     {
         using (MemoryStream ms = new(image))
         {
-
-
             using (Image originalImage = Image.FromStream(ms))
             {
                 // Calculate the new dimensions while maintaining the aspect ratio
-                Size newSize = GetNewSize(originalImage.Size, 1000, 1000);
+                Size newSize = GetNewSize(originalImage.Size, maxWidth, maxHeight);
 
                 // Create a new bitmap with the new dimensions
                 using (Bitmap resizedImage = new Bitmap(newSize.Width, newSize.Height))
@@ -72,16 +75,34 @@ public class ExtendedProduct : Product
                         graphics.DrawImage(originalImage, 0, 0, newSize.Width, newSize.Height);
                     }
 
-                    // Save the resized image
-                    using (MemoryStream ms1 = new MemoryStream())
-                    {
-                        resizedImage.Save(ms1, ImageFormat.Png);
-                        return ms1.ToArray();
-                    }
+                    // Save the resized image as JPEG with quality settings
+                    long quality = 20L; // Adjust quality (0-100, where 100 is the best quality)
+                    return BitmapToByteArray(resizedImage, ImageFormat.Jpeg, quality);
                 }
             }
         }
     }
+    //generated
+    private static byte[] BitmapToByteArray(Bitmap bitmap, ImageFormat format, long quality)
+    {
+        using (MemoryStream ms = new MemoryStream())
+        {
+            // Set the quality parameter for JPEG
+            if (format == ImageFormat.Jpeg)
+            {
+                var encoderParameters = new EncoderParameters(1);
+                encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+                ImageCodecInfo jpegCodec = GetEncoder(ImageFormat.Jpeg);
+                bitmap.Save(ms, jpegCodec, encoderParameters);
+            }
+            else
+            {
+                bitmap.Save(ms, format);
+            }
+            return ms.ToArray();
+        }
+    }
+
     //Generated
     private static Size GetNewSize(Size originalSize, int maxWidth, int maxHeight)
     {
@@ -95,5 +116,18 @@ public class ExtendedProduct : Product
         int newHeight = (int)(originalSize.Height * ratio);
 
         return new Size(newWidth, newHeight);
+    }
+    //Generated
+    private static ImageCodecInfo GetEncoder(ImageFormat format)
+    {
+        ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+        foreach (ImageCodecInfo codec in codecs)
+        {
+            if (codec.FormatID == format.Guid)
+            {
+                return codec;
+            }
+        }
+        return null;
     }
 }
