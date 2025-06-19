@@ -8,21 +8,21 @@ public class Product
     [DatabaseAutoIncrementID]
     public long? ProductId;
     public string Name;
-    public string ProductDescription;
+    public string Description;
     public decimal Price;
     [IgnoreInsert]
     public string[]? Categories;
-    public string? Imagepath;
+    public string? ImagePath;
 
     [IgnoreInsert]
     public byte[]? Picture;//cuz it's easier.
 
-    public Product(string name, string productDescription, decimal price, string[]? categories, byte[] picture)
+    public Product(string name, string description, decimal price, string[]? categories, byte[] picture)
     {
         if (name == "") throw new("Invalid name");
         this.Name = name;
-        if (productDescription == "") throw new Exception("Invalid productDescription");
-        this.ProductDescription = productDescription;
+        if (description == "") throw new Exception("Invalid description");
+        this.Description = description;
         if (price == 0) throw new Exception("Price was 0");
         this.Price = price;
         this.Categories = categories;
@@ -30,18 +30,19 @@ public class Product
         this.Picture = picture;
     }
     [DatabaseConstructor]
-    public Product(int productId, string name, string productDescription, decimal price, string imagepath)
+    public Product(int productId, string name, string description, decimal price, string imagepath)
     {
         ProductId = productId;
         Name = name;
-        ProductDescription = productDescription;
+        Description = description;
         Price = price;
+        ImagePath = imagepath;
     }
     [JsonConstructor]
-    public Product(long? productId, string name, string productDescription, decimal price, string[] categories, byte[] picture)
+    public Product(long? productId, string name, string description, decimal price, string[] categories, byte[] picture)
     {
         this.Name = name;
-        this.ProductDescription = productDescription;
+        this.Description = description;
         this.Price = price;
         this.Categories = categories;
         this.Picture = picture;

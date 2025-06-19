@@ -23,7 +23,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL
                 pBXMainProductPic.Image = Image.FromFile("../../../Resources/fallbackIMG.png");
             }
             lbl_ProductName.Text = product.Name;
-            lbl_BeschreibungInhalt.Text = product.ProductDescription;
+            lbl_BeschreibungInhalt.Text = product.Description;
             lbl_ProductPrice.Text = $"{this.product.Price:C}";
             InitializeManualComponent();
         }

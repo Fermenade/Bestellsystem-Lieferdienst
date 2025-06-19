@@ -8,7 +8,7 @@ public class ExtendedProduct:Product
     private ExtendedProduct()
     {
         Name = "";
-        ProductDescription = "";
+        Description = "";
         Price = 0;
         Categories = [];
         Picture = null;

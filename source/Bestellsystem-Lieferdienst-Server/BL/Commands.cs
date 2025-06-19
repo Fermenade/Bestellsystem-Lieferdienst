@@ -71,10 +71,10 @@ public class Commands
                     }
                     VARIABLE.Categories = categories.ToArray();
 
-                    if (VARIABLE.Imagepath != null)
+                    if (VARIABLE.ImagePath != null)
                     {
-                        VARIABLE.Picture = File.ReadAllBytes(VARIABLE.Imagepath);
-                        VARIABLE.Imagepath = null;
+                        VARIABLE.Picture = File.ReadAllBytes(VARIABLE.ImagePath);
+                        VARIABLE.ImagePath = null;
                     }
                 }
 
@@ -205,7 +205,7 @@ public class Commands
                     string filename = Guid.CreateVersion7().ToString();
                     string filesFilepath = $"{AssetsFolderPath}\\{filename}";
 
-                    i.Imagepath = filesFilepath;
+                    i.ImagePath = filesFilepath;
 
                     SqlCommand command = new SqlCommand().Insert(tableProduct, i);
                     long productid = _dbHelper.InsertItemIntoTable(command);
