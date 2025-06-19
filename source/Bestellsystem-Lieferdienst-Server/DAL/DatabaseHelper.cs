@@ -1,5 +1,6 @@
 using Client_Server_Code_Library;
 using MySql.Data.MySqlClient;
+using System.Data.Common;
 using System.Reflection;
 
 
@@ -7,6 +8,25 @@ namespace Bestellsystem_Lieferdienst_Server.DAL;
 
 public class DatabaseHelper(string connectionString)
 {
+    public void ExecutePlainNonQuery(string query)
+    {
+        using (var command = new MySqlCommand(query))
+        {
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (MySqlException ex) // Catching specific exception related to MySQL
+            {
+                if (ex.Message.Contains("UNIQUE"))
+                {
+                    throw new Exception("DATABASE KEY EXISTS");
+                }
+                throw new Exception("Failed to insert item: " + query);
+            }
+        }
+    }
 
     private long InsertItemIntoTableSession(SqlCommand query, MySqlConnection _connection)
     {

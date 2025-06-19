@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Bestellsystem_Lieferdienst_Client.BL;
 using Bestellsystem_Lieferdienst_Client.Server;
 
 namespace Bestellsystem_Lieferdienst_Client.PL.Admin
@@ -16,17 +17,20 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Admin
         public Console()
         {
             InitializeComponent();
+            InitalizeManualComponent();
         }
-        private void SetupConsole()
+        private void InitalizeManualComponent()
         {
             // Setup the RichTextBox like a console
             richTextBoxConsole.ReadOnly = true;
             richTextBoxConsole.BackColor = System.Drawing.Color.Black;
             richTextBoxConsole.ForeColor = System.Drawing.Color.White;
             richTextBoxConsole.Font = new System.Drawing.Font("Courier New", 10);
+
+            textBox1.KeyPress += textBox1_KeyPress;
         }
 
-        private void txtInput_KeyPress(object sender, KeyPressEventArgs e)
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
@@ -44,17 +48,30 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Admin
             if (command.Equals("exit", StringComparison.OrdinalIgnoreCase))
             {
                 AppendToConsole("Exiting program...");
-                Application.Exit();  // Close the application
+                Application.Exit(); // Close the application
             }
 
-            AppendToConsole(await Client.client.SendAndReturnAsync<string>(command));
+            string i;
+            try
+            {
+               i = await Client.client.SendAndReturnAsync<string>(command);
+            }
+            catch (Exception e)
+            {
+                i = "Error: " +e.Message;
+            }
+
+            AppendToConsole(i);
         }
 
         private void AppendToConsole(string text)
         {
-            // Append text to the RichTextBox (console output)
             richTextBoxConsole.AppendText(text + Environment.NewLine);
             richTextBoxConsole.ScrollToCaret(); // Scroll to the bottom
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.LoadView(new StartForm());
         }
     }
 }

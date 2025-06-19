@@ -10,6 +10,11 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         public List<(string, object)> Parameters { get; private set; }
 
 
+        public SqlCommand DeleteAllFromTable(string table)
+        {
+            SqlStatement = $"TRUNCATE TABLE {table}";
+            return this;
+        }
 
         public SqlCommand Insert<T>(string table, T data)
         {

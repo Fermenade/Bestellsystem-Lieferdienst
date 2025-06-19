@@ -30,6 +30,7 @@
         {
             richTextBoxConsole = new RichTextBox();
             textBox1 = new TextBox();
+            button1 = new Button();
             SuspendLayout();
             // 
             // richTextBoxConsole
@@ -47,10 +48,21 @@
             textBox1.Size = new Size(876, 31);
             textBox1.TabIndex = 2;
             // 
+            // button1
+            // 
+            button1.Location = new Point(1165, 17);
+            button1.Name = "button1";
+            button1.Size = new Size(112, 34);
+            button1.TabIndex = 3;
+            button1.Text = "zurück";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += this.button1_Click;
+            // 
             // Console
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(button1);
             Controls.Add(textBox1);
             Controls.Add(richTextBoxConsole);
             Name = "Console";
@@ -62,5 +74,6 @@
         #endregion
         private RichTextBox richTextBoxConsole;
         private TextBox textBox1;
+        private Button button1;
     }
 }
