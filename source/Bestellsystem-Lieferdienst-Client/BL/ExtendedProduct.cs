@@ -35,10 +35,14 @@ public class ExtendedProduct : Product
         {
             throw new Exception("Price is not of type decimal");
         }
-        if (picture.Length > ServerClientConfig.streamsize)
+        if (picture.Length > ServerClientConfig.streamsize/4*3)
         {
             Debug.WriteLine("Picture to big, trying to downscale image");
             picture = DownscaleImage(picture);
+            if (picture.Length > ServerClientConfig.streamsize / 4 * 3)
+            {
+                throw new Exception("Picture is waaay to big.");
+            }
         }
 
         return new(name, description, Price, categories.Cast<ProductCategory>().ToArray(), picture);

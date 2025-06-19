@@ -2,5 +2,5 @@
 
 public class ServerClientConfig
 {
-    public const int streamsize= 1_000_000;
+    public const int streamsize= 10_000_000;
 }
