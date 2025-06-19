@@ -17,4 +17,8 @@
       <ProjectReference Include="..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="BL\Datatypes\" />
+    </ItemGroup>
+
 </Project>

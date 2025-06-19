@@ -10,6 +10,7 @@ public class Product
     public string Name;
     public string Description;
     public decimal Price;
+    [IgnoreInsert]
     public string[]? Categories;
     public string? Imagepath;
 
@@ -39,22 +40,11 @@ public class Product
     [JsonConstructor]
     public Product(long? productId, string name, string description, decimal price, string[] categories, byte[] picture)
     {
-        if (productId == -1)
-        {
-            this.Name = name;
-            this.Description = description;
-            this.Price = price;
-            this.Categories = categories;
-            this.Picture = picture;
-        }
-        else
-        {
-            ProductId = productId;
-            Name = name;
-            Description = description;
-            Price = price;
-            Categories = categories;
-        }
+        this.Name = name;
+        this.Description = description;
+        this.Price = price;
+        this.Categories = categories;
+        this.Picture = picture;
     }
 
     protected Product()
