@@ -12,7 +12,6 @@ namespace Bestellsystem_Lieferdienst_Client.PL
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            label4.Text = "connecting...";
             Client.client.Dispose();
             Client.client = new(textBox2.Text, (int)numericUpDown1.Value);
             Client.client.ConnectToServer();
