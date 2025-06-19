@@ -1,7 +1,7 @@
 # Install:
 	./Dokumentation/deliveryservice.sql
 	The server and client have to be running to work properly.
-	To make the Signup process working, alter the User table and make the AddressID to be nullable
+	To use the employee or admin view change the usertype id accordingly
 
 # Known Issiues:
 	Server looses track of clients when running pc goes into sleep/hibernation mode. - Will not be fixed.
