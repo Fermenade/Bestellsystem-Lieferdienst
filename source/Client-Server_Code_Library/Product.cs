@@ -11,13 +11,13 @@ public class Product
     public string Description;
     public decimal Price;
     [IgnoreInsert]
-    public string[]? Categories;
+    public ProductCategory[]? Categories;
     public string? ImagePath;
 
     [IgnoreInsert]
     public byte[]? Picture;//cuz it's easier.
 
-    public Product(string name, string description, decimal price, string[]? categories, byte[] picture)
+    public Product(string name, string description, decimal price, ProductCategory[]? categories, byte[] picture)
     {
         if (name == "") throw new("Invalid name");
         this.Name = name;
@@ -39,7 +39,7 @@ public class Product
         ImagePath = imagepath;
     }
     [JsonConstructor]
-    public Product(long? productId, string name, string description, decimal price, string[] categories, byte[] picture)
+    public Product(long? productId, string name, string description, decimal price, ProductCategory[] categories, byte[] picture)
     {
         ProductId = productId;
         this.Name = name;
@@ -54,23 +54,24 @@ public class Product
         //This has to be empty
     }
 
-    public static Product CreateProduct(int id, string name, string description, string price, byte[] picture, string[] categories)
+    public static Product CreateProduct(int id, string name, string description, string price, byte[] picture, object[] categories)
     {
         if (!decimal.TryParse(price, out decimal Price))
         {
             throw new Exception("Price is not of type decimal");
         }
 
-        return new(id, name, description, Price, categories, picture);
+        
+        return new(id, name, description, Price, [], picture);
     }
-    public static Product CreateProduct(string name, string description, string price, byte[] picture, string[] categories)
+    public static Product CreateProduct(string name, string description, string price, byte[] picture, object[] categories)
     {
         if (!decimal.TryParse(price, out decimal Price))
         {
             throw new Exception("Price is not of type decimal");
         }
-
-        return new(name, description, Price, categories, picture);
+        ProductCategory cate = (ProductCategory)categories[0];
+        return new(name, description, Price, [], picture);
     }
 
     public override string ToString()

@@ -35,7 +35,7 @@ public partial class ProductsView : FlowLayoutPanel
                 )
                 &&
                 (
-                    name.Categories.Contains(categoryFilter) ||
+                    name.Categories.All(i=>i.name==categoryFilter) ||
                     "Alle" == categoryFilter
                 )
             );

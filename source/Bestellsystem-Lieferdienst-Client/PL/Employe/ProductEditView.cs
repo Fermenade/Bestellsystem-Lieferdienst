@@ -29,13 +29,13 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
                 pictureBox1.Image = Image.FromFile("../../../Resources/fallbackIMG.png");
             }
 
-            foreach (string VARIABLE in Product.Categories ?? [])
+            foreach (ProductCategory VARIABLE in Product.Categories ?? [])
             {
                 listBox1.Items.Add(VARIABLE);
             }
             foreach (ProductCategory VARIABLE in await ServerData.GetAllProductCategories() ?? [])
             {
-                listBox2.Items.Add(VARIABLE.name);
+                listBox2.Items.Add(VARIABLE);
             }
         }
         private void button1_Click(object sender, EventArgs e)

@@ -63,11 +63,11 @@ public class Commands
                 foreach (var VARIABLE in products)
                 {
                     command = new SqlCommand().SelectColumnsByJoin(tableProductGroup, cTableProduct_ProductGroup,
-                        ["name"], [("productID", "productgroup.productgroupID")], [("productID", VARIABLE.ProductId)]);
-                    List<string> categories = new();
-                    foreach (var VARIABLE1 in _dbHelper.GetDataFromDatabase(command))
+                        ["name", "productgroupID"], [("productID", "productgroup.productgroupID")], [("productID", VARIABLE.ProductId)]);
+                    List<ProductCategory> categories = new();
+                    foreach (var VARIABLE1 in _dbHelper.GetDataFromDatabase<ProductCategory>(command))
                     {
-                        categories.Add(VARIABLE1[0].ToString());
+                        categories.Add(VARIABLE1);
                     }
                     VARIABLE.Categories = categories.ToArray();
 
@@ -215,10 +215,10 @@ public class Commands
                     command = new SqlCommand().SelectAll(tableProductGroup);
                     ProductCategory[] categories = _dbHelper.GetDataFromDatabase<ProductCategory>(command);
 
-                    foreach (string categorie in i.Categories)
+                    foreach (ProductCategory categorie in i.Categories)
                     {
                         // Check if there is a match in the categories array
-                        var matchingItem = categories.FirstOrDefault(VARIABLE => VARIABLE.name == categorie);
+                        var matchingItem = categories.FirstOrDefault(VARIABLE => VARIABLE.name == categorie.name);
 
                         if (matchingItem != null)
                         {
@@ -230,7 +230,7 @@ public class Commands
                         else
                         {
                             // Handle the case where categories does not contain the name
-                            command = new SqlCommand().Insert(tableProductGroup, new ProductCategory(categorie));
+                            command = new SqlCommand().Insert(tableProductGroup, categorie);
                             long groupid = _dbHelper.InsertItemIntoTable(command);
 
                             Product_Productgroup n = new Product_Productgroup(productid, groupid);
