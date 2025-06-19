@@ -38,7 +38,7 @@ public class Commands
             {
 
                 var s = StringFormating.Explode(args);
-                string endresult ="";
+                string endresult = "";
                 foreach (string command in s)
                 {
                     BaseCommand? baseCommand = (BaseCommand?)CommandManager.GetBaseCommand(command);
@@ -172,8 +172,9 @@ public class Commands
                 {
                     File.Delete(VARIABLE);
                 }
-                SqlCommand command = new SqlCommand().DeleteAllFromTable(tableOrder).
-                _dbHelper.InsertItemIntoTable()
+
+                SqlCommand command = new SqlCommand().DeleteAllFromTable(tableOrder);
+                _dbHelper.InsertItemIntoTable(command);
                 return "Cleared Assets Folder ad";
             }
         }

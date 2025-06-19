@@ -55,7 +55,7 @@ public class UserCommand
         {
             throw new Exception("Commands max take 1 Argument");
         }
-        string arg = input.Length == 0? "": StringFormating.RemoveQuotes(input[0]);
+        string arg = input.Length == 0 ? "" : StringFormating.RemoveQuotes(input[0]);
 
         ICommand subCommand = Command.GetSubCommand(arg) ?? throw new Exception($"{Command.Name} doesnt have an argument called '{arg}'");
         CArgument cArgument;
