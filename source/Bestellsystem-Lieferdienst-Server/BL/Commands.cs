@@ -76,7 +76,7 @@ public class Commands
             public object Execute(string? args)
             {
                 StringBuilder help = new StringBuilder();
-                help.AppendLine("'!command' -argument [parameter]");
+                help.AppendLine("'!command' argument [parameter]");
                 help.AppendLine("Available commands:");
                 if (args != null)
                 {
@@ -123,7 +123,7 @@ public class Commands
                 help.AppendLine($"{command.Name}");
                 foreach (ICommand VARIABLE in command.SubCommands)
                 {
-                    help.AppendLine($"\t{VARIABLE.Name} : {VARIABLE.MinPrivilegeRequired}, takes Params: {VARIABLE.TakesParameter}");
+                    help.AppendLine($"\t{VARIABLE.Name} min priv lvl: {VARIABLE.MinPrivilegeRequired}, takes Params: {VARIABLE.TakesParameter}");
                 }
             }
         }
@@ -144,7 +144,13 @@ public class Commands
 
             public object Execute(string? args)
             {
-                throw new NotImplementedException();
+                //Dont have time for the rest.
+                if (args.Split(" ")[0] != "SELECT")
+                {
+                    _dbHelper.ExecutePlainNonQuery(args);
+                }
+
+                return "Succsessful";
             }
         }
     }
@@ -155,7 +161,7 @@ public class Commands
 
         public class ExecSqlCommand : ICommand
         {
-            public string Name => "clear assets";
+            public string Name => "clearall";
             public bool? TakesParameter => false;
             public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.Admin;
 
@@ -166,8 +172,9 @@ public class Commands
                 {
                     File.Delete(VARIABLE);
                 }
-
-                return "Cleared Assets Folder";
+                SqlCommand command = new SqlCommand().DeleteAllFromTable(tableOrder).
+                _dbHelper.InsertItemIntoTable()
+                return "Cleared Assets Folder ad";
             }
         }
     }
