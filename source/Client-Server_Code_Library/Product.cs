@@ -6,7 +6,7 @@ namespace Client_Server_Code_Library;
 public class Product
 {
     [DatabaseAutoIncrementID]
-    public int? ProductId;
+    public long? ProductId;
     public string Name;
     public string Description;
     public decimal Price;
