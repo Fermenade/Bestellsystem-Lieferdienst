@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Client_Server_Code_Library;
 using MySql.Data.MySqlClient;
 using System.Reflection;

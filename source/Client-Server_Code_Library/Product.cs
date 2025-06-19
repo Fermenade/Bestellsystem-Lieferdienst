@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Diagnostics.Metrics;
+using System.Diagnostics;
 
 namespace Client_Server_Code_Library;
 
@@ -61,8 +61,8 @@ public class Product
             throw new Exception("Price is not of type decimal");
         }
 
-        
-        return new(id, name, description, Price, [], picture);
+
+        return new(id, name, description, Price, categories.Cast<ProductCategory>().ToArray(), picture);
     }
     public static Product CreateProduct(string name, string description, string price, byte[] picture, object[] categories)
     {
@@ -70,8 +70,14 @@ public class Product
         {
             throw new Exception("Price is not of type decimal");
         }
-        ProductCategory cate = (ProductCategory)categories[0];
-        return new(name, description, Price, [], picture);
+
+        if (picture.Length >= 10_000_000)
+        {
+            Debug.WriteLine("Picture to big, trying to downscale image");
+
+        }
+
+        return new(name, description, Price, categories.Cast<ProductCategory>().ToArray(), picture);
     }
 
     public override string ToString()

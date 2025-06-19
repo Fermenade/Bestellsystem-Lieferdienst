@@ -18,20 +18,20 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
                 .Where(p => !Attribute.IsDefined(p, typeof(DatabaseAutoIncrementIDAttribute)));
 
             // Get properties of the type T that are not marked with IgnoreInsertAttribute
-             fieldInfos = fieldInfos
-                .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
+            fieldInfos = fieldInfos
+               .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
 
-             List<string> columnNames = fieldInfos.Select(p => p.Name).ToList();
-             columnNames.AddRange();
+            List<string> columnNames = fieldInfos.Select(p => p.Name).ToList();
+            columnNames.AddRange();
 
             IEnumerable<PropertyInfo> propertyInfos = typeof(T).GetProperties()
                  .Where(p => !Attribute.IsDefined(p, typeof(DatabaseAutoIncrementIDAttribute)));
 
-             // Get properties of the type T that are not marked with IgnoreInsertAttribute
-             propertyInfos = propertyInfos
-                 .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
+            // Get properties of the type T that are not marked with IgnoreInsertAttribute
+            propertyInfos = propertyInfos
+                .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
 
-             columnNames.AddRange(propertyInfos.Select(p => p.Name));
+            columnNames.AddRange(propertyInfos.Select(p => p.Name));
 
             // Get the column names from the properties
 

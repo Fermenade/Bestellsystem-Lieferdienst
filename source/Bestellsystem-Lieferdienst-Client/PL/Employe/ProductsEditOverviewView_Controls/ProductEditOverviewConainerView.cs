@@ -11,6 +11,8 @@ namespace Bestellsystem_Lieferdienst.PL.Employe.ProductsEditOverviewView_Control
         public ProductEditOverviewConainerView()
         {
             InitializeComponent();
+            Dock = DockStyle.Bottom;
+            Height = 900;
         }
 
         private void InitializeComponent()
@@ -22,7 +24,7 @@ namespace Bestellsystem_Lieferdienst.PL.Employe.ProductsEditOverviewView_Control
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
-                BackColor = Color.White
+                BackColor = Color.White,
             };
             // Header Labels
             Label lblTitle = new Label { Text = "Name", Left = 10, Width = 120, Top = 10, ForeColor = Color.Black };

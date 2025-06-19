@@ -26,7 +26,7 @@ public class ClientStream : TcpClient
 
         if (_clientReceiveHandlingStarted) throw new Exception("Client receive handling already started.");
         _clientReceiveHandlingStarted = true;
-        byte[] responseBuffer = new byte[10000]; //TODO: check if this is long enough.
+        byte[] responseBuffer = new byte[ServerClientConfig.streamsize];
         Task.Run(() =>
         {
             while (true)

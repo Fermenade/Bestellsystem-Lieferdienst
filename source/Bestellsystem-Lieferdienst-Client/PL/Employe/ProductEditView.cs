@@ -54,7 +54,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
                     product =
                         Product.CreateProduct(tbx_Name.Text, tbx_Description.Text, tbx_Price.Text,
                             Product.Picture,
-                            listBox1.Items.Cast<string>().ToArray());
+                            listBox1.Items.Cast<ProductCategory>().ToArray());
                 }
                 catch (Exception exception)
                 {
@@ -108,14 +108,31 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
 
         private void button4_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Add(listBox2.SelectedItems);
+            AddCategoriesToProduct(listBox2.SelectedItems.Cast<ProductCategory>());
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if(listBox1.Items.Contains(tbx_NewCategorie.Text))return;
-            listBox1.Items.Add(tbx_NewCategorie.Text);
+            AddCategoryToProduct(new ProductCategory(tbx_NewCategorie.Text));
+
             tbx_NewCategorie.Text = "";
+        }
+        private void AddCategoriesToProduct(IEnumerable<ProductCategory> categories)
+        {
+            IEnumerable<ProductCategory> listboxItems = listBox1.Items.Cast<ProductCategory>();
+            foreach (var VARIABLE in categories)
+            {
+                if (listboxItems.Any(i => i.name == VARIABLE.name)) return;
+
+                listBox1.Items.Add(VARIABLE);
+            }
+        }
+        private void AddCategoryToProduct(ProductCategory category)
+        {
+            IEnumerable<ProductCategory> listboxItems = listBox1.Items.Cast<ProductCategory>();
+            if (listboxItems.Any(i => i.name == category.name)) return;
+
+            listBox1.Items.Add(category);
         }
     }
 }

@@ -1,7 +1,6 @@
 using Bestellsystem_Lieferdienst_Server.BL.Datatypes;
 using Bestellsystem_Lieferdienst_Server.DAL;
 using Client_Server_Code_Library;
-using System.Xml.Linq;
 
 // ReSharper disable UnusedType.Global
 
@@ -169,7 +168,7 @@ public class Commands
 
                     command = new SqlCommand().SelectById(tableUser, id);
                     User user = _dbHelper.GetDataFromID<User>(command)!;
-                    
+
                     if (user.Address_addressID != null)
                     {
                         command = new SqlCommand().SelectById(tableAddress, (int)user.Address_addressID);
@@ -209,8 +208,8 @@ public class Commands
 
                     SqlCommand command = new SqlCommand().Insert(tableProduct, i);
                     long productid = _dbHelper.InsertItemIntoTable(command);
-                    File.WriteAllBytes(filesFilepath,i.Picture);
-                    
+                    File.WriteAllBytes(filesFilepath, i.Picture);
+
                     //this gets more data from the database, but this is faster.
                     command = new SqlCommand().SelectAll(tableProductGroup);
                     ProductCategory[] categories = _dbHelper.GetDataFromDatabase<ProductCategory>(command);
