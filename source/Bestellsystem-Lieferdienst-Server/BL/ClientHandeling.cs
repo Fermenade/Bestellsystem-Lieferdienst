@@ -29,6 +29,7 @@ public class Client(Socket client) : ClientStream(client)
         ClientDisconnected -= ProcessClientDisconnected;
         // Remove the client from the list and close the connection
         Server.clients.Remove(this);
+        handleClient = false;
         Console.WriteLine("Client disconnected: " + client.RemoteEndPoint);
         Close();
     }

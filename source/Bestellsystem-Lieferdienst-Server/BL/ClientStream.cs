@@ -6,7 +6,7 @@ namespace Bestellsystem_Lieferdienst_Server.BL;
 
 public class ClientStream(Socket client) : NetworkStream(client, true)
 {
-
+    public bool handleClient = true;
     private bool _clientReceiveHandlingStarted = false;
     /// <summary>
     /// Starts the server client receiver.
@@ -20,7 +20,7 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
         byte[] responseBuffer = new byte[ServerClientConfig.streamsize];
         Task.Run(() =>
         {
-            while (true)
+            while (handleClient)
             {
                 try
                 {
