@@ -24,7 +24,7 @@ public partial class ProductsView : FlowLayoutPanel
             .Where(name =>
                 (
                     name.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase) ||
-                    name.Description.Contains(nameFilter, StringComparison.OrdinalIgnoreCase)
+                    name.ProductDescription.Contains(nameFilter, StringComparison.OrdinalIgnoreCase)
                 )
                 &&
                 (

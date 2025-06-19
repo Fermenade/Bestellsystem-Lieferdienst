@@ -11,7 +11,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe.ProductsEditOverviewView_
             this.Product = product;
 
             lb_Name.Text = product.Name;
-            lb_description.Text = product.Description;
+            lb_description.Text = product.ProductDescription;
             lb_price.Text = $"{product.Price:C}";
         }
     }

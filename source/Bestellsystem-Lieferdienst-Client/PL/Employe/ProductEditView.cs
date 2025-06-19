@@ -16,7 +16,7 @@ namespace Bestellsystem_Lieferdienst_Client.PL.Employe
         async void InitializeManualComponent()
         {
             tbx_Name.Text = Product.Name;
-            tbx_Description.Text = Product.Description;
+            tbx_Description.Text = Product.ProductDescription;
             tbx_Price.Text = Product.Price.ToString();
             if (Product.Picture != null)
             {
