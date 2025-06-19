@@ -1,5 +1,7 @@
+using Bestellsystem_Lieferdienst_Server.BL.Datatypes;
 using Bestellsystem_Lieferdienst_Server.DAL;
 using Client_Server_Code_Library;
+using System.Xml.Linq;
 
 // ReSharper disable UnusedType.Global
 
@@ -206,10 +208,39 @@ public class Commands
                     i.Imagepath = filesFilepath;
 
                     SqlCommand command = new SqlCommand().Insert(tableProduct, i);
-                    _dbHelper.InsertItemIntoTable(command);
-
+                    long productid = _dbHelper.InsertItemIntoTable(command);
                     File.WriteAllBytes(filesFilepath,i.Picture);
-                    return 1;
+                    
+                    //this gets more data from the database, but this is faster.
+                    command = new SqlCommand().SelectAll(tableProductGroup);
+                    ProductCategory[] categories = _dbHelper.GetDataFromDatabase<ProductCategory>(command);
+                    
+                    foreach (string categorie in i.Categories)
+                    {
+                        foreach (var VARIABLE in categories)
+                        {
+                            if (VARIABLE.name == categorie)
+                            {
+                                // Handle the case where array2 contains the name
+                                Product_Productgroup n = new Product_Productgroup(productid, VARIABLE.id);
+                                command = new SqlCommand().Insert(cTableProduct_ProductGroup,n);
+                                _dbHelper.InsertItemIntoTable(command);
+                            }
+                            else
+                            {
+                                // Handle the case where array2 contains´not the name
+
+                                command = new SqlCommand().Insert(tableProductGroup, categorie);
+                                long groupid = _dbHelper.InsertItemIntoTable(command);
+
+                                Product_Productgroup n = new Product_Productgroup(productid, groupid);
+                                command = new SqlCommand().Insert(cTableProduct_ProductGroup, n);
+                                _dbHelper.InsertItemIntoTable(command);
+                            }
+                        }
+                    }
+
+                    return true;
                 }
             }
 
