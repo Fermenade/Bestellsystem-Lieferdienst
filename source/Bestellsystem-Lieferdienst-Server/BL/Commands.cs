@@ -214,31 +214,31 @@ public class Commands
                     //this gets more data from the database, but this is faster.
                     command = new SqlCommand().SelectAll(tableProductGroup);
                     ProductCategory[] categories = _dbHelper.GetDataFromDatabase<ProductCategory>(command);
-                    
+
                     foreach (string categorie in i.Categories)
                     {
-                        foreach (var VARIABLE in categories)
+                        // Check if there is a match in the categories array
+                        var matchingItem = categories.FirstOrDefault(VARIABLE => VARIABLE.name == categorie);
+
+                        if (matchingItem != null)
                         {
-                            if (VARIABLE.name == categorie)
-                            {
-                                // Handle the case where array2 contains the name
-                                Product_Productgroup n = new Product_Productgroup(productid, VARIABLE.id);
-                                command = new SqlCommand().Insert(cTableProduct_ProductGroup,n);
-                                _dbHelper.InsertItemIntoTable(command);
-                            }
-                            else
-                            {
-                                // Handle the case where array2 contains´not the name
+                            // Handle the case where categories contains the name
+                            Product_Productgroup n = new Product_Productgroup(productid, matchingItem.id);
+                            command = new SqlCommand().Insert(cTableProduct_ProductGroup, n);
+                            _dbHelper.InsertItemIntoTable(command);
+                        }
+                        else
+                        {
+                            // Handle the case where categories does not contain the name
+                            command = new SqlCommand().Insert(tableProductGroup, new ProductCategory(categorie));
+                            long groupid = _dbHelper.InsertItemIntoTable(command);
 
-                                command = new SqlCommand().Insert(tableProductGroup, categorie);
-                                long groupid = _dbHelper.InsertItemIntoTable(command);
-
-                                Product_Productgroup n = new Product_Productgroup(productid, groupid);
-                                command = new SqlCommand().Insert(cTableProduct_ProductGroup, n);
-                                _dbHelper.InsertItemIntoTable(command);
-                            }
+                            Product_Productgroup n = new Product_Productgroup(productid, groupid);
+                            command = new SqlCommand().Insert(cTableProduct_ProductGroup, n);
+                            _dbHelper.InsertItemIntoTable(command);
                         }
                     }
+
 
                     return true;
                 }
