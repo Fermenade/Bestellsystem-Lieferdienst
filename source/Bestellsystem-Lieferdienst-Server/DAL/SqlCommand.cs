@@ -14,24 +14,24 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
         //Generated 1/2
         public SqlCommand Insert<T>(string table, T data)
         {
-            IEnumerable<FieldInfo> properties = typeof(T).GetFields()
+            IEnumerable<FieldInfo> fieldInfos = typeof(T).GetFields()
                 .Where(p => !Attribute.IsDefined(p, typeof(DatabaseAutoIncrementIDAttribute)));
 
             // Get properties of the type T that are not marked with IgnoreInsertAttribute
-             properties = properties
+             fieldInfos = fieldInfos
                 .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
 
-             List<string> columnNames = properties.Select(p => p.Name).ToList();
+             List<string> columnNames = fieldInfos.Select(p => p.Name).ToList();
              columnNames.AddRange();
 
-            IEnumerable<PropertyInfo> roperties = typeof(T).GetProperties()
+            IEnumerable<PropertyInfo> propertyInfos = typeof(T).GetProperties()
                  .Where(p => !Attribute.IsDefined(p, typeof(DatabaseAutoIncrementIDAttribute)));
 
              // Get properties of the type T that are not marked with IgnoreInsertAttribute
-             roperties = roperties
+             propertyInfos = propertyInfos
                  .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
 
-             columnNames.AddRange(roperties.Select(p => p.Name));
+             columnNames.AddRange(propertyInfos.Select(p => p.Name));
 
             // Get the column names from the properties
 
@@ -40,7 +40,7 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
             SqlStatement = BuildInsertStatement(table, columnNames);
 
             // Convert properties to parameters
-            Parameters = ConvertToParameters(properties, data);
+            Parameters = ConvertToParameters(fieldInfos, data);
 
 
 
