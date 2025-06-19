@@ -11,42 +11,37 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
 
 
-        //Generated 1/2
         public SqlCommand Insert<T>(string table, T data)
         {
-            IEnumerable<FieldInfo> fieldInfos = typeof(T).GetFields()
-                .Where(p => !Attribute.IsDefined(p, typeof(DatabaseAutoIncrementIDAttribute)));
+            IEnumerable<MemberInfo> members = typeof(T).GetMembers()
+                .Where(m => m.MemberType == MemberTypes.Field || m.MemberType == MemberTypes.Property)
+                .Where(m => !Attribute.IsDefined(m, typeof(DatabaseAutoIncrementIDAttribute))) // Exclude auto-increment fields
+                .Where(m => !Attribute.IsDefined(m, typeof(IgnoreInsertAttribute))); // Exclude ignored fields
 
-            // Get properties of the type T that are not marked with IgnoreInsertAttribute
-            fieldInfos = fieldInfos
-               .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
+            // Get the column names
+            List<string> columnNames = members.Select(m => m.Name).ToList();
 
-            List<string> columnNames = fieldInfos.Select(p => p.Name).ToList();
-            columnNames.AddRange();
-
-            IEnumerable<PropertyInfo> propertyInfos = typeof(T).GetProperties()
-                 .Where(p => !Attribute.IsDefined(p, typeof(DatabaseAutoIncrementIDAttribute)));
-
-            // Get properties of the type T that are not marked with IgnoreInsertAttribute
-            propertyInfos = propertyInfos
-                .Where(p => !Attribute.IsDefined(p, typeof(IgnoreInsertAttribute)));
-
-            columnNames.AddRange(propertyInfos.Select(p => p.Name));
-
-            // Get the column names from the properties
-
-
-            // Build the insert statement with OUTPUT clause
             SqlStatement = BuildInsertStatement(table, columnNames);
 
-            // Convert properties to parameters
-            Parameters = ConvertToParameters(fieldInfos, data);
-
-
+            Parameters = ConvertToParameters(members, data);
 
             return this;
         }
 
+        private static List<(string, object)> ConvertToParameters(IEnumerable<MemberInfo> members, object data)
+        {
+            return members.Select(m =>
+            {
+                // reflection :gud:
+                object value = m switch
+                {
+                    FieldInfo field => field.GetValue(data),
+                    PropertyInfo property => property.GetValue(data),
+                    _ => null
+                };
+                return ($"@{m.Name}", value ?? DBNull.Value);
+            }).ToList();
+        }
         public SqlCommand Update<T>(string table, T data)
         {
             var properties = typeof(T).GetFields();
@@ -198,9 +193,6 @@ namespace Bestellsystem_Lieferdienst_Server.DAL
 
         private static List<(string, object)> CreateIdParameter(string table, long id) =>
             [($"@{table}Id", id)];
-
-        private static List<(string, object)> ConvertToParameters(IEnumerable<FieldInfo> properties, object data) =>
-            properties.Select(p => ($"@{p.Name}", p.GetValue(data) ?? DBNull.Value)).ToList();
 
         //Generated 1/2
         private static string BuildInsertStatement(string table, IEnumerable<string> columns)
