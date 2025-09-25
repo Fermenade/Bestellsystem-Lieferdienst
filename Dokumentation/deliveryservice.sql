@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2025 at 09:26 PM
+-- Generation Time: Jun 19, 2025 at 07:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,18 +35,7 @@ CREATE TABLE `address` (
   `street` varchar(45) NOT NULL,
   `housenr` varchar(10) NOT NULL,
   `apartmentnr` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `address`
---
-
-INSERT INTO `address` (`addressID`, `country`, `postzip`, `city`, `street`, `housenr`, `apartmentnr`) VALUES
-(1, 'Deutscheland', 187, 'Prag', 'Street', '69', NULL),
-(2, 'Deutschesland', 24, 'Westerland', 'Straße', '34', NULL),
-(3, 'Iran', 8679, 'Uspekistan', 'Hallallstraße', '3', NULL),
-(4, 'Pingin Insel', 123, 'Es ist eine Insel', 'mit pinguinen', '-', NULL),
-(5, 'Australien', 69806, 'Hallow', 'Strada', '678', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -56,21 +45,11 @@ INSERT INTO `address` (`addressID`, `country`, `postzip`, `city`, `street`, `hou
 
 CREATE TABLE `order` (
   `orderID` int(11) NOT NULL,
-  `userID` int(11) NOT NULL,
-  `addressID` int(11) NOT NULL,
-  `handovertime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `order`
---
-
-INSERT INTO `order` (`orderID`, `userID`, `addressID`, `handovertime`) VALUES
-(1, 10, 2, '2025-04-24 21:09:40'),
-(2, 9, 1, '2025-04-24 21:09:40'),
-(3, 7, 2, '2025-04-24 21:20:14'),
-(4, 6, 1, '2025-04-24 21:20:15'),
-(5, 8, 1, '2025-04-24 21:20:15');
+  `User_userID` int(11) DEFAULT NULL,
+  `state` int(11) NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `address` varchar(1000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -79,21 +58,10 @@ INSERT INTO `order` (`orderID`, `userID`, `addressID`, `handovertime`) VALUES
 --
 
 CREATE TABLE `order_has_product` (
-  `productD` int(11) NOT NULL,
-  `orderID` int(11) NOT NULL,
-  `amount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `order_has_product`
---
-
-INSERT INTO `order_has_product` (`productD`, `orderID`, `amount`) VALUES
-(1, 1, 34),
-(1, 2, 3),
-(2, 2, 1),
-(3, 1, 34),
-(3, 2, 22);
+  `Order_orderID` int(11) NOT NULL,
+  `product_productD` int(11) NOT NULL,
+  `amount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -104,21 +72,10 @@ INSERT INTO `order_has_product` (`productD`, `orderID`, `amount`) VALUES
 CREATE TABLE `product` (
   `productID` int(11) NOT NULL,
   `name` varchar(80) NOT NULL,
-  `productdescription` varchar(255) DEFAULT NULL,
-  `price` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `product`
---
-
-INSERT INTO `product` (`productID`, `name`, `productdescription`, `price`) VALUES
-(1, 'Döner Pommes', 'Döner mit Pommes', 5),
-(2, 'Kebab', NULL, 4),
-(3, 'Falafel', 'Ich glaub ich hab das falsch geschrieben (:', 8.45),
-(4, 'Eis', 'Ais', 1),
-(5, 'Marmeladendöner', 'Von manchen banausen auch Krapfen oder Berliener genannt', 12),
-(6, 'Ei', 'Ei', 0);
+  `description` text DEFAULT NULL,
+  `price` decimal(10,0) NOT NULL,
+  `imagepath` varchar(400) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -129,16 +86,14 @@ INSERT INTO `product` (`productID`, `name`, `productdescription`, `price`) VALUE
 CREATE TABLE `productgroup` (
   `productgroupID` int(11) NOT NULL,
   `name` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `productgroup`
 --
 
 INSERT INTO `productgroup` (`productgroupID`, `name`) VALUES
-(0, 'Appetizers'),
-(1, 'Main meals'),
-(2, 'Replenishments');
+(1, 'Brot');
 
 -- --------------------------------------------------------
 
@@ -149,16 +104,7 @@ INSERT INTO `productgroup` (`productgroupID`, `name`) VALUES
 CREATE TABLE `product_has_productgroup` (
   `productID` int(11) NOT NULL,
   `productgroupID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `product_has_productgroup`
---
-
-INSERT INTO `product_has_productgroup` (`productID`, `productgroupID`) VALUES
-(1, 0),
-(2, 1),
-(3, 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -169,22 +115,18 @@ INSERT INTO `product_has_productgroup` (`productID`, `productgroupID`) VALUES
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
   `usertypeID` int(11) NOT NULL,
-  `firstname` varchar(80) NOT NULL,
-  `lastname` varchar(80) NOT NULL,
-  `e-mail` varchar(80) NOT NULL,
-  `password` varchar(80) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `email` varchar(80) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `address_addressID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userID`, `usertypeID`, `firstname`, `lastname`, `e-mail`, `password`) VALUES
-(6, 2, 'Max', 'Mustermann', 'max@muster.com', '1234'),
-(7, 1, 'Jonny', 'Sinz', 'hereisjonny@email.com', 'password'),
-(8, 1, 'Darth', 'Wader', 'deinVaddern@imper.ium', '69420'),
-(9, 2, 'Alle', 'Meine', 'entchen@schwimmen.auf', 'dem See'),
-(10, 3, 'Bannana', 'Bannana', 'Baba@nana.aaa', 'gugu');
+INSERT INTO `user` (`userID`, `usertypeID`, `email`, `password`, `address_addressID`) VALUES
+(34, 2, 'm', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', NULL),
+(48, 3, 'a', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', NULL);
 
 -- --------------------------------------------------------
 
@@ -195,38 +137,16 @@ INSERT INTO `user` (`userID`, `usertypeID`, `firstname`, `lastname`, `e-mail`, `
 CREATE TABLE `usertype` (
   `usertypeID` int(11) NOT NULL,
   `name` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `usertype`
 --
 
 INSERT INTO `usertype` (`usertypeID`, `name`) VALUES
-(1, 'Consumer'),
+(1, 'Customer'),
 (2, 'Employee'),
 (3, 'Admin');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_has_address`
---
-
-CREATE TABLE `user_has_address` (
-  `userID` int(11) NOT NULL,
-  `addressID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `user_has_address`
---
-
-INSERT INTO `user_has_address` (`userID`, `addressID`) VALUES
-(6, 4),
-(7, 3),
-(8, 2),
-(9, 5),
-(10, 1);
 
 --
 -- Indexes for dumped tables
@@ -236,24 +156,24 @@ INSERT INTO `user_has_address` (`userID`, `addressID`) VALUES
 -- Indexes for table `address`
 --
 ALTER TABLE `address`
-  ADD PRIMARY KEY (`addressID`);
+  ADD PRIMARY KEY (`addressID`),
+  ADD UNIQUE KEY `addressID_UNIQUE` (`addressID`);
 
 --
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`orderID`,`userID`,`addressID`),
-  ADD UNIQUE KEY `bestellungID_UNIQUE` (`orderID`),
-  ADD UNIQUE KEY `user_userID_UNIQUE` (`userID`),
-  ADD KEY `fk_Order_Address1_idx` (`addressID`);
+  ADD PRIMARY KEY (`orderID`),
+  ADD UNIQUE KEY `orderID_UNIQUE` (`orderID`),
+  ADD KEY `fk_Order_User1_idx` (`User_userID`);
 
 --
 -- Indexes for table `order_has_product`
 --
 ALTER TABLE `order_has_product`
-  ADD PRIMARY KEY (`productD`,`orderID`),
-  ADD KEY `fk_Produkt_has_Bestellung_Bestellung1_idx` (`orderID`),
-  ADD KEY `fk_Produkt_has_Bestellung_Produkt1_idx` (`productD`);
+  ADD PRIMARY KEY (`Order_orderID`,`product_productD`),
+  ADD KEY `fk_Produkt_has_Bestellung_Produkt1_idx` (`product_productD`),
+  ADD KEY `fk_Order_has_Product_Order1_idx` (`Order_orderID`);
 
 --
 -- Indexes for table `product`
@@ -266,7 +186,8 @@ ALTER TABLE `product`
 -- Indexes for table `productgroup`
 --
 ALTER TABLE `productgroup`
-  ADD PRIMARY KEY (`productgroupID`);
+  ADD PRIMARY KEY (`productgroupID`),
+  ADD UNIQUE KEY `productgroupID_UNIQUE` (`productgroupID`);
 
 --
 -- Indexes for table `product_has_productgroup`
@@ -282,7 +203,9 @@ ALTER TABLE `product_has_productgroup`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`,`usertypeID`),
   ADD UNIQUE KEY `UserID_UNIQUE` (`userID`),
-  ADD KEY `fk_user_user_type1_idx` (`usertypeID`);
+  ADD UNIQUE KEY `email_UNIQUE` (`email`),
+  ADD KEY `fk_user_user_type1_idx` (`usertypeID`),
+  ADD KEY `fk_User_Address1_idx` (`address_addressID`);
 
 --
 -- Indexes for table `usertype`
@@ -292,14 +215,6 @@ ALTER TABLE `usertype`
   ADD UNIQUE KEY `usertypeID_UNIQUE` (`usertypeID`);
 
 --
--- Indexes for table `user_has_address`
---
-ALTER TABLE `user_has_address`
-  ADD PRIMARY KEY (`userID`,`addressID`),
-  ADD KEY `fk_Benutzer_has_Adresse_Adresse1_idx` (`addressID`),
-  ADD KEY `fk_Benutzer_has_Adresse_Benutzer1_idx` (`userID`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -307,25 +222,31 @@ ALTER TABLE `user_has_address`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `productgroup`
+--
+ALTER TABLE `productgroup`
+  MODIFY `productgroupID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `usertype`
@@ -341,15 +262,14 @@ ALTER TABLE `usertype`
 -- Constraints for table `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `fk_Bestellung_user1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Order_Address1` FOREIGN KEY (`addressID`) REFERENCES `address` (`addressID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Order_User1` FOREIGN KEY (`User_userID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `order_has_product`
 --
 ALTER TABLE `order_has_product`
-  ADD CONSTRAINT `fk_Produkt_has_Bestellung_Bestellung1` FOREIGN KEY (`orderID`) REFERENCES `order` (`orderID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Produkt_has_Bestellung_Produkt1` FOREIGN KEY (`productD`) REFERENCES `product` (`productID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Order_has_Product_Order1` FOREIGN KEY (`Order_orderID`) REFERENCES `order` (`orderID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Produkt_has_Bestellung_Produkt1` FOREIGN KEY (`product_productD`) REFERENCES `product` (`productID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `product_has_productgroup`
@@ -362,14 +282,8 @@ ALTER TABLE `product_has_productgroup`
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
+  ADD CONSTRAINT `fk_User_Address1` FOREIGN KEY (`address_addressID`) REFERENCES `address` (`addressID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_user_user_type1` FOREIGN KEY (`usertypeID`) REFERENCES `usertype` (`usertypeID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `user_has_address`
---
-ALTER TABLE `user_has_address`
-  ADD CONSTRAINT `fk_Benutzer_has_Adresse_Adresse1` FOREIGN KEY (`addressID`) REFERENCES `address` (`addressID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Benutzer_has_Adresse_Benutzer1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

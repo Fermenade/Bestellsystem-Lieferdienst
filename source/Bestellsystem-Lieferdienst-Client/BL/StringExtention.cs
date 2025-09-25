@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Bestellsystem_Lieferdienst.BL
+namespace Bestellsystem_Lieferdienst_Client.BL
 {
     public static class StringExtensions
     {

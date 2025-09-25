@@ -6,7 +6,7 @@ namespace Bestellsystem_Lieferdienst_Server.BL;
 
 public class ClientStream(Socket client) : NetworkStream(client, true)
 {
-
+    public bool handleClient = true;
     private bool _clientReceiveHandlingStarted = false;
     /// <summary>
     /// Starts the server client receiver.
@@ -17,10 +17,10 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
 
         if (_clientReceiveHandlingStarted) throw new Exception("Client receive handling already started.");
         _clientReceiveHandlingStarted = true;
-        byte[] responseBuffer = new byte[10000]; //TODO: check if this is long enough.
+        byte[] responseBuffer = new byte[ServerClientConfig.streamsize];
         Task.Run(() =>
         {
-            while (true)
+            while (handleClient)
             {
                 try
                 {
@@ -38,7 +38,7 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
                 catch (IOException ex)
                 {
                     Console.WriteLine($"Error when receiving message: {ex.Message}");
-                    
+
                     Console.WriteLine("Client forcibly close the connection.\nExiting..");
                     ClientDisconnected.Invoke();
                     break;
@@ -46,6 +46,7 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
             }
         });
     }
+
 
     async void SendBinaryAsync(byte[] bytes)
     {
@@ -62,8 +63,31 @@ public class ClientStream(Socket client) : NetworkStream(client, true)
     public async Task<T> SendAndReturn<T>(string command)
     {
         PendingPackage newPackage = new PendingPackage(command);
-        string i = await newPackage.WaitForAnswer();//RequestRecieve
-        return JsonSerialize.Deserialize<T>(i);
+        Package package = await newPackage.WaitForAnswerAsync().ConfigureAwait(false);
+        if (package.ErrorMessage != null)
+        {
+            if (package.Data != null)
+            {
+                throw new Exception("Package error and package data was not null");
+            }
+        }
+        if (package.ErrorMessage != null)
+        {
+            throw new Exception(package.ErrorMessage);
+        }
+        if (package.ErrorMessage == null)
+        {
+            if (package.Data == null)
+            {
+                throw new Exception("Package error and package data was null");
+            }
+        }
+        return JsonSerialize.Deserialize<T>(package.Data);
+    }
+
+    protected void OnClientDisconnected()
+    {
+        ClientDisconnected.Invoke();
     }
 
     public event MessageDelegate MessageReceived;

@@ -1,11 +1,10 @@
-using Client_Server_Code_Library;
 using System.Reflection;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
 public static class CommandManager
 {
-    private static readonly List<ICommand> Commands = new();
+    public static readonly List<ICommand> Commands = new();
     static CommandManager()
     {
         RegisterAllCommandsAndSubcommands();
@@ -72,14 +71,14 @@ public interface ICommand
 {
     string Name { get; }
     bool? TakesParameter { get; }
-    Usertype MinPrivilegeRequired { get; }
-    object Execute(User? user, string? command);
+    PredefinedUserAccessLvl MinPrivilegeRequired { get; }
+    object Execute(string? command);
 }
 
 public abstract class BaseCommand : ICommand
 {
     public abstract string Name { get; }
-    public Usertype MinPrivilegeRequired => Usertype.User;
+    public PredefinedUserAccessLvl MinPrivilegeRequired => PredefinedUserAccessLvl.User;
     public bool? TakesParameter => null;//TODO: es kann sein dass wenn diese wert nicht false ist, dann macht es etwas falsches um Usage anzeige.
 
     //public abstract void Execute(string[] args);
@@ -103,7 +102,7 @@ public abstract class BaseCommand : ICommand
         }
         if ((int)userCommand.Command.MinPrivilegeRequired <= (userCommand.User?.UsertypeID ?? 0))
         {
-            return userCommand.Command.Execute(userCommand.User, userCommand.Argument);
+            return userCommand.Command.Execute(userCommand.Argument);
         }
         else
         {
@@ -112,7 +111,7 @@ public abstract class BaseCommand : ICommand
         //,   Console.WriteLine($"Executing {Name} with args: {string.Join(", ", args)}");
     }
 
-    public object Execute(User user, string command) //This has to be empty 
+    public object Execute(string command) //This has to be empty 
     {
         return null;
     }

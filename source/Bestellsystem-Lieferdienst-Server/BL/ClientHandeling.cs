@@ -1,6 +1,6 @@
-using System.Net.Sockets;
 using Client_Server_Code_Library;
-using Org.BouncyCastle.Tls.Crypto;
+using System.Diagnostics;
+using System.Net.Sockets;
 
 namespace Bestellsystem_Lieferdienst_Server.BL;
 
@@ -20,7 +20,7 @@ public class Client(Socket client) : ClientStream(client)
         catch (Exception ex)
         {
             Console.WriteLine("Error: " + ex.Message + "\n Exiting...");
-            ProcessClientDisconnected();
+            OnClientDisconnected();
         }
     }
     void ProcessClientDisconnected()
@@ -29,6 +29,7 @@ public class Client(Socket client) : ClientStream(client)
         ClientDisconnected -= ProcessClientDisconnected;
         // Remove the client from the list and close the connection
         Server.clients.Remove(this);
+        handleClient = false;
         Console.WriteLine("Client disconnected: " + client.RemoteEndPoint);
         Close();
     }
@@ -37,8 +38,17 @@ public class Client(Socket client) : ClientStream(client)
     void ProcessReceiveMessages(string message)
     {
         Console.WriteLine($"Received message '{message}' from '{client.RemoteEndPoint}'");
-
-        Package request = JsonSerialize.Deserialize<Package>(message);
+        Package request;
+        try
+        {
+            request = JsonSerialize.Deserialize<Package>(message);
+        }
+        catch (Newtonsoft.Json.JsonReaderException e)
+        {
+            Console.WriteLine("Recieved too big Datapackage wich should normally not occour - this is sussy.");
+            OnClientDisconnected();
+            return;
+        }
 
         if (!PendingPackage.isPendingPackage(request))
         {
@@ -57,13 +67,15 @@ public class Client(Socket client) : ClientStream(client)
                 {
                     if (e[0] == "GET")
                     {
-                        user = JsonSerialize.Deserialize<User>(request.Data);
+                        if (request.Data != "null")
+                            user = JsonSerialize.Deserialize<User>(request.Data);
                     }
                     else
                     {
-                        user = JsonSerialize.Deserialize<User>(e[3]);
+                        user = JsonSerialize.Deserialize<User>(e[2]);
                     }
                 }
+
             }
             catch (Exception ex)
             {
@@ -74,12 +86,19 @@ public class Client(Socket client) : ClientStream(client)
                         request.ErrorMessage = "Unknown Command";
                         break;
                     default:
-                        request.ErrorMessage = $"{ex}\n{ex.Message}";
+                        request.ErrorMessage = $"{ex}";
                         break;
                 }
             }
-
-            MessageSendAsync(request.ToString());
+            try
+            {
+                MessageSendAsync(request.ToString());
+            }
+            catch (IOException exception)
+            {
+                Debug.WriteLine("Connection to client was closed while processing a responce.");
+                OnClientDisconnected();
+            }
         }
     }
 }

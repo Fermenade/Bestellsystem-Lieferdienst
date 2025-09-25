@@ -1,0 +1,48 @@
+﻿using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+
+namespace Bestellsystem_Lieferdienst_Client.PL.ShopingCart_Controls
+{
+    partial class ShoppingCart
+    {
+        /// <summary> 
+        /// Erforderliche Designervariable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Verwendete Ressourcen bereinigen.
+        /// </summary>
+        /// <param name="disposing">True, wenn verwaltete Ressourcen gelöscht werden sollen; andernfalls False.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+                CartManager.CartItems.ListChanged -= RenderCartItems;
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Vom Komponenten-Designer generierter Code
+
+        /// <summary> 
+        /// Erforderliche Methode für die Designerunterstützung. 
+        /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            Height = 800;
+            BackColor = Color.LightGray;
+            SuspendLayout();
+            // cartPanel
+            AutoScroll = true;
+            FlowDirection = FlowDirection.TopDown; 
+            WrapContents = false; 
+            // ShoppingCart
+            ResumeLayout(false);
+        }
+
+        #endregion
+        private Panel headerPanel;
+    }
+}

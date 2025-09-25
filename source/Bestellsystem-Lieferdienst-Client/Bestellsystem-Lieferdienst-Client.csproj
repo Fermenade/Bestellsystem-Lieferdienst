@@ -10,24 +10,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Update="PL\SignupUserControl.cs">
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Update="PL\ShoppingCart.cs">
-          <SubType>UserControl</SubType>
-        </Compile>
+      <Compile Remove="DAL\**" />
+      <EmbeddedResource Remove="DAL\**" />
+      <None Remove="DAL\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DAL\" />
+        <Compile Update="PL\Consumer\SignupUserControl.cs">
+            <SubType>UserControl</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="System.Drawing.Common" Version="9.0.6" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
+      <ProjectReference Include="..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
     </ItemGroup>
 
 </Project>

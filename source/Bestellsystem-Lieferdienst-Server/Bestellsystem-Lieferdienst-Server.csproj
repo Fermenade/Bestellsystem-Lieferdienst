@@ -11,11 +11,14 @@
 
     <ItemGroup>
       <PackageReference Include="MySql.Data" Version="9.3.0" />
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
+      <ProjectReference Include="..\Client-Server_Code_Library\Client-Server_Code_Library.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="BL\Datatypes\" />
     </ItemGroup>
 
 </Project>

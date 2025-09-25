@@ -1,5 +1,5 @@
+using Client_Server_Code_Library;
 using MySql.Data.MySqlClient;
-using System.Data;
 using System.Reflection;
 
 
@@ -7,61 +7,106 @@ namespace Bestellsystem_Lieferdienst_Server.DAL;
 
 public class DatabaseHelper(string connectionString)
 {
-    private MySqlConnection _connection = new(connectionString); //if this fails database couldn't be reached.
-
-    public void InsertItemIntoTable(SqlCommand query)
+    public void ExecutePlainNonQuery(string query)
     {
+        using (MySqlConnection con = new MySqlConnection(connectionString))
+        {
+            con.Open();
+            using (var command = new MySqlCommand(query, con))
+            {
 
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (MySqlException ex) // Catching specific exception related to MySQL
+                {
+                    if (ex.Message.Contains("UNIQUE"))
+                    {
+                        throw new Exception("DATABASE KEY EXISTS");
+                    }
+                    throw new Exception("Failed to insert item: " + query);
+                }
+            }
+        }
+    }
+
+    private long InsertItemIntoTableSession(SqlCommand query, MySqlConnection _connection)
+    {
         using (var command = new MySqlCommand(query.SqlStatement, _connection))
         {
             foreach (var VARIABLE in query.Parameters)
             {
                 command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
             }
+
             try
             {
                 command.ExecuteNonQuery();
             }
             catch (MySqlException ex) // Catching specific exception related to MySQL
             {
-
-                throw new Exception("Failed to insert item: "+ query.SqlStatement);
-
+                if (ex.Message.Contains("UNIQUE"))
+                {
+                    throw new Exception("DATABASE KEY EXISTS");
+                }
+                throw new Exception("Failed to insert item: " + query.SqlStatement);
             }
+
+            return command.LastInsertedId;
         }
     }
-    /// <summary>
-    /// Execute a non Value returning sql command.
-    /// eg. INSERT, UPDATE
-    /// </summary>
-    /// <param name="query">The sql query</param>
-    /// <returns>The amount of rows affected.</returns>
-    public int ExecuteNonQuery(SqlCommand query)
+    public long InsertItemIntoTable(SqlCommand query)
     {
-        _connection.Open();
-        using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
+        using (MySqlConnection _connection = new(connectionString))
         {
-            foreach (var VARIABLE in query.Parameters)
-            {
-                command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
-            }
-
-            _connection.Close();
-            return command.ExecuteNonQuery(); //TODO: Make it run async
+            _connection.Open();
+            return InsertItemIntoTableSession(query, _connection);
         }
     }
 
+    // Generated
     /// <summary>
-    /// Get a single row in a table selected from the ID.
+    /// Inserts a new item into the specified database table and returns specified columns from the inserted item.
     /// </summary>
-    /// <param name="id">ID of the row</param>
+    /// <remarks> It is best practice to define a primary key with AUTO_INCREMENT for tables that require unique identifiers.</remarks>
+    /// <param name="query">The SQL command containing the insert statement and parameters.</param>
+    /// <param name="returnColumns">An array of column names to return from the inserted item.</param>
+    /// <returns>An object containing the specified columns from the newly inserted item.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the query or returnColumns are null.</exception>
+    /// <exception cref="SqlException">Thrown when there is an error executing the SQL command.</exception> Generated end
+    public object[]? InsertAndReturnSpecifiedColumns(SqlCommand query, string table, string[]? returnColumns = null)
+    {
+        long? lastId;
+        using (MySqlConnection _connection = new(connectionString))
+        {
+            lastId = InsertItemIntoTableSession(query, _connection);
+        }
+        //this is a small buggy optimisation
+        if (returnColumns == null)
+        {
+            throw new Exception("Return columns where null");
+        }
+
+        SqlCommand sql = new SqlCommand().SelectColumnsById(table, returnColumns, lastId.Value);
+
+        return GetDataFromDatabase(sql)?[0];
+    }
+
+    /// <summary>
+    /// Get a single row in a table selected from the ProductId.
+    /// </summary>
+    /// <param name="id">ProductId of the row</param>
     /// <param name="tableName">Name of the table</param>
     /// <typeparam name="T">T must be type class. The type the data should be converted into.</typeparam>
-    /// <remarks>The ID column is default {tableName}ID</remarks>
-    /// <returns>The selected row of the database converted into the matching type</returns>
-    public T GetDataFromID<T>(SqlCommand query) where T : class
+    /// <remarks>This method truncates any other returned data except the first row</remarks>
+    /// <returns>The first selected row</returns>
+    public T? GetDataFromID<T>(SqlCommand query) where T : class
     {
         var i = GetDataFromDatabase<T>(query);
+        if (i.Length == 0)
+            return null;
+
         return i[0];
     }
     /// <summary>
@@ -76,44 +121,63 @@ public class DatabaseHelper(string connectionString)
         //Generated
         List<T> results = [];
         var o = GetDataFromDatabase(query);
+        if (o.Length == 0) return [];
+
         ConstructorInfo? matchedConstructor = null;
+        var x = typeof(T).GetConstructors();
+        IEnumerable<ConstructorInfo> constructors = typeof(T).GetConstructors().Where(p => Attribute.IsDefined(p, typeof(DatabaseConstructorAttribute)));
+        ConstructorInfo[] constructorInfos = constructors as ConstructorInfo[] ?? constructors.ToArray();
 
-        //Check if the class has a matching constructor
-        foreach (var VARIABLE in typeof(T).GetConstructors())
+        if (constructorInfos.Count() == 1)
         {
-            var x = VARIABLE.GetParameters();
-            if (o[0].Length == x.Length)
-            {
-                bool validConsturctorExists = true;
-                for (int i = 0; i < x.Length; ++i)
-                {
-                    if (o[0][i].GetType() != x[i].ParameterType)
-                    {
-                        validConsturctorExists = false;
-                        break;
-                    }
-                }
+            matchedConstructor = constructorInfos.First();
+        }
+        else
+        {
+            throw new InvalidOperationException($"Expected exactly one constructor marked with DatabaseConstructorAttribute. Found {constructorInfos.Count()}.");
+        }
 
-                if (validConsturctorExists)
-                {
-                    matchedConstructor = VARIABLE;
-                    break;
-                }
-            }
-        }
-        if (matchedConstructor == null)
-        {
-            throw new Exception("Did not find matching constructor.");
-        }
+        var matchedParams = matchedConstructor.GetParameters();
         foreach (object[] VARIABLE in o)
         {
+            object[] replacedNull = new object[VARIABLE.Length];
+            for (int i = 0; i < VARIABLE.Length; i++)
+            {
+                if (VARIABLE[i] == DBNull.Value)
+                {
+                    replacedNull[i] = null;
+                }
+                else
+                {
+                    // Convert the value to the expected type
+                    Type targetType = matchedParams[i].ParameterType;
+
+                    //Generated
+                    if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        targetType = Nullable.GetUnderlyingType(targetType);
+                    }
+
+                    replacedNull[i] = Convert.ChangeType(VARIABLE[i], targetType);
+                }
+            }
             // Create an instance of T using the constructor and the arguments
-            var instance = (T)matchedConstructor.Invoke(VARIABLE);
+            T instance = (T)matchedConstructor.Invoke(replacedNull);
             results.Add(instance);
         }
 
         return results.ToArray();
     }
+    //generated
+    private bool IsNullable(Type type)
+    {
+        if (Nullable.GetUnderlyingType(type) != null)
+        {
+            return true;
+        }
+        return !type.IsValueType;
+    }
+
     /// <summary>
     /// Takes a sql query, executes it and returns the output as two-dimensional object array.
     /// </summary>
@@ -121,38 +185,37 @@ public class DatabaseHelper(string connectionString)
     /// <exception cref="Exception">Error reading data from database</exception>
     /// <exception cref="Exception">Could not find any matching data.</exception>
     /// <returns>A nested array of all entries returned by the query.</returns>
-    public object[][] GetDataFromDatabase(SqlCommand query)
+    public object[][]? GetDataFromDatabase(SqlCommand query)
     {
         List<object[]> data = new List<object[]>();
-        _connection.Open();
-
-        using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
+        using (MySqlConnection _connection = new(connectionString))
         {
-            foreach (var VARIABLE in query.Parameters)
-            {
-                command.Parameters.AddWithValue(VARIABLE.Item1,VARIABLE.Item2);
-            }
-            using (MySqlDataReader reader = command.ExecuteReader())
-            {
-                if (reader == null) throw new Exception("Error reading data from database");
-                while (reader.Read())
-                {
-                    List<object> temp = new List<object>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        temp.Add(reader.GetValue(i));
-                    }
+            _connection.Open();
 
-                    data.Add(temp.ToArray());
+            using (MySqlCommand command = new MySqlCommand(query.SqlStatement, _connection))
+            {
+
+                foreach (var VARIABLE in query.Parameters ?? [])
+                {
+                    command.Parameters.AddWithValue(VARIABLE.Item1, VARIABLE.Item2);
+                }
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader == null) throw new Exception("Error reading data from database");
+                    while (reader.Read())
+                    {
+                        List<object> temp = new List<object>();
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            temp.Add(reader.GetValue(i));
+                        }
+
+                        data.Add(temp.ToArray());
+                    }
                 }
             }
+            return data.ToArray();
         }
-        _connection.Close();
-
-        if (data.Count == 0)
-        {
-            throw new Exception("Could not find data from database.");
-        }
-        return data.ToArray();
     }
 }

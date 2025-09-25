@@ -1,0 +1,60 @@
+﻿using Bestellsystem_Lieferdienst_Client.BL;
+using Bestellsystem_Lieferdienst_Client.BL.ShopingCart;
+using Client_Server_Code_Library;
+
+namespace Bestellsystem_Lieferdienst_Client.PL
+{
+    public partial class ProductDetailView : UserControl
+    {
+        private Product product;
+        public ProductDetailView(Product product)
+        {
+            this.product = product;
+            InitializeComponent();
+            if (product.Picture != null)
+            {
+                using (MemoryStream ms = new(product.Picture))
+                {
+                    pBXMainProductPic.Image = Image.FromStream(ms);
+                }
+            }
+            else
+            {
+                pBXMainProductPic.Image = Image.FromFile("../../../Resources/fallbackIMG.png");
+            }
+            lbl_ProductName.Text = product.Name;
+            lbl_BeschreibungInhalt.Text = product.Description;
+            lbl_ProductPrice.Text = $"{this.product.Price:C}";
+            InitializeManualComponent();
+        }
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbl_BeschreibungÜberschrift_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbl_BeschreibungInhalt_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_BackToMain2_Click(object sender, EventArgs e)
+        {
+            this.LoadView(new Bestellsystem_Lieferdienst_Client.PL.StartForm());
+        }
+
+        private void btn_WarenkorbProduktAnsicht_Click(object sender, EventArgs e)
+        {
+            CartManager.AddProduct(product);
+        }
+
+        private void btn_Kaufen_Click(object sender, EventArgs e)
+        {
+            this.LoadView(new CheckoutForm());
+        }
+    }
+}
