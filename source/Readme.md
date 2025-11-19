@@ -1,5 +1,5 @@
 # Install:
-	./Dokumentation/deliveryservice.sql
+	/Dokumentation/deliveryservice.sql
 	The server and client have to be running to work properly.
 	To use the employee or admin view change the usertype id accordingly
 
