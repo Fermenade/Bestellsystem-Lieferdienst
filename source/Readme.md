@@ -31,6 +31,4 @@
 	 Notes were partially created during the process as comments. Not all Notes may be presserverd. For further details, please refer to the commit history in our GitHub repository: https://github.com/Fermenade/Bestellsystem-Lieferdienst/commits
 
 # Generated Code:
-	Generierter Code wurde weitesgehend markiert, falls dieser generierte Code über weite Teile angepasst wurde, hat dieser seien Kommentar verloren.
-	Nicht auszuschließen ist, dass Kommentare abhanden gekommen sind oder fälschlicherweise stehen gelassen wurden.
 	The generated code has been mostly marked or modified, with some parts not accurately represented due to changes in the code over time. It is unclear if some comments remained intact.
